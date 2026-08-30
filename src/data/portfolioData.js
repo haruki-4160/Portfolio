@@ -21,8 +21,8 @@ export const portfolioData = {
     location: "Tokyo / Remote",
     status: "Available for ambitious freelance & full-time roles",
     email: "haruki.engineer@gmail.com",
-    discordId: "1056581297597956100", // Easily replaced by user
-    github: "https://github.com",
+    discordId: "1098483466926030869",
+    github: "https://github.com/haruki-4160",
     linkedin: "https://linkedin.com",
     twitter: "https://x.com",
     stats: [
