@@ -16,7 +16,7 @@ import confetti from 'canvas-confetti';
 
 export default function ContactPage() {
   const { profile } = portfolioData;
-  const [formData, setFormData] = useState({ name: '', email: '', message: '', projectType: 'Full-Stack Web App' });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', projectType: 'Discord Bot & Automation' });
   const [attachedFile, setAttachedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -46,7 +46,7 @@ export default function ContactPage() {
         animate={{ opacity: 1, y: 0 }}
         className="text-left max-w-2xl space-y-4"
       >
-        <span className="text-xs font-mono font-bold tracking-widest text-[#00ffaa] uppercase px-3 py-1 rounded-full bg-[#00ffaa]/10 border border-[#00ffaa]/30">
+        <span className="text-xs font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 uppercase px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30">
           GET IN TOUCH
         </span>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
@@ -63,7 +63,7 @@ export default function ContactPage() {
           <div className="glass-panel p-8 sm:p-10 rounded-3xl space-y-6">
             {submitted ? (
               <div className="text-center py-12 space-y-4">
-                <div className="w-16 h-16 rounded-full bg-[#00ffaa]/20 border border-[#00ffaa]/40 text-[#00ffaa] flex items-center justify-center mx-auto text-2xl font-bold">
+                <div className="w-16 h-16 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 flex items-center justify-center mx-auto text-2xl font-bold">
                   ✓
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Message Transmitted!</h3>
@@ -72,7 +72,7 @@ export default function ContactPage() {
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="text-xs font-mono text-[#00ffaa] underline pt-4 cursor-pointer"
+                  className="text-xs font-mono text-blue-500 dark:text-blue-400 underline pt-4 cursor-pointer"
                 >
                   Send another message
                 </button>
@@ -90,7 +90,7 @@ export default function ContactPage() {
                       placeholder="e.g. Alex Morgan"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-[#00ffaa] transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors"
                     />
                   </div>
 
@@ -104,7 +104,7 @@ export default function ContactPage() {
                       placeholder="alex@company.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-[#00ffaa] transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors"
                     />
                   </div>
                 </div>
@@ -116,11 +116,11 @@ export default function ContactPage() {
                   <select
                     value={formData.projectType}
                     onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#121218] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-[#00ffaa]"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#121218] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500"
                   >
-                    <option value="Full-Stack Web App">Full-Stack Web App</option>
-                    <option value="AI / Generative Model Integration">AI / Generative Model Integration</option>
-                    <option value="Creative 3D / WebGL Landing Page">Creative 3D / WebGL Landing Page</option>
+                    <option value="Discord Bot & Automation">Discord Bot & Automation</option>
+                    <option value="Cybersecurity Audit / Systems">Cybersecurity Audit / Systems</option>
+                    <option value="Web & Frontend Application">Web & Frontend Application</option>
                     <option value="Consulting / Architecture">Consulting / Architecture</option>
                   </select>
                 </div>
@@ -135,7 +135,7 @@ export default function ContactPage() {
                     placeholder="Tell me about your project, timeline, and goals..."
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-[#00ffaa] transition-colors resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors resize-none"
                   />
                 </div>
 
@@ -152,7 +152,7 @@ export default function ContactPage() {
 
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[#00ffaa] to-[#00a2ff] text-black font-bold text-sm flex items-center justify-center gap-2 hover:opacity-95 shadow-lg shadow-[#00ffaa]/20 transition-all hover:scale-[1.01] cursor-pointer"
+                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[#38bdf8] via-[#2563eb] to-[#1d4ed8] text-white font-bold text-sm flex items-center justify-center gap-2 hover:opacity-95 shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.01] cursor-pointer"
                 >
                   <Send className="w-4 h-4" />
                   <span>Transmit Message</span>
@@ -166,7 +166,7 @@ export default function ContactPage() {
         <div className="lg:col-span-5 space-y-6">
           {/* One Click Email Copy Card */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
-            <span className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-500 inline-block">
+            <span className="p-2.5 rounded-xl bg-blue-500/10 text-blue-500 inline-block">
               <Mail className="w-5 h-5" />
             </span>
             <div>
@@ -183,7 +183,7 @@ export default function ContactPage() {
               className="w-full py-3 px-4 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 flex items-center justify-between text-xs font-mono text-slate-800 dark:text-slate-200 transition-all cursor-pointer"
             >
               <span className="truncate">{profile.email}</span>
-              <span className="flex items-center gap-1 text-[#00ffaa] font-semibold">
+              <span className="flex items-center gap-1 text-blue-500 dark:text-sky-400 font-semibold">
                 {copiedEmail ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
                 {copiedEmail ? 'Copied!' : 'Copy'}
               </span>
@@ -192,7 +192,7 @@ export default function ContactPage() {
 
           {/* Discord Connect Card */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
-            <span className="p-2.5 rounded-xl bg-[#5c67ff]/10 text-[#5c67ff] inline-block">
+            <span className="p-2.5 rounded-xl bg-[#5865F2]/10 text-[#5865F2] inline-block">
               <MessageSquare className="w-5 h-5" />
             </span>
             <div>
@@ -208,7 +208,7 @@ export default function ContactPage() {
               href={`https://discord.com/users/${profile.discordId}`}
               target="_blank"
               rel="noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-[#5c67ff] hover:bg-[#4a55ee] text-white flex items-center justify-between text-xs font-mono font-semibold transition-all shadow-md shadow-[#5c67ff]/30"
+              className="w-full py-3 px-4 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center justify-between text-xs font-mono font-semibold transition-all shadow-md shadow-[#5865F2]/25 hover:scale-[1.01]"
             >
               <span>Connect on Discord</span>
               <ArrowUpRight className="w-4 h-4" />

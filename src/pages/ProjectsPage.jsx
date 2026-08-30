@@ -91,14 +91,14 @@ export default function ProjectsPage({ onSelectProject }) {
         animate={{ opacity: 1, y: 0 }}
         className="text-center max-w-2xl mx-auto space-y-4"
       >
-        <span className="text-xs font-mono font-bold tracking-widest text-[#00ffaa] uppercase px-3.5 py-1 rounded-full bg-[#00ffaa]/10 border border-[#00ffaa]/30">
+        <span className="text-xs font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 uppercase px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30">
           GITHUB REPOSITORIES
         </span>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
           Live Repositories & Work
         </h1>
         <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-          Directly synced from <a href={`https://github.com/${username}`} target="_blank" rel="noreferrer" className="text-[#00ffaa] underline font-mono">github.com/{username}</a>
+          Directly synced from <a href={`https://github.com/${username}`} target="_blank" rel="noreferrer" className="text-sky-500 dark:text-sky-400 underline font-mono">github.com/{username}</a>
         </p>
 
         {/* Live Sync Trigger */}
@@ -106,9 +106,9 @@ export default function ProjectsPage({ onSelectProject }) {
           <button
             onClick={handleRefreshClick}
             disabled={refreshing}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 transition-all cursor-pointer shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 transition-all cursor-pointer shadow-sm hover:scale-[1.02]"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-[#00ffaa]' : 'text-slate-400'}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-blue-500' : 'text-slate-400'}`} />
             <span>{refreshing ? 'Fetching Live Repos...' : 'Sync Latest GitHub Commits'}</span>
           </button>
         </div>
@@ -126,7 +126,7 @@ export default function ProjectsPage({ onSelectProject }) {
           placeholder="Search repositories, tech stack..."
         />
 
-        {/* Category Pills */}
+        {/* Category Pills with Sapphire Active State */}
         <div className="flex flex-wrap justify-center gap-2">
           {categories.map((cat) => (
             <button
@@ -134,7 +134,7 @@ export default function ProjectsPage({ onSelectProject }) {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-1.5 rounded-full text-xs font-mono transition-all cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-gradient-to-r from-[#00ffaa] to-[#00a2ff] text-black font-bold shadow-md shadow-[#00ffaa]/20'
+                  ? 'bg-gradient-to-r from-[#38bdf8] to-[#2563eb] text-white font-bold shadow-md shadow-blue-500/25'
                   : 'bg-slate-200 dark:bg-white/5 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-white/10 hover:bg-slate-300 dark:hover:bg-white/15'
               }`}
             >
@@ -147,7 +147,7 @@ export default function ProjectsPage({ onSelectProject }) {
       {/* Repositories Grid */}
       {loading ? (
         <div className="text-center py-16 space-y-3">
-          <RefreshCw className="w-8 h-8 text-[#00ffaa] animate-spin mx-auto" />
+          <RefreshCw className="w-8 h-8 text-blue-500 animate-spin mx-auto" />
           <p className="text-xs font-mono text-slate-400">Loading GitHub repositories...</p>
         </div>
       ) : filteredProjects.length > 0 ? (
@@ -176,7 +176,7 @@ export default function ProjectsPage({ onSelectProject }) {
           </p>
           <button
             onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}
-            className="text-xs font-mono text-[#00ffaa] underline pt-2 cursor-pointer"
+            className="text-xs font-mono text-blue-500 dark:text-blue-400 underline pt-2 cursor-pointer"
           >
             Reset Filters
           </button>

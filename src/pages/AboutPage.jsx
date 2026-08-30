@@ -27,7 +27,7 @@ export default function AboutPage() {
         animate={{ opacity: 1, y: 0 }}
         className="text-left max-w-3xl space-y-4"
       >
-        <span className="text-xs font-mono font-bold tracking-widest text-[#00ffaa] uppercase px-3 py-1 rounded-full bg-[#00ffaa]/10 border border-[#00ffaa]/30">
+        <span className="text-xs font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 uppercase px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30">
           01 / BACKGROUND & FOCUS
         </span>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
@@ -51,7 +51,7 @@ export default function AboutPage() {
           {/* Bio Overview */}
           <div className="glass-panel p-8 rounded-3xl space-y-4">
             <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Shield className="w-5 h-5 text-[#00ffaa]" />
+              <Shield className="w-5 h-5 text-blue-500 dark:text-blue-400" />
               Focus & Core Philosophy
             </h3>
             <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
@@ -67,7 +67,7 @@ export default function AboutPage() {
           {/* Cybersecurity & Development Domain Trees */}
           <div className="glass-panel p-8 rounded-3xl space-y-6">
             <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Terminal className="w-5 h-5 text-cyan-400" />
+              <Terminal className="w-5 h-5 text-sky-500 dark:text-sky-400" />
               Domains & Technical Focus
             </h3>
 
@@ -76,12 +76,12 @@ export default function AboutPage() {
                 const Icon = dom.icon;
                 return (
                   <div key={dom.domain} className="space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#00ffaa] tracking-wider">
-                      <Icon className="w-4 h-4 text-[#5c67ff]" />
+                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-blue-600 dark:text-blue-400 tracking-wider">
+                      <Icon className="w-4 h-4 text-sky-500" />
                       <span>{dom.domain}</span>
                     </div>
 
-                    <div className="space-y-2 pl-2 border-l-2 border-slate-200 dark:border-white/10">
+                    <div className="space-y-2 pl-2 border-l-2 border-slate-300 dark:border-white/10">
                       {dom.items.map((item) => (
                         <div key={item} className="text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center gap-2">
                           <span className="text-slate-400">├──</span>
@@ -104,7 +104,7 @@ export default function AboutPage() {
           {/* 3D Floating Folder Resume Box */}
           <div className="glass-panel p-6 rounded-3xl flex flex-col items-center text-center space-y-3">
             <div className="text-left w-full">
-              <span className="text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider">
+              <span className="text-[10px] font-mono text-sky-500 dark:text-sky-400 font-bold uppercase tracking-wider">
                 DOCUMENTATION
               </span>
               <h4 className="text-base font-bold text-slate-900 dark:text-white">
