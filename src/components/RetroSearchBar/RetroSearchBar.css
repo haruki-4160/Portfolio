@@ -1,4 +1,4 @@
-/* Retro Search Bar CSS derived from user code */
+/* Silver & Grey Modern Search Bar */
 .retro-search-wrapper {
   position: relative;
   display: flex;
@@ -25,23 +25,27 @@
 }
 
 .retro-input {
-  background-color: #f2e2c4;
-  color: #3a2e20;
-  border: none;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  color: #0f172a;
+  border: 1px solid rgba(255, 255, 255, 0.8);
   width: 310px;
   height: 56px;
   border-radius: 12px;
   padding-left: 54px;
   padding-right: 50px;
-  font-size: 16px;
-  font-family: 'JetBrains Mono', 'Courier New', monospace;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+  font-size: 15px;
+  font-family: 'JetBrains Mono', monospace;
+  box-shadow: 
+    inset 0 2px 4px rgba(71, 85, 105, 0.1),
+    0 4px 12px rgba(71, 85, 105, 0.08);
+  transition: all 0.3s ease;
 }
 
 .dark .retro-input {
-  background-color: #1e1914;
-  color: #f2e2c4;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+  background: #14141c;
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 #poda {
@@ -52,11 +56,20 @@
 }
 
 .retro-input::placeholder {
-  color: #857754;
+  color: #64748b;
+}
+
+.dark .retro-input::placeholder {
+  color: #64748b;
 }
 
 .retro-input:focus {
   outline: none;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.5), inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dark .retro-input:focus {
+  box-shadow: 0 0 0 2px rgba(0, 255, 170, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 #retro-main:focus-within > #input-mask {
@@ -65,13 +78,17 @@
 
 #input-mask {
   pointer-events: none;
-  width: 90px;
+  width: 70px;
   height: 20px;
   position: absolute;
-  background: linear-gradient(90deg, transparent, #3a2e20);
+  background: linear-gradient(90deg, transparent, #94a3b8);
   top: 18px;
   left: 60px;
-  opacity: 0.3;
+  opacity: 0.15;
+}
+
+.dark #input-mask {
+  background: linear-gradient(90deg, transparent, #334155);
 }
 
 #pink-mask {
@@ -79,12 +96,17 @@
   width: 30px;
   height: 20px;
   position: absolute;
-  background: #f28e8e;
+  background: #38bdf8;
   top: 10px;
   left: 5px;
   filter: blur(20px);
-  opacity: 0.8;
+  opacity: 0.5;
   transition: all 1.5s ease;
+}
+
+.dark #pink-mask {
+  background: #00ffaa;
+  opacity: 0.6;
 }
 
 #retro-main:hover > #pink-mask {
@@ -110,16 +132,27 @@
   height: 600px;
   background-repeat: no-repeat;
   background-position: 0 0;
-  filter: brightness(1.4);
+  filter: brightness(1.2);
   background-image: conic-gradient(
-    rgba(0, 0, 0, 0) 0%,
-    #dcb483,
-    rgba(0, 0, 0, 0) 8%,
-    rgba(0, 0, 0, 0) 50%,
-    #d16e5a,
-    rgba(0, 0, 0, 0) 58%
+    rgba(255, 255, 255, 0) 0%,
+    #cbd5e1,
+    rgba(255, 255, 255, 0) 10%,
+    rgba(255, 255, 255, 0) 50%,
+    #94a3b8,
+    rgba(255, 255, 255, 0) 60%
   );
   transition: all 2s;
+}
+
+.dark .retro-white::before {
+  background-image: conic-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    #00ffaa,
+    rgba(0, 0, 0, 0) 8%,
+    rgba(0, 0, 0, 0) 50%,
+    #5c67ff,
+    rgba(0, 0, 0, 0) 58%
+  );
 }
 
 .retro-border {
@@ -139,18 +172,28 @@
   position: absolute;
   width: 600px;
   height: 600px;
-  filter: brightness(1.3);
   background-repeat: no-repeat;
   background-position: 0 0;
   background-image: conic-gradient(
-    #3a2e20,
-    #c98f65 5%,
-    #3a2e20 14%,
-    #3a2e20 50%,
-    #f28e8e 60%,
-    #3a2e20 64%
+    #94a3b8,
+    #cbd5e1 5%,
+    #64748b 14%,
+    #475569 50%,
+    #38bdf8 60%,
+    #64748b 64%
   );
   transition: all 2s;
+}
+
+.dark .retro-border::before {
+  background-image: conic-gradient(
+    #0a0a0f,
+    #00a2ff 5%,
+    #0a0a0f 14%,
+    #0a0a0f 50%,
+    #00ffaa 60%,
+    #0a0a0f 64%
+  );
 }
 
 .retro-darkBorderBg {
@@ -171,14 +214,25 @@
   background-repeat: no-repeat;
   background-position: 0 0;
   background-image: conic-gradient(
-    rgba(0, 0, 0, 0),
-    #725d4a,
-    rgba(0, 0, 0, 0) 10%,
-    rgba(0, 0, 0, 0) 50%,
-    #d16e5a,
-    rgba(0, 0, 0, 0) 60%
+    rgba(255, 255, 255, 0),
+    #94a3b8,
+    rgba(255, 255, 255, 0) 10%,
+    rgba(255, 255, 255, 0) 50%,
+    #64748b,
+    rgba(255, 255, 255, 0) 60%
   );
   transition: all 2s;
+}
+
+.dark .retro-darkBorderBg::before {
+  background-image: conic-gradient(
+    rgba(0, 0, 0, 0),
+    #5c67ff,
+    rgba(0, 0, 0, 0) 10%,
+    rgba(0, 0, 0, 0) 50%,
+    #00ffaa,
+    rgba(0, 0, 0, 0) 60%
+  );
 }
 
 #poda:hover > .retro-darkBorderBg::before,
@@ -208,9 +262,13 @@
 .retro-glow {
   overflow: hidden;
   filter: blur(25px);
-  opacity: 0.5;
+  opacity: 0.35;
   max-height: 120px;
   max-width: 360px;
+}
+
+.dark .retro-glow {
+  opacity: 0.5;
 }
 
 .retro-glow::before {
@@ -226,14 +284,25 @@
   background-repeat: no-repeat;
   background-position: 0 0;
   background-image: conic-gradient(
-    #000,
-    #c98f65 5%,
-    #000 38%,
-    #000 50%,
-    #f28e8e 60%,
-    #000 87%
+    rgba(255, 255, 255, 0),
+    #94a3b8 5%,
+    rgba(255, 255, 255, 0) 38%,
+    rgba(255, 255, 255, 0) 50%,
+    #38bdf8 60%,
+    rgba(255, 255, 255, 0) 87%
   );
   transition: all 2s;
+}
+
+.dark .retro-glow::before {
+  background-image: conic-gradient(
+    #000,
+    #5c67ff 5%,
+    #000 38%,
+    #000 50%,
+    #00ffaa 60%,
+    #000 87%
+  );
 }
 
 #filter-icon-btn {
@@ -248,10 +317,16 @@
   width: 38px;
   overflow: hidden;
   border-radius: 10px;
-  background: linear-gradient(180deg, #a57d52, #846846, #6b5342);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, #64748b, #475569, #334155);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   cursor: pointer;
   transition: transform 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.dark #filter-icon-btn {
+  background: linear-gradient(180deg, #1e1e28, #161622, #0e0e16);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 #filter-icon-btn:hover {
@@ -281,16 +356,27 @@
   height: 400px;
   background-repeat: no-repeat;
   background-position: 0 0;
-  filter: brightness(1.35);
+  filter: brightness(1.2);
   background-image: conic-gradient(
-    rgba(0, 0, 0, 0),
-    #a57d52,
-    rgba(0, 0, 0, 0) 50%,
-    rgba(0, 0, 0, 0) 50%,
-    #a57d52,
-    rgba(0, 0, 0, 0) 100%
+    rgba(255, 255, 255, 0),
+    #94a3b8,
+    rgba(255, 255, 255, 0) 50%,
+    rgba(255, 255, 255, 0) 50%,
+    #38bdf8,
+    rgba(255, 255, 255, 0) 100%
   );
   animation: retroRotate 4s linear infinite;
+}
+
+.dark .filter-border-anim::before {
+  background-image: conic-gradient(
+    rgba(0, 0, 0, 0),
+    #00ffaa,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0) 50%,
+    #5c67ff,
+    rgba(0, 0, 0, 0) 100%
+  );
 }
 
 #retro-main {
@@ -302,8 +388,12 @@
   position: absolute;
   left: 18px;
   top: 16px;
-  color: #c98f65;
+  color: #64748b;
   pointer-events: none;
+}
+
+.dark #retro-search-icon {
+  color: #00ffaa;
 }
 
 @keyframes retroRotate {
