@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import CyberCard from '../components/CyberCard/CyberCard';
-import DiscordPresence from '../components/DiscordPresence/DiscordPresence';
+import CyberProfileCard from '../components/CyberProfileCard/CyberProfileCard';
 import VinylMusicPlayer from '../components/VinylMusicPlayer/VinylMusicPlayer';
 import { 
   ArrowRight, 
@@ -104,17 +104,17 @@ export default function Home({ onNavigate, onSelectProject }) {
           </div>
         </motion.div>
 
-        {/* Right Hero Column: Live Profile Bubble & 3D Tilt Card */}
+        {/* Right Hero Column: 3D Cyber Profile Bubble Card with Hover Tracking */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="shrink-0 w-full lg:w-[420px] space-y-6"
+          className="shrink-0 flex items-center justify-center py-4 relative"
         >
-          {/* 🟢 Live Discord Profile Bubble (Real Avatar, Live Status & Direct Chat) */}
-          <div className="relative">
-            <DiscordPresence defaultDiscordId={profile.discordId} />
-          </div>
+          {/* Ambient sapphire back glow */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-sky-400/20 rounded-3xl blur-3xl -z-10" />
+
+          <CyberProfileCard onNavigate={onNavigate} />
         </motion.div>
       </section>
 
