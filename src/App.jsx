@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
 import SmoothScroll from './components/SmoothScroll/SmoothScroll';
 import ScrollProgress from './components/ScrollProgress/ScrollProgress';
+import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import BackgroundGrid from './components/Background/BackgroundGrid';
 import AppleDock from './components/AppleDock/AppleDock';
 import ThemeSwitch from './components/ThemeSwitch/ThemeSwitch';
 import ProjectModal from './components/ProjectModal/ProjectModal';
+import { GithubIcon, DiscordIcon, LinkedinIcon, TwitterIcon } from './components/Icons/SocialIcons';
 import Home from './pages/Home';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
@@ -14,6 +16,7 @@ import ContactPage from './pages/ContactPage';
 function PortfolioApp() {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Scroll spy with active section detector
   useEffect(() => {
@@ -53,7 +56,10 @@ function PortfolioApp() {
   };
 
   return (
-    <div className="min-h-screen relative flex flex-col justify-between text-slate-900 dark:text-slate-100 selection:bg-[#00ffaa]/30 selection:text-[#00ffaa]">
+    <div className="min-h-screen relative flex flex-col justify-between text-slate-900 dark:text-slate-100 selection:bg-[#3b82f6]/30 selection:text-[#93c5fd]">
+      {/* Custom 3-Second Loading Screen */}
+      <LoadingScreen onComplete={() => setLoading(false)} />
+
       {/* Top Scroll Progress Indicator */}
       <ScrollProgress />
 
@@ -78,10 +84,10 @@ function PortfolioApp() {
             <div>
               <div className="font-extrabold text-sm sm:text-base tracking-widest text-slate-900 dark:text-white flex items-center gap-1.5 font-mono">
                 HARUKI
-                <span className="text-[#00ffaa] text-xs">✦</span>
+                <span className="text-sky-500 text-xs">✦</span>
               </div>
               <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 hidden sm:block">
-                CREATIVE DEVELOPER
+                ASHISH SUNIL // CYBERSECURITY
               </div>
             </div>
           </button>
@@ -116,16 +122,57 @@ function PortfolioApp() {
         </section>
       </main>
 
-      {/* Footer */}
+      {/* Footer with Clickable Real Socials */}
       <footer className="w-full text-center py-10 pb-32 text-xs font-mono text-slate-500 dark:text-slate-500 border-t border-slate-200/50 dark:border-white/5 z-10">
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <img src="/haruki-logo.png" alt="Logo" className="w-5 h-5 opacity-70" />
-          <span className="font-bold text-slate-700 dark:text-slate-300">HARUKI PORTFOLIO</span>
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <img src="/haruki-logo.png" alt="Logo" className="w-6 h-6 opacity-80" />
+          <span className="font-bold text-slate-800 dark:text-slate-200 tracking-wider">ASHISH SUNIL · HARUKI</span>
         </div>
-        <p>© {new Date().getFullYear()} Haruki. Built with React, Tailwind & tactile 3D CSS.</p>
+
+        {/* Clickable Socials Bar */}
+        <div className="flex items-center justify-center gap-4 my-4">
+          <a
+            href="https://github.com/haruki-4160"
+            target="_blank"
+            rel="noreferrer"
+            className="p-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all shadow-sm"
+            title="GitHub Profile"
+          >
+            <GithubIcon className="w-4 h-4" />
+          </a>
+          <a
+            href="https://discord.com/users/1098483466926030869"
+            target="_blank"
+            rel="noreferrer"
+            className="p-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-[#5865F2] transition-all shadow-sm"
+            title="Discord Direct"
+          >
+            <DiscordIcon className="w-4 h-4" />
+          </a>
+          <a
+            href="https://linkedin.com"
+            target="_blank"
+            rel="noreferrer"
+            className="p-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-[#0077B5] transition-all shadow-sm"
+            title="LinkedIn Profile"
+          >
+            <LinkedinIcon className="w-4 h-4" />
+          </a>
+          <a
+            href="https://x.com"
+            target="_blank"
+            rel="noreferrer"
+            className="p-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all shadow-sm"
+            title="Twitter / X"
+          >
+            <TwitterIcon className="w-4 h-4" />
+          </a>
+        </div>
+
+        <p>© {new Date().getFullYear()} Ashish Sunil (Haruki). Built with React, Tailwind & tactile 3D CSS.</p>
       </footer>
 
-      {/* Floating Apple-Style Springy Magnification Dock */}
+      {/* Floating Rectangular Glass Apple-Style Dock */}
       <AppleDock activeTab={activeTab} onTabChange={handleNavigate} />
 
       {/* Project Case Study Modal */}

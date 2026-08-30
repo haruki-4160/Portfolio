@@ -21,15 +21,16 @@
   align-items: center;
   border-radius: 20px;
   transition: 700ms;
-  background: linear-gradient(135deg, #121218 0%, #1e1e28 100%);
-  border: 2px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #10121c 0%, #161a29 100%);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.5),
-    inset 0 0 20px rgba(0, 0, 0, 0.4);
+    0 16px 36px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(147, 197, 253, 0.15),
+    inset 0 0 20px rgba(0, 0, 0, 0.5);
 }
 
-/* Brushed Silver / Platinum Metallic Chassis */
+/* Brushed Silver / Platinum Metallic Chassis in Light Mode */
 .light .cyber-card {
   background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 50%, #e2e8f0 100%);
   border: 1.5px solid rgba(255, 255, 255, 0.9);
@@ -63,7 +64,7 @@
   position: absolute;
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
-  text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
   font-family: 'JetBrains Mono', monospace;
   pointer-events: none;
 }
@@ -81,10 +82,10 @@
   letter-spacing: 2px;
   text-align: left;
   width: 100%;
-  background: linear-gradient(45deg, #00ffaa, #00a2ff);
+  background: linear-gradient(45deg, #e0f2fe, #60a5fa, #818cf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 15px rgba(0, 255, 170, 0.3));
+  filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.4));
 }
 
 .light .cyber-title {
@@ -108,9 +109,9 @@
 }
 
 .cyber-highlight {
-  color: #00ffaa;
+  color: #38bdf8;
   margin-left: 5px;
-  background: linear-gradient(90deg, #5c67ff, #ad51ff);
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bold;
@@ -132,53 +133,70 @@
 .cyber-glow-2,
 .cyber-glow-3 {
   position: absolute;
-  width: 120px;
-  height: 120px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
-  background: radial-gradient(
-    circle at center,
-    rgba(0, 255, 170, 0.25) 0%,
-    rgba(0, 255, 170, 0) 70%
-  );
-  filter: blur(18px);
+  filter: blur(20px);
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+/* 1. Luminous Cyan */
+.cyber-glow-1 {
+  top: -20px;
+  left: -20px;
+  background: radial-gradient(
+    circle at center,
+    rgba(56, 189, 248, 0.3) 0%,
+    rgba(56, 189, 248, 0) 70%
+  );
 }
 
 .light .cyber-glow-1 {
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
 }
 
-.cyber-glow-1 {
-  top: -20px;
-  left: -20px;
-}
+/* 2. Electric Indigo & Violet */
 .cyber-glow-2 {
   top: 50%;
   right: -30px;
   transform: translateY(-50%);
-  background: radial-gradient(circle at center, rgba(92, 103, 255, 0.3) 0%, transparent 70%);
+  background: radial-gradient(
+    circle at center,
+    rgba(99, 102, 241, 0.35) 0%,
+    transparent 70%
+  );
 }
+
 .light .cyber-glow-2 {
   background: radial-gradient(circle at center, rgba(148, 163, 184, 0.4) 0%, transparent 70%);
 }
+
+/* 3. Deep Sapphire */
 .cyber-glow-3 {
   bottom: -20px;
   left: 30%;
+  background: radial-gradient(
+    circle at center,
+    rgba(37, 99, 235, 0.3) 0%,
+    transparent 70%
+  );
 }
 
 .cyber-card-particles span {
   position: absolute;
   width: 3px;
   height: 3px;
-  background: #00ffaa;
+  background: #38bdf8;
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.3s ease;
+  box-shadow: 0 0 6px #38bdf8;
 }
 
 .light .cyber-card-particles span {
   background: #0284c7;
+  box-shadow: none;
 }
 
 /* Hover effects */
@@ -221,8 +239,8 @@
   content: "";
   background: radial-gradient(
     circle at center,
-    rgba(0, 255, 170, 0.12) 0%,
-    rgba(0, 162, 255, 0.08) 50%,
+    rgba(56, 189, 248, 0.15) 0%,
+    rgba(99, 102, 241, 0.1) 50%,
     transparent 100%
   );
   filter: blur(25px);
@@ -267,7 +285,7 @@
 
 .cyber-tracker:hover ~ .cyber-card {
   transition: 250ms ease-out;
-  filter: brightness(1.04);
+  filter: brightness(1.06);
 }
 
 .cyber-canvas {
@@ -317,7 +335,7 @@
   background: linear-gradient(
     125deg,
     rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.1) 50%,
     rgba(255, 255, 255, 0) 100%
   );
   opacity: 0;
@@ -343,7 +361,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(92, 103, 255, 0.3),
+    rgba(56, 189, 248, 0.35),
     transparent
   );
   pointer-events: none;
@@ -373,7 +391,7 @@
   position: absolute;
   width: 14px;
   height: 14px;
-  border: 2px solid rgba(92, 103, 255, 0.4);
+  border: 2px solid rgba(96, 165, 250, 0.4);
   pointer-events: none;
   transition: all 0.3s ease;
 }
@@ -388,8 +406,8 @@
 .cyber-corner-elements span:nth-child(4) { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
 
 .cyber-tracker:hover ~ .cyber-card .cyber-corner-elements span {
-  border-color: rgba(0, 255, 170, 0.8);
-  box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+  border-color: rgba(56, 189, 248, 0.9);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
 }
 
 .light .cyber-tracker:hover ~ .cyber-card .cyber-corner-elements span {
@@ -403,7 +421,7 @@
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(0, 255, 170, 0.12),
+    rgba(56, 189, 248, 0.15),
     transparent
   );
   transform: translateY(-100%);
