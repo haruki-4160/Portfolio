@@ -14,7 +14,8 @@ import {
   Cpu,
   Lock,
   ExternalLink,
-  Code2
+  Code2,
+  Headphones
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -100,12 +101,12 @@ export default function Home({ onNavigate, onSelectProject }) {
           </div>
         </motion.div>
 
-        {/* Right 3D Cyber Tilt Hero Card & Vinyl Player */}
+        {/* Right 3D Cyber Tilt Hero Card (Clean & Standalone) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="shrink-0 relative flex flex-col items-center justify-center py-6 gap-6"
+          className="shrink-0 relative flex flex-col items-center justify-center py-6"
         >
           {/* Ambient sapphire back glow */}
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-sky-400/20 rounded-3xl blur-2xl -z-10" />
@@ -121,13 +122,39 @@ export default function Home({ onNavigate, onSelectProject }) {
             icon={Shield}
             onClick={() => onNavigate('about')}
           />
-
-          {/* Interactive Expanding Vinyl Music Player Widget */}
-          <div className="pt-2">
-            <VinylMusicPlayer />
-          </div>
         </motion.div>
       </section>
+
+      {/* 🎧 Dedicated Ambient Vinyl Music Lounge (Separate & Clean) */}
+      <motion.section
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="glass-panel p-6 sm:p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-200/80 dark:border-white/10 shadow-lg"
+      >
+        <div className="space-y-1 text-center md:text-left">
+          <div className="flex items-center justify-center md:justify-start gap-2">
+            <span className="p-1.5 rounded-lg bg-blue-500/10 text-blue-500">
+              <Headphones className="w-4 h-4" />
+            </span>
+            <span className="text-xs font-mono font-bold tracking-wider text-blue-500 dark:text-blue-400 uppercase">
+              AUDIO LOUNGE
+            </span>
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+            Curated Soundtrack & Vibing
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md">
+            Hover over the vinyl player to expand controls, scrub through the track, or adjust volume.
+          </p>
+        </div>
+
+        {/* Standalone Vinyl Player with Volume Controller */}
+        <div className="shrink-0">
+          <VinylMusicPlayer />
+        </div>
+      </motion.section>
 
       {/* 02 / WHAT I BUILD */}
       <motion.section 
