@@ -8,6 +8,7 @@ import AppleDock from './components/AppleDock/AppleDock';
 import ThemeSwitch from './components/ThemeSwitch/ThemeSwitch';
 import ProjectModal from './components/ProjectModal/ProjectModal';
 import { GithubIcon, DiscordIcon, LinkedinIcon, InstagramIcon } from './components/Icons/SocialIcons';
+import { Mail } from 'lucide-react';
 import Home from './pages/Home';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
@@ -122,7 +123,7 @@ function PortfolioApp() {
         </section>
       </main>
 
-      {/* Footer with Real Verified Social Links */}
+      {/* Footer with Real Verified Social Links (No Twitter) */}
       <footer className="w-full text-center py-10 pb-32 text-xs font-mono text-slate-500 dark:text-slate-500 border-t border-slate-200/50 dark:border-white/5 z-10">
         <div className="flex items-center justify-center gap-2 mb-3">
           <img src="/haruki-logo.png" alt="Logo" className="w-6 h-6 opacity-80" />
@@ -166,6 +167,13 @@ function PortfolioApp() {
             title="Discord Direct"
           >
             <DiscordIcon className="w-4 h-4" />
+          </a>
+          <a
+            href="mailto:ashishsunil4160@gmail.com"
+            className="p-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-sky-400 transition-all shadow-sm hover:scale-105"
+            title="Direct Email (ashishsunil4160@gmail.com)"
+          >
+            <Mail className="w-4 h-4" />
           </a>
         </div>
 

@@ -10,9 +10,11 @@ import {
   MessageSquare, 
   Sparkles, 
   ArrowUpRight,
-  QrCode
+  QrCode,
+  ExternalLink,
+  ScanLine
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, InstagramIcon, DiscordIcon } from '../components/Icons/SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '../components/Icons/SocialIcons';
 import confetti from 'canvas-confetti';
 
 export default function ContactPage() {
@@ -21,7 +23,6 @@ export default function ContactPage() {
   const [attachedFile, setAttachedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [showQr, setShowQr] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -164,19 +165,68 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Right Column: Direct Connect & Socials (5 cols) */}
+        {/* Right Column: Direct Connect, Scannable Instagram QR & Socials (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
-          {/* One Click Email Copy Card */}
+          {/* Scannable Instagram QR Code Card */}
+          <div className="glass-panel p-6 rounded-3xl space-y-4 relative overflow-hidden border border-white/80 dark:border-white/10">
+            {/* Ambient Instagram Brand Glow */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-gradient-to-br from-[#f58529] via-[#dd2a7b] to-[#8134af] opacity-20 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="p-2 rounded-xl bg-gradient-to-br from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white inline-block shadow-sm">
+                  <InstagramIcon className="w-4 h-4" />
+                </span>
+                <div>
+                  <h4 className="text-base font-bold text-slate-900 dark:text-white">
+                    Instagram Official
+                  </h4>
+                  <p className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                    @huesofharuki
+                  </p>
+                </div>
+              </div>
+              <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-500 border border-rose-500/20 flex items-center gap-1">
+                <ScanLine className="w-3 h-3" />
+                SCANNABLE
+              </span>
+            </div>
+
+            {/* High-Contrast Scannable QR Container */}
+            <div className="bg-white p-4 rounded-2xl border-2 border-slate-200 dark:border-slate-700 shadow-md flex flex-col items-center justify-center group relative">
+              <img
+                src="/instagram-qr.png"
+                alt="Hues of Haruki Instagram QR Code"
+                className="w-48 h-48 sm:w-52 sm:h-52 object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+              />
+              <span className="text-[10px] font-mono text-slate-600 font-semibold mt-1">
+                Scan with phone camera or Instagram
+              </span>
+            </div>
+
+            {/* Direct Open Button */}
+            <a
+              href={profile.instagram}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#f58529] via-[#dd2a7b] to-[#8134af] text-white flex items-center justify-center gap-2 text-xs font-mono font-bold shadow-md hover:opacity-95 transition-all hover:scale-[1.01]"
+            >
+              <span>Open @huesofharuki on Instagram</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+
+          {/* Direct Email Card */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
             <span className="p-2.5 rounded-xl bg-blue-500/10 text-blue-500 inline-block">
               <Mail className="w-5 h-5" />
             </span>
             <div>
-              <h4 className="text-lg font-bold text-slate-900 dark:text-white">
+              <h4 className="text-base font-bold text-slate-900 dark:text-white">
                 Direct Email
               </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Prefer direct communication? Click below to copy:
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                Click below to copy address:
               </p>
             </div>
 
@@ -192,77 +242,42 @@ export default function ContactPage() {
             </button>
           </div>
 
-          {/* Discord Connect Card */}
+          {/* Elsewhere on the Web (GitHub, LinkedIn, Email - Twitter Replaced!) */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
-            <span className="p-2.5 rounded-xl bg-[#5865F2]/10 text-[#5865F2] inline-block">
-              <MessageSquare className="w-5 h-5" />
-            </span>
-            <div>
-              <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-                Discord Direct
-              </h4>
-              <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                Chat or hop on a call via Discord:
-              </p>
-            </div>
-
-            <a
-              href={`https://discord.com/users/${profile.discordId}`}
-              target="_blank"
-              rel="noreferrer"
-              className="w-full py-3 px-4 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center justify-between text-xs font-mono font-semibold transition-all shadow-md shadow-[#5865F2]/25 hover:scale-[1.01]"
-            >
-              <span>Connect on Discord</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </a>
-          </div>
-
-          {/* Real Verified Social Links Grid */}
-          <div className="glass-panel p-6 rounded-3xl space-y-4">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-                Social Networks
-              </h4>
-              <button
-                onClick={() => setShowQr(!showQr)}
-                className="text-[11px] font-mono text-sky-500 hover:underline flex items-center gap-1 cursor-pointer"
-              >
-                <QrCode className="w-3.5 h-3.5" />
-                <span>{showQr ? 'Hide QR' : 'Instagram QR'}</span>
-              </button>
-            </div>
-
-            {/* Instagram QR Code view */}
-            {showQr && (
-              <div className="p-4 rounded-2xl bg-white dark:bg-black/50 border border-slate-300 dark:border-white/10 flex flex-col items-center text-center space-y-2 animate-fadeIn">
-                <img
-                  src="/instagram-qr.png"
-                  alt="HuesOfHaruki Instagram QR"
-                  className="w-48 h-48 object-contain rounded-xl shadow-md"
-                />
-                <span className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200">
-                  @huesofharuki
-                </span>
-              </div>
-            )}
-
+            <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+              Elsewhere on the Web
+            </h4>
             <div className="grid grid-cols-3 gap-3">
-              {[
-                { name: 'GitHub', icon: GithubIcon, url: profile.github },
-                { name: 'LinkedIn', icon: LinkedinIcon, url: profile.linkedin },
-                { name: 'Instagram', icon: InstagramIcon, url: profile.instagram },
-              ].map((s) => (
-                <a
-                  key={s.name}
-                  href={s.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/15 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-sky-400 transition-all hover:-translate-y-1 shadow-sm"
-                >
-                  <s.icon className="w-5 h-5 mb-1 text-slate-800 dark:text-slate-200" />
-                  <span className="text-[11px] font-mono">{s.name}</span>
-                </a>
-              ))}
+              <a
+                href={profile.github}
+                target="_blank"
+                rel="noreferrer"
+                className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/15 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all hover:-translate-y-1 shadow-sm"
+                title="GitHub Profile"
+              >
+                <GithubIcon className="w-5 h-5 mb-1 text-slate-800 dark:text-slate-200" />
+                <span className="text-[11px] font-mono font-semibold">GitHub</span>
+              </a>
+
+              <a
+                href={profile.linkedin}
+                target="_blank"
+                rel="noreferrer"
+                className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/15 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-[#0077B5] transition-all hover:-translate-y-1 shadow-sm"
+                title="LinkedIn Profile"
+              >
+                <LinkedinIcon className="w-5 h-5 mb-1 text-slate-800 dark:text-slate-200" />
+                <span className="text-[11px] font-mono font-semibold">LinkedIn</span>
+              </a>
+
+              <a
+                href={`mailto:${profile.email}`}
+                className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/15 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-sky-400 transition-all hover:-translate-y-1 shadow-sm"
+                title="Direct Email"
+              >
+                <Mail className="w-5 h-5 mb-1 text-slate-800 dark:text-slate-200" />
+                <span className="text-[11px] font-mono font-semibold">Email</span>
+              </a>
             </div>
           </div>
         </div>
