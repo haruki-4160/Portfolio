@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import CyberCard from '../components/CyberCard/CyberCard';
+import VinylMusicPlayer from '../components/VinylMusicPlayer/VinylMusicPlayer';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -99,12 +100,12 @@ export default function Home({ onNavigate, onSelectProject }) {
           </div>
         </motion.div>
 
-        {/* Right 3D Cyber Tilt Hero Card */}
+        {/* Right 3D Cyber Tilt Hero Card & Vinyl Player */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="shrink-0 relative flex justify-center items-center py-6"
+          className="shrink-0 relative flex flex-col items-center justify-center py-6 gap-6"
         >
           {/* Ambient sapphire back glow */}
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-sky-400/20 rounded-3xl blur-2xl -z-10" />
@@ -120,6 +121,11 @@ export default function Home({ onNavigate, onSelectProject }) {
             icon={Shield}
             onClick={() => onNavigate('about')}
           />
+
+          {/* Interactive Expanding Vinyl Music Player Widget */}
+          <div className="pt-2">
+            <VinylMusicPlayer />
+          </div>
         </motion.div>
       </section>
 
