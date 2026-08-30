@@ -112,51 +112,97 @@ export const portfolioData = {
       id: "celeste",
       title: "CELESTE",
       type: "Discord Moderation",
-      stack: ["Python", "Discord.py"],
+      stack: ["Python", "Discord.py", "AsyncIO", "SQLite"],
+      tags: ["Python", "Discord.py", "AsyncIO", "SQLite"],
       description: "Robust Discord moderation bot built with custom permission checks, automated filtering, and server safety utilities.",
+      fullDescription: "Celeste is a production-grade Discord moderation and security engine built with Python and Discord.py. It features asynchronous rate-limiting, custom permission hierarchies, automated raid detection, message content filtering, and audit logging to keep communities safe and organized.",
+      features: [
+        "Automated anti-spam and content filtering",
+        "Granular role and permission hierarchies",
+        "Asynchronous event dispatching with Python AsyncIO",
+        "Audit logging and moderation history tracking"
+      ],
       highlight: "MODERATION",
       badge: "DISCORD BOT",
-      githubUrl: "https://github.com/haruki-4160"
+      githubUrl: "https://github.com/haruki-4160",
+      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200&q=80"
     },
     {
       id: "celune",
       title: "CELUNE",
       type: "Discord Music",
-      stack: ["Python", "Discord"],
+      stack: ["Python", "Discord.py", "FFmpeg", "Audio Streaming"],
+      tags: ["Python", "Discord.py", "FFmpeg", "Audio Streaming"],
       description: "High-performance Discord music streaming bot with queue management, voice client optimization, and playback controls.",
+      fullDescription: "Celune delivers high-fidelity audio playback directly into Discord voice channels. Optimized with custom FFmpeg streaming buffers, dynamic queue management, and volume normalization for uninterrupted community listening sessions.",
+      features: [
+        "Low-latency voice client streaming via FFmpeg",
+        "Dynamic audio queue and playlist support",
+        "Interactive playback controls with Discord UI components",
+        "Stream recovery and auto-disconnect timers"
+      ],
       highlight: "MUSIC ENGINE",
       badge: "DISCORD BOT",
-      githubUrl: "https://github.com/haruki-4160"
+      githubUrl: "https://github.com/haruki-4160",
+      image: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&q=80"
     },
     {
       id: "sryaa",
       title: "SRYAA",
       type: "Discord Chat",
-      stack: ["Python", "Discord"],
+      stack: ["Python", "Discord.py", "APIs", "Natural Language"],
+      tags: ["Python", "Discord.py", "APIs", "Natural Language"],
       description: "Interactive conversational Discord bot with context-aware chat utilities and community engagement features.",
+      fullDescription: "Sryaa brings life and personality into Discord servers with interactive dialogue flows, dynamic API integrations, and community engagement minigames designed to boost server interaction and member retention.",
+      features: [
+        "Context-aware conversational flows and prompts",
+        "Third-party REST API integrations for real-time data",
+        "Custom server leveling and activity rewards",
+        "Smart message command parsing and response caching"
+      ],
       highlight: "CHAT UTILITY",
       badge: "DISCORD BOT",
-      githubUrl: "https://github.com/haruki-4160"
+      githubUrl: "https://github.com/haruki-4160",
+      image: "https://images.unsplash.com/photo-1614680376593-902f749f7ffc?w=1200&q=80"
     },
     {
       id: "portfolio",
-      title: "PORTFOLIO",
+      title: "TACTILE PORTFOLIO",
       type: "Web Experience",
-      stack: ["React", "Tailwind", "Framer Motion"],
+      stack: ["React 18", "Tailwind CSS", "Framer Motion", "Lenis"],
+      tags: ["React 18", "Tailwind CSS", "Framer Motion", "Lenis"],
       description: "Tactile personal portfolio featuring 3D tilt cards, skeuomorphic theme switcher, spring physics Apple dock, and live Discord API integration.",
+      fullDescription: "A high-performance personal portfolio engineered with React and Tailwind CSS. Showcases skeuomorphic 3D UI components, custom 25-zone perspective mouse trackers, live WebSocket Lanyard Discord streaming, and Lenis momentum smooth scrolling.",
+      features: [
+        "25-zone 3D perspective mouse tracker cards",
+        "Skeuomorphic 3D tilt dark/light theme toggle",
+        "Spring-physics Apple magnification dock navbar",
+        "Real-time WebSocket Discord presence and Spotify live bar"
+      ],
       highlight: "FRONTEND",
       badge: "WEB APP",
-      githubUrl: "https://github.com/haruki-4160/Portfolio"
+      liveUrl: "https://portfolio-haruki.vercel.app",
+      githubUrl: "https://github.com/haruki-4160/Portfolio",
+      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80"
     },
     {
       id: "squid-game-website",
       title: "SQUID GAME WEBSITE",
       type: "Event Website",
-      stack: ["Frontend", "UI/UX", "JavaScript"],
+      stack: ["JavaScript", "HTML5", "CSS3", "Web Audio"],
+      tags: ["JavaScript", "HTML5", "CSS3", "Web Audio"],
       description: "Immersive event landing page designed with themed animations, sound effects, and interactive registration stages.",
+      fullDescription: "An immersive, cinematic event landing page built for campus gaming tournaments. Features atmospheric animations, custom web audio triggers, interactive player registration stages, and reactive game countdown timers.",
+      features: [
+        "Cinematic themed visual styling and glitch animations",
+        "Interactive registration forms with client-side validation",
+        "Atmospheric ambient audio and interactive sound effects",
+        "Fully responsive layout across mobile and ultra-wide displays"
+      ],
       highlight: "EVENT UI",
       badge: "EVENT WEB",
-      githubUrl: "https://github.com/haruki-4160"
+      githubUrl: "https://github.com/haruki-4160",
+      image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=1200&q=80"
     }
   ]
 };
