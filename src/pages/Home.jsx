@@ -169,7 +169,13 @@ export default function Home({ onNavigate, onSelectProject }) {
       </section>
 
       {/* 🍱 BENTO GRID HIGHLIGHTS */}
-      <section className="space-y-6">
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="space-y-6"
+      >
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
           <div>
             <span className="text-xs font-mono font-bold tracking-widest text-[#00ffaa] uppercase">
@@ -190,7 +196,10 @@ export default function Home({ onNavigate, onSelectProject }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Bento Card 1: Timezone & Location */}
-          <div className="glass-panel p-6 rounded-3xl space-y-4">
+          <motion.div 
+            whileHover={{ y: -4 }}
+            className="glass-panel p-6 rounded-3xl space-y-4 transition-shadow hover:shadow-lg"
+          >
             <div className="flex items-center justify-between">
               <span className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-500">
                 <MapPin className="w-5 h-5" />
@@ -208,10 +217,13 @@ export default function Home({ onNavigate, onSelectProject }) {
                 Working globally across UTC+9 with overlap across Americas & Europe.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Bento Card 2: Philosophy */}
-          <div className="glass-panel p-6 rounded-3xl space-y-4">
+          <motion.div 
+            whileHover={{ y: -4 }}
+            className="glass-panel p-6 rounded-3xl space-y-4 transition-shadow hover:shadow-lg"
+          >
             <span className="p-2.5 rounded-xl bg-purple-500/10 text-purple-500 inline-block">
               <Sparkles className="w-5 h-5" />
             </span>
@@ -223,10 +235,13 @@ export default function Home({ onNavigate, onSelectProject }) {
                 Zero compromise on performance, accessibility, and micro-interaction delight.
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* Bento Card 3: Stack Arsenal */}
-          <div className="glass-panel p-6 rounded-3xl space-y-4">
+          <motion.div 
+            whileHover={{ y: -4 }}
+            className="glass-panel p-6 rounded-3xl space-y-4 transition-shadow hover:shadow-lg"
+          >
             <span className="p-2.5 rounded-xl bg-[#00ffaa]/10 text-[#00ffaa] inline-block">
               <Terminal className="w-5 h-5" />
             </span>
@@ -242,12 +257,18 @@ export default function Home({ onNavigate, onSelectProject }) {
                 ))}
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 🚀 FEATURED WORK PREVIEW */}
-      <section className="space-y-6">
+      <motion.section 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="space-y-6"
+      >
         <div className="flex items-center justify-between">
           <div>
             <span className="text-xs font-mono font-bold tracking-widest text-[#00ffaa] uppercase">
@@ -289,7 +310,7 @@ export default function Home({ onNavigate, onSelectProject }) {
             ))}
           </div>
         )}
-      </section>
+      </motion.section>
     </div>
   );
 }

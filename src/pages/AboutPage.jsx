@@ -38,7 +38,13 @@ export default function AboutPage() {
       </motion.div>
 
       {/* Grid: Story & Live Discord Presence */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="grid grid-cols-1 lg:grid-cols-12 gap-8"
+      >
         {/* Left Column: Narrative Story & Skills (7 cols) */}
         <div className="lg:col-span-7 space-y-8">
           <div className="glass-panel p-8 rounded-3xl space-y-4">
@@ -113,10 +119,16 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Experience & Milestones Timeline */}
-      <div className="space-y-8">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.15 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="space-y-8"
+      >
         <div className="space-y-2">
           <span className="text-xs font-mono font-bold tracking-widest text-[#00ffaa] uppercase">
             CAREER TRAJECTORY
@@ -146,7 +158,7 @@ export default function AboutPage() {
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import SmoothScroll from './components/SmoothScroll/SmoothScroll';
+import ScrollProgress from './components/ScrollProgress/ScrollProgress';
 import BackgroundGrid from './components/Background/BackgroundGrid';
 import AppleDock from './components/AppleDock/AppleDock';
 import ThemeSwitch from './components/ThemeSwitch/ThemeSwitch';
@@ -13,7 +15,7 @@ function PortfolioApp() {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
 
-  // Scroll spy with IntersectionObserver
+  // Scroll spy with active section detector
   useEffect(() => {
     const sections = ['home', 'projects', 'about', 'contact'];
     const handleScroll = () => {
@@ -40,26 +42,33 @@ function PortfolioApp() {
     setActiveTab(sectionId);
     const el = document.getElementById(sectionId);
     if (el) {
-      const yOffset = -70; // Header offset
-      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      if (window.lenis) {
+        window.lenis.scrollTo(el, { offset: -70, duration: 1.4 });
+      } else {
+        const yOffset = -70;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
     }
   };
 
   return (
     <div className="min-h-screen relative flex flex-col justify-between text-slate-900 dark:text-slate-100 selection:bg-[#00ffaa]/30 selection:text-[#00ffaa]">
-      {/* Dynamic Background */}
+      {/* Top Scroll Progress Indicator */}
+      <ScrollProgress />
+
+      {/* Dynamic Parallax Background */}
       <BackgroundGrid />
 
       {/* Top Header Bar */}
       <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/75 dark:bg-[#0a0a0f]/80 border-b border-slate-200/60 dark:border-white/10 transition-colors duration-300">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
-          {/* Logo / Crest with new uploaded Favicon */}
+          {/* Logo / Crest with Favicon */}
           <button
             onClick={() => handleNavigate('home')}
             className="flex items-center gap-3 group text-left cursor-pointer"
           >
-            <div className="relative w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/20 dark:ring-white/10 group-hover:scale-105 transition-transform bg-black/40">
+            <div className="relative w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/20 dark:ring-white/10 group-hover:scale-105 transition-transform bg-black/40 shadow-md">
               <img
                 src="/haruki-logo.png"
                 alt="Haruki Crest"
@@ -131,7 +140,9 @@ function PortfolioApp() {
 export default function App() {
   return (
     <ThemeProvider>
-      <PortfolioApp />
+      <SmoothScroll>
+        <PortfolioApp />
+      </SmoothScroll>
     </ThemeProvider>
   );
 }

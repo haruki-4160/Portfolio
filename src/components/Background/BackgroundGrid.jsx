@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 export default function BackgroundGrid() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const { scrollY } = useScroll();
+
+  // Parallax shifts on scroll
+  const orb1Y = useTransform(scrollY, [0, 3000], [0, 500]);
+  const orb2Y = useTransform(scrollY, [0, 3000], [0, -350]);
+  const orb3Y = useTransform(scrollY, [0, 3000], [0, 400]);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -23,10 +30,19 @@ export default function BackgroundGrid() {
         }}
       />
 
-      {/* Floating Ambient Aurora Orbs */}
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#5c67ff]/20 dark:bg-[#5c67ff]/25 rounded-full blur-[120px] animate-pulse-glow" />
-      <div className="absolute top-1/3 -right-32 w-96 h-96 bg-[#00a2ff]/15 dark:bg-[#00a2ff]/20 rounded-full blur-[140px] animate-pulse-glow" style={{ animationDelay: '2s' }} />
-      <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-[#00ffaa]/15 dark:bg-[#00ffaa]/20 rounded-full blur-[130px] animate-pulse-glow" style={{ animationDelay: '4s' }} />
+      {/* Floating Ambient Aurora Orbs with Scroll Parallax */}
+      <motion.div
+        style={{ y: orb1Y }}
+        className="absolute -top-32 -left-32 w-[450px] h-[450px] bg-[#5c67ff]/20 dark:bg-[#5c67ff]/25 rounded-full blur-[130px] animate-pulse-glow"
+      />
+      <motion.div
+        style={{ y: orb2Y, animationDelay: '2s' }}
+        className="absolute top-1/3 -right-32 w-[450px] h-[450px] bg-[#00a2ff]/15 dark:bg-[#00a2ff]/20 rounded-full blur-[140px] animate-pulse-glow"
+      />
+      <motion.div
+        style={{ y: orb3Y, animationDelay: '4s' }}
+        className="absolute -bottom-32 left-1/3 w-[450px] h-[450px] bg-[#00ffaa]/15 dark:bg-[#00ffaa]/20 rounded-full blur-[130px] animate-pulse-glow"
+      />
 
       {/* Blueprint / Tech Grid */}
       <div className="absolute inset-0 bg-tech-grid opacity-60 dark:opacity-50" />
