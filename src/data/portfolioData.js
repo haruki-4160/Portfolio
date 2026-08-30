@@ -51,64 +51,7 @@ export const portfolioData = {
     }
   ],
 
-  projects: [
-    {
-      id: "neural-canvas",
-      title: "NEURAL CANVAS",
-      subtitle: "GENERATIVE AI",
-      highlight: "WEBGL",
-      category: "AI/ML",
-      badge: "FEATURED",
-      description: "Real-time generative art canvas running local diffusion models with interactive 3D particle brush strokes.",
-      fullDescription: "Neural Canvas is an experimental creative playground blending Three.js GPU shaders with web-workers to render interactive generative patterns and AI-assisted vector artwork at 60 FPS.",
-      tags: ["React", "Three.js", "WebGPU", "FastAPI"],
-      liveUrl: "https://github.com",
-      githubUrl: "https://github.com",
-      image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"
-    },
-    {
-      id: "hyper-terminal",
-      title: "HYPER DOCK",
-      subtitle: "SYSTEMS",
-      highlight: "DESKTOP",
-      category: "Tools",
-      badge: "POPULAR",
-      description: "Next-generation developer workstation with native telemetry, container debugging, and spring physics launcher.",
-      fullDescription: "A high-performance Electron & Rust workspace environment for modern full-stack engineers, featuring hot-reloading terminals, Docker metrics, and an Apple-inspired tactile command dock.",
-      tags: ["TypeScript", "Rust", "Tailwind", "Electron"],
-      liveUrl: "https://github.com",
-      githubUrl: "https://github.com",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80"
-    },
-    {
-      id: "zenith-exchange",
-      title: "ZENITH PAY",
-      subtitle: "FINTECH",
-      highlight: "ZERO-LATENCY",
-      category: "Web Apps",
-      badge: "ENTERPRISE",
-      description: "Decentralized treasury management dashboard with real-time WebSocket order books and multi-sig security.",
-      fullDescription: "Engineered for institutional crypto traders, Zenith Pay delivers sub-millisecond execution charts, automated smart-contract rebalancing, and dark-glass analytical charts.",
-      tags: ["Next.js", "WebSocket", "Solidity", "Tailwind"],
-      liveUrl: "https://github.com",
-      githubUrl: "https://github.com",
-      image: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=800&q=80"
-    },
-    {
-      id: "aether-audio",
-      title: "AETHER SYNTH",
-      subtitle: "AUDIO DSP",
-      highlight: "WEBAUDIO",
-      category: "Creative",
-      badge: "EXPERIMENT",
-      description: "Modular polyphonic browser synthesizer with real-time waveform visualizers and MIDI keyboard integration.",
-      fullDescription: "Built with the Web Audio API and Canvas 2D, Aether Synth provides tactile rotary dials, filter envelopes, and interactive frequency spectrograms directly in the browser.",
-      tags: ["Web Audio", "Canvas API", "React", "DSP"],
-      liveUrl: "https://github.com",
-      githubUrl: "https://github.com",
-      image: "https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&q=80"
-    }
-  ],
+  projects: [],
 
   experience: [
     {

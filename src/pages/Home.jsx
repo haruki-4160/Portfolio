@@ -12,13 +12,18 @@ import {
   Send,
   Code,
   Layers,
-  Cpu
+  Cpu,
+  RefreshCw
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function Home({ onNavigate, onSelectProject }) {
-  const { profile, skills, projects } = portfolioData;
+  const { profile } = portfolioData;
   const [tokyoTime, setTokyoTime] = useState('');
+  const [featuredRepos, setFeaturedRepos] = useState([]);
+  const [loadingRepos, setLoadingRepos] = useState(true);
+
+  const username = "haruki-4160";
 
   useEffect(() => {
     const updateTime = () => {
@@ -34,6 +39,35 @@ export default function Home({ onNavigate, onSelectProject }) {
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
+  }, []);
+
+  // Fetch real GitHub repos for Home preview
+  useEffect(() => {
+    async function fetchRepos() {
+      try {
+        const res = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=6`);
+        if (res.ok) {
+          const data = await res.json();
+          const formatted = data.slice(0, 3).map(repo => ({
+            id: `gh-${repo.id}`,
+            title: repo.name.toUpperCase().replace(/[-_]/g, ' '),
+            subtitle: (repo.language || "CODE").toUpperCase(),
+            highlight: repo.stargazers_count > 0 ? `★ ${repo.stargazers_count} STARS` : "ACTIVE REPO",
+            description: repo.description || `Live GitHub repository maintained by ${username}.`,
+            tags: [repo.language, ...(repo.topics || [])].filter(Boolean),
+            badge: "GITHUB",
+            liveUrl: repo.homepage || null,
+            githubUrl: repo.html_url,
+          }));
+          setFeaturedRepos(formatted);
+        }
+      } catch (err) {
+        console.error('Error fetching home repos', err);
+      } finally {
+        setLoadingRepos(false);
+      }
+    }
+    fetchRepos();
   }, []);
 
   const handleHeroCta = () => {
@@ -80,7 +114,7 @@ export default function Home({ onNavigate, onSelectProject }) {
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={handleHeroCta}
-              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#00ffaa] to-[#00a2ff] text-black font-bold text-sm flex items-center gap-2 hover:opacity-95 shadow-lg shadow-[#00ffaa]/25 hover:shadow-[#00ffaa]/40 hover:-translate-y-0.5 transition-all"
+              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#00ffaa] to-[#00a2ff] text-black font-bold text-sm flex items-center gap-2 hover:opacity-95 shadow-lg shadow-[#00ffaa]/25 hover:shadow-[#00ffaa]/40 hover:-translate-y-0.5 transition-all cursor-pointer"
             >
               <span>Explore My Work</span>
               <ArrowRight className="w-4 h-4" />
@@ -88,7 +122,7 @@ export default function Home({ onNavigate, onSelectProject }) {
 
             <button
               onClick={() => onNavigate('contact')}
-              className="px-6 py-3.5 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-800 dark:text-white border border-slate-300 dark:border-white/10 font-semibold text-sm flex items-center gap-2 transition-all"
+              className="px-6 py-3.5 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-800 dark:text-white border border-slate-300 dark:border-white/10 font-semibold text-sm flex items-center gap-2 transition-all cursor-pointer"
             >
               <span>Get In Touch</span>
               <Send className="w-4 h-4 text-cyan-500" />
@@ -126,7 +160,7 @@ export default function Home({ onNavigate, onSelectProject }) {
             highlight="CREATIVE"
             prompt="HOVER ME"
             description="Specialized in reactive frontend physics, WebGL canvas shaders, and scalable distributed backends."
-            tags={["React", "Node", "Tailwind", "Three.js"]}
+            tags={["React", "Node", "Tailwind", "Vite"]}
             badge="PORTFOLIO CORE"
             icon={Sparkles}
             onClick={() => onNavigate('about')}
@@ -147,7 +181,7 @@ export default function Home({ onNavigate, onSelectProject }) {
           </div>
           <button
             onClick={() => onNavigate('about')}
-            className="text-xs font-mono text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1"
+            className="text-xs font-mono text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer"
           >
             <span>Learn more about my journey</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -201,8 +235,8 @@ export default function Home({ onNavigate, onSelectProject }) {
                 Modern Arsenal
               </h3>
               <div className="flex flex-wrap gap-1.5 mt-2">
-                {["React", "Next.js", "Tailwind", "TypeScript", "FastAPI", "Postgres"].map((s) => (
-                  <span key={s} className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-slate-700 dark:text-slate-300">
+                {["React", "Next.js", "Tailwind", "TypeScript", "Python", "Git"].map((s) => (
+                  <span key={s} className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-200/80 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300">
                     {s}
                   </span>
                 ))}
@@ -220,35 +254,41 @@ export default function Home({ onNavigate, onSelectProject }) {
               Selected Works
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-              Featured Projects
+              Featured GitHub Repositories
             </h2>
           </div>
           <button
             onClick={() => onNavigate('projects')}
-            className="text-xs font-mono text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1"
+            className="text-xs font-mono text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 cursor-pointer"
           >
-            <span>View all archive</span>
+            <span>View all repositories</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
-          {projects.slice(0, 3).map((proj) => (
-            <CyberCard
-              key={proj.id}
-              title={proj.title}
-              subtitle={proj.subtitle}
-              highlight={proj.highlight}
-              prompt="VIEW CASE"
-              description={proj.description}
-              tags={proj.tags}
-              badge={proj.badge}
-              liveUrl={proj.liveUrl}
-              githubUrl={proj.githubUrl}
-              onClick={() => onSelectProject(proj)}
-            />
-          ))}
-        </div>
+        {loadingRepos ? (
+          <div className="text-center py-12">
+            <RefreshCw className="w-6 h-6 text-[#00ffaa] animate-spin mx-auto" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+            {featuredRepos.map((proj) => (
+              <CyberCard
+                key={proj.id}
+                title={proj.title}
+                subtitle={proj.subtitle}
+                highlight={proj.highlight}
+                prompt="VIEW REPO"
+                description={proj.description}
+                tags={proj.tags.length > 0 ? proj.tags : ["GitHub", "Source"]}
+                badge={proj.badge}
+                liveUrl={proj.liveUrl}
+                githubUrl={proj.githubUrl}
+                onClick={() => onSelectProject(proj)}
+              />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );
