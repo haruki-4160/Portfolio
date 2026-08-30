@@ -1,4 +1,4 @@
-/* Apple Dock Styles */
+/* Rectangular Modern Glass Dock */
 .apple-dock-nav {
   position: fixed;
   left: 50%;
@@ -14,7 +14,7 @@
 
 .apple-dock-menu {
   width: 100%;
-  max-width: 540px;
+  max-width: 520px;
   backdrop-filter: blur(24px) saturate(200%) contrast(110%);
   -webkit-backdrop-filter: blur(24px) saturate(200%) contrast(110%);
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(203, 213, 225, 0.75) 100%);
@@ -23,18 +23,18 @@
     0 20px 45px -10px rgba(71, 85, 105, 0.25),
     0 0 0 1px rgba(255, 255, 255, 0.8),
     inset 0 1px 2px rgba(255, 255, 255, 1);
-  padding: 8px 14px;
-  border-radius: 99rem;
+  padding: 8px 12px;
+  border-radius: 20px; /* Modern sleek rounded rectangle */
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   position: relative;
   transition: all 0.3s ease;
 }
 
 .dark .apple-dock-menu {
-  background: rgba(15, 23, 42, 0.75);
+  background: rgba(15, 23, 42, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.08);
 }
@@ -63,11 +63,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 58px;
+  min-width: 62px;
   color: #334155;
   text-decoration: none;
-  padding: 8px 6px;
-  border-radius: 999rem;
+  padding: 8px 10px;
+  border-radius: 14px; /* Sleek squircle item shape */
   -webkit-tap-highlight-color: transparent;
   cursor: pointer;
   position: relative;
@@ -100,7 +100,7 @@
 }
 
 .dark .dock-item.active {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.12);
   color: #00ffaa;
   box-shadow: inset 0 0 12px rgba(0, 255, 170, 0.2);
 }
