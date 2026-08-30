@@ -2,47 +2,153 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Volume2, VolumeX, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function VinylMusicPlayer({ spotifyPresence }) {
+export default function VinylMusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(30);
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState("0:00");
+  const [duration, setDuration] = useState("2:48");
   const [playMode, setPlayMode] = useState(false); // repeat vs shuffle
-  const [trackIndex, setTrackIndex] = useState(0);
+  const [playerReady, setPlayerReady] = useState(false);
+  
+  const playerRef = useRef(null);
+  const intervalRef = useRef(null);
 
-  const defaultTracks = [
-    { title: "Midnight Cyber", artist: "Haruki Beats", duration: "3:45" },
-    { title: "Celune Symphony", artist: "Python Audio Engine", duration: "2:50" },
-    { title: "Sapphire Rain", artist: "Linear Synth", duration: "4:12" },
-  ];
+  const videoId = "eR-u3XauxDU"; // DOCE BRISA - QMIIR (Slowed) x Cipher
+  const trackInfo = {
+    title: "DOCE BRISA (Slowed)",
+    artist: "QMIIR x Cipher",
+    youtubeUrl: `https://youtu.be/${videoId}`
+  };
 
-  // Use live Spotify song if active, otherwise use default playlist
-  const currentTrack = spotifyPresence?.listening_to_spotify && spotifyPresence?.spotify
-    ? {
-        title: spotifyPresence.spotify.song,
-        artist: spotifyPresence.spotify.artist,
-        albumArt: spotifyPresence.spotify.album_art_url,
-        duration: "Live Spotify"
+  // Initialize YouTube IFrame Player API for Real Audio Playback
+  useEffect(() => {
+    // Load YouTube API script if not already present
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    const initPlayer = () => {
+      if (window.YT && window.YT.Player) {
+        playerRef.current = new window.YT.Player('yt-vinyl-audio-player', {
+          height: '0',
+          width: '0',
+          videoId: videoId,
+          playerVars: {
+            autoplay: 0,
+            controls: 0,
+            loop: 1,
+            playlist: videoId,
+            playsinline: 1
+          },
+          events: {
+            onReady: (event) => {
+              setPlayerReady(true);
+              const totalSec = event.target.getDuration();
+              if (totalSec) {
+                const mins = Math.floor(totalSec / 60);
+                const secs = Math.floor(totalSec % 60);
+                setDuration(`${mins}:${secs < 10 ? '0' : ''}${secs}`);
+              }
+            },
+            onStateChange: (event) => {
+              // 1 = playing, 2 = paused, 0 = ended
+              if (event.data === window.YT.PlayerState.PLAYING) {
+                setIsPlaying(true);
+              } else if (event.data === window.YT.PlayerState.PAUSED || event.data === window.YT.PlayerState.ENDED) {
+                setIsPlaying(false);
+              }
+            }
+          }
+        });
       }
-    : defaultTracks[trackIndex];
+    };
 
-  // Interactive Play/Pause Toggle
+    if (window.YT && window.YT.Player) {
+      initPlayer();
+    } else {
+      window.onYouTubeIframeAPIReady = initPlayer;
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (playerRef.current && playerRef.current.destroy) {
+        try {
+          playerRef.current.destroy();
+        } catch (e) {
+          // ignore cleanup error
+        }
+      }
+    };
+  }, [videoId]);
+
+  // Track progress ticker
+  useEffect(() => {
+    if (isPlaying) {
+      intervalRef.current = setInterval(() => {
+        if (playerRef.current && playerRef.current.getCurrentTime && playerRef.current.getDuration) {
+          const cur = playerRef.current.getCurrentTime() || 0;
+          const dur = playerRef.current.getDuration() || 1;
+          setProgress((cur / dur) * 100);
+
+          const mins = Math.floor(cur / 60);
+          const secs = Math.floor(cur % 60);
+          setCurrentTime(`${mins}:${secs < 10 ? '0' : ''}${secs}`);
+        }
+      }, 500);
+    } else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    }
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [isPlaying]);
+
+  // Real Play / Pause Toggle
   const togglePlay = () => {
-    const nextState = !isPlaying;
-    setIsPlaying(nextState);
-    if (nextState) {
-      confetti({ particleCount: 25, spread: 40, origin: { y: 0.8 } });
+    if (!playerRef.current) return;
+
+    try {
+      if (isPlaying) {
+        playerRef.current.pauseVideo();
+        setIsPlaying(false);
+      } else {
+        playerRef.current.playVideo();
+        setIsPlaying(true);
+        confetti({ particleCount: 30, spread: 50, origin: { y: 0.8 } });
+      }
+    } catch (err) {
+      console.warn("Audio playback trigger error", err);
     }
   };
 
-  const handleNext = () => {
-    setTrackIndex((prev) => (prev + 1) % defaultTracks.length);
+  // Seek bar scrubber
+  const handleSeek = (e) => {
+    const newPercent = Number(e.target.value);
+    setProgress(newPercent);
+    if (playerRef.current && playerRef.current.getDuration && playerRef.current.seekTo) {
+      const totalSec = playerRef.current.getDuration();
+      const targetSec = (newPercent / 100) * totalSec;
+      playerRef.current.seekTo(targetSec, true);
+    }
   };
 
-  const handlePrev = () => {
-    setTrackIndex((prev) => (prev - 1 + defaultTracks.length) % defaultTracks.length);
+  const handleRestart = () => {
+    if (playerRef.current && playerRef.current.seekTo) {
+      playerRef.current.seekTo(0, true);
+      playerRef.current.playVideo();
+      setIsPlaying(true);
+    }
   };
 
   return (
     <div className="flex flex-col items-center group/he select-none relative z-20 my-4">
+      {/* Hidden YouTube IFrame Container for real audio streaming */}
+      <div id="yt-vinyl-audio-player" className="hidden pointer-events-none" />
+
       {/* Vinyl Disc Container */}
       <div className="relative z-0 h-16 -mb-2 transition-all duration-300 group-hover/he:h-0">
         <div className={`duration-500 rounded-full shadow-xl border-4 border-slate-700 dark:border-zinc-500 border-spacing-5 ${isPlaying ? 'animate-[spin_3s_linear_infinite]' : ''} transition-all`}>
@@ -107,11 +213,17 @@ export default function VinylMusicPlayer({ spotifyPresence }) {
 
           {/* Song Details */}
           <div className="flex flex-col justify-center w-full pl-3 -ml-20 overflow-hidden group-hover/he:-ml-3 text-nowrap transition-all duration-300">
-            <p className="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate">
-              {currentTrack.title}
-            </p>
+            <a
+              href={trackInfo.youtubeUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="text-base sm:text-lg font-bold text-slate-900 dark:text-white truncate hover:text-blue-500 transition-colors"
+              title="Open Track on YouTube"
+            >
+              {trackInfo.title}
+            </a>
             <p className="text-xs text-slate-500 dark:text-slate-400 font-mono truncate">
-              {currentTrack.artist}
+              {trackInfo.artist}
             </p>
           </div>
         </div>
@@ -119,18 +231,18 @@ export default function VinylMusicPlayer({ spotifyPresence }) {
         {/* Progress Seeker Bar */}
         <div className="flex flex-row items-center mx-3 mt-2 bg-slate-100 dark:bg-white/5 rounded-md min-h-6 group-hover/he:mt-0 px-2 transition-all">
           <span className="hidden text-[11px] font-mono text-slate-500 dark:text-slate-400 group-hover/he:inline-block pr-1">
-            0:42
+            {currentTime}
           </span>
           <input
             type="range"
             min="0"
             max="100"
             value={progress}
-            onChange={(e) => setProgress(e.target.value)}
+            onChange={handleSeek}
             className="w-24 group-hover/he:w-full flex-grow h-1.5 mx-2 my-auto bg-slate-300 dark:bg-slate-700 rounded-full appearance-none cursor-pointer accent-blue-500"
           />
           <span className="hidden text-[11px] font-mono text-slate-500 dark:text-slate-400 group-hover/he:inline-block pl-1">
-            {currentTrack.duration}
+            {duration}
           </span>
         </div>
 
@@ -160,11 +272,11 @@ export default function VinylMusicPlayer({ spotifyPresence }) {
             )}
           </button>
 
-          {/* Previous Track */}
+          {/* Previous / Restart Track */}
           <button
-            onClick={handlePrev}
+            onClick={handleRestart}
             className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 cursor-pointer transition-colors"
-            title="Previous Track"
+            title="Restart Track"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="19 20 9 12 19 4 19 20"></polygon>
@@ -172,11 +284,11 @@ export default function VinylMusicPlayer({ spotifyPresence }) {
             </svg>
           </button>
 
-          {/* Play / Pause Toggle Button */}
+          {/* Real Play / Pause Toggle Button */}
           <button
             onClick={togglePlay}
             className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-500 hover:bg-blue-600 text-white cursor-pointer transition-all shadow-md shadow-blue-500/30 hover:scale-105"
-            title={isPlaying ? "Pause" : "Play"}
+            title={isPlaying ? "Pause" : "Play (DOCE BRISA)"}
           >
             {isPlaying ? (
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -190,11 +302,11 @@ export default function VinylMusicPlayer({ spotifyPresence }) {
             )}
           </button>
 
-          {/* Next Track */}
+          {/* Next / Restart Track */}
           <button
-            onClick={handleNext}
+            onClick={handleRestart}
             className="flex items-center justify-center w-8 h-8 rounded-lg hover:bg-slate-200 dark:hover:bg-white/10 cursor-pointer transition-colors"
-            title="Next Track"
+            title="Loop Track"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="5 4 15 12 5 20 5 4"></polygon>
@@ -202,13 +314,16 @@ export default function VinylMusicPlayer({ spotifyPresence }) {
             </svg>
           </button>
 
-          {/* Playlist Info */}
-          <div
+          {/* Direct Link */}
+          <a
+            href={trackInfo.youtubeUrl}
+            target="_blank"
+            rel="noreferrer"
             className="hidden group-hover/he:flex items-center justify-center w-8 h-8 text-slate-400 hover:text-blue-500 cursor-pointer transition-colors"
-            title="Playlist Active"
+            title="Listen on YouTube"
           >
             <Sparkles className="w-4 h-4" />
-          </div>
+          </a>
         </div>
       </div>
     </div>
