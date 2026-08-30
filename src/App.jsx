@@ -7,7 +7,7 @@ import BackgroundGrid from './components/Background/BackgroundGrid';
 import AppleDock from './components/AppleDock/AppleDock';
 import ThemeSwitch from './components/ThemeSwitch/ThemeSwitch';
 import ProjectModal from './components/ProjectModal/ProjectModal';
-import { GithubIcon, DiscordIcon, LinkedinIcon, TwitterIcon } from './components/Icons/SocialIcons';
+import { GithubIcon, DiscordIcon, LinkedinIcon, InstagramIcon } from './components/Icons/SocialIcons';
 import Home from './pages/Home';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
@@ -122,7 +122,7 @@ function PortfolioApp() {
         </section>
       </main>
 
-      {/* Footer with Clickable Real Socials */}
+      {/* Footer with Real Verified Social Links */}
       <footer className="w-full text-center py-10 pb-32 text-xs font-mono text-slate-500 dark:text-slate-500 border-t border-slate-200/50 dark:border-white/5 z-10">
         <div className="flex items-center justify-center gap-2 mb-3">
           <img src="/haruki-logo.png" alt="Logo" className="w-6 h-6 opacity-80" />
@@ -135,37 +135,37 @@ function PortfolioApp() {
             href="https://github.com/haruki-4160"
             target="_blank"
             rel="noreferrer"
-            className="p-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all shadow-sm"
+            className="p-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all shadow-sm hover:scale-105"
             title="GitHub Profile"
           >
             <GithubIcon className="w-4 h-4" />
           </a>
           <a
-            href="https://discord.com/users/1098483466926030869"
+            href="https://www.linkedin.com/in/ashish-sunil-159503364"
             target="_blank"
             rel="noreferrer"
-            className="p-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-[#5865F2] transition-all shadow-sm"
-            title="Discord Direct"
-          >
-            <DiscordIcon className="w-4 h-4" />
-          </a>
-          <a
-            href="https://linkedin.com"
-            target="_blank"
-            rel="noreferrer"
-            className="p-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-[#0077B5] transition-all shadow-sm"
+            className="p-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-[#0077B5] transition-all shadow-sm hover:scale-105"
             title="LinkedIn Profile"
           >
             <LinkedinIcon className="w-4 h-4" />
           </a>
           <a
-            href="https://x.com"
+            href="https://www.instagram.com/huesofharuki?igsi=MW5mcWQ0cXFtN3ppNg%3D%3D"
             target="_blank"
             rel="noreferrer"
-            className="p-2 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white transition-all shadow-sm"
-            title="Twitter / X"
+            className="p-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-[#E4405F] transition-all shadow-sm hover:scale-105"
+            title="Instagram (@huesofharuki)"
           >
-            <TwitterIcon className="w-4 h-4" />
+            <InstagramIcon className="w-4 h-4" />
+          </a>
+          <a
+            href="https://discord.com/users/1098483466926030869"
+            target="_blank"
+            rel="noreferrer"
+            className="p-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 dark:bg-white/5 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-[#5865F2] transition-all shadow-sm hover:scale-105"
+            title="Discord Direct"
+          >
+            <DiscordIcon className="w-4 h-4" />
           </a>
         </div>
 

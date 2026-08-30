@@ -9,9 +9,10 @@ import {
   Mail, 
   MessageSquare, 
   Sparkles, 
-  ArrowUpRight
+  ArrowUpRight,
+  QrCode
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, TwitterIcon } from '../components/Icons/SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon, DiscordIcon } from '../components/Icons/SocialIcons';
 import confetti from 'canvas-confetti';
 
 export default function ContactPage() {
@@ -20,6 +21,7 @@ export default function ContactPage() {
   const [attachedFile, setAttachedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [showQr, setShowQr] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -53,7 +55,7 @@ export default function ContactPage() {
           Let's Build Something Exceptional.
         </h1>
         <p className="text-base text-slate-600 dark:text-slate-300">
-          Have an exciting project, architectural challenge, or full-time opportunity? Drop a message or connect via Discord.
+          Have an exciting project, architectural challenge, or collaboration in mind? Drop a message or connect directly.
         </p>
       </motion.div>
 
@@ -180,7 +182,7 @@ export default function ContactPage() {
 
             <button
               onClick={handleCopyEmail}
-              className="w-full py-3 px-4 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 flex items-center justify-between text-xs font-mono text-slate-800 dark:text-slate-200 transition-all cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 flex items-center justify-between text-xs font-mono text-slate-800 dark:text-slate-200 transition-all cursor-pointer shadow-sm"
             >
               <span className="truncate">{profile.email}</span>
               <span className="flex items-center gap-1 text-blue-500 dark:text-sky-400 font-semibold">
@@ -215,23 +217,47 @@ export default function ContactPage() {
             </a>
           </div>
 
-          {/* Social Links Grid */}
+          {/* Real Verified Social Links Grid */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
-            <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-              Elsewhere on the Web
-            </h4>
+            <div className="flex items-center justify-between">
+              <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                Social Networks
+              </h4>
+              <button
+                onClick={() => setShowQr(!showQr)}
+                className="text-[11px] font-mono text-sky-500 hover:underline flex items-center gap-1 cursor-pointer"
+              >
+                <QrCode className="w-3.5 h-3.5" />
+                <span>{showQr ? 'Hide QR' : 'Instagram QR'}</span>
+              </button>
+            </div>
+
+            {/* Instagram QR Code view */}
+            {showQr && (
+              <div className="p-4 rounded-2xl bg-white dark:bg-black/50 border border-slate-300 dark:border-white/10 flex flex-col items-center text-center space-y-2 animate-fadeIn">
+                <img
+                  src="/instagram-qr.png"
+                  alt="HuesOfHaruki Instagram QR"
+                  className="w-48 h-48 object-contain rounded-xl shadow-md"
+                />
+                <span className="text-xs font-mono font-bold text-slate-800 dark:text-slate-200">
+                  @huesofharuki
+                </span>
+              </div>
+            )}
+
             <div className="grid grid-cols-3 gap-3">
               {[
                 { name: 'GitHub', icon: GithubIcon, url: profile.github },
                 { name: 'LinkedIn', icon: LinkedinIcon, url: profile.linkedin },
-                { name: 'Twitter', icon: TwitterIcon, url: profile.twitter },
+                { name: 'Instagram', icon: InstagramIcon, url: profile.instagram },
               ].map((s) => (
                 <a
                   key={s.name}
                   href={s.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/15 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 transition-all hover:-translate-y-1"
+                  className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/15 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-sky-400 transition-all hover:-translate-y-1 shadow-sm"
                 >
                   <s.icon className="w-5 h-5 mb-1 text-slate-800 dark:text-slate-200" />
                   <span className="text-[11px] font-mono">{s.name}</span>
