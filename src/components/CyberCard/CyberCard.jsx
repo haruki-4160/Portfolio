@@ -42,18 +42,18 @@ export default function CyberCard({
 
             {/* Top Bar / Badge & Icon */}
             <div className="flex items-center justify-between w-full z-10">
-              <span className="text-[10px] font-mono font-bold tracking-wider px-2.5 py-1 rounded-full bg-[#00ffaa]/10 text-[#00ffaa] border border-[#00ffaa]/30 flex items-center gap-1">
-                <Sparkles className="w-3 h-3 text-[#00ffaa]" />
+              <span className="text-[10px] font-mono font-bold tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-[#00ffaa] border border-emerald-500/20 dark:border-[#00ffaa]/30 flex items-center gap-1">
+                <Sparkles className="w-3 h-3 text-emerald-500 dark:text-[#00ffaa]" />
                 {badge}
               </span>
-              {Icon && <Icon className="w-5 h-5 text-slate-400 group-hover:text-[#00ffaa] transition-colors" />}
+              {Icon && <Icon className="w-5 h-5 text-slate-400 group-hover:text-cyan-600 dark:group-hover:text-[#00ffaa] transition-colors" />}
             </div>
 
             {/* Title & Description */}
             <div className="my-auto z-10 w-full">
               <div className="cyber-title">{title}</div>
               {description && (
-                <p className="text-xs text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">
                   {description}
                 </p>
               )}
@@ -70,13 +70,13 @@ export default function CyberCard({
             <div className="z-10 w-full flex flex-col gap-3">
               <div className="flex flex-wrap gap-1.5">
                 {tags.map((t) => (
-                  <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 border border-white/10 text-slate-300">
+                  <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300">
                     #{t}
                   </span>
                 ))}
               </div>
 
-              <div className="flex items-center justify-between pt-2 border-t border-white/10">
+              <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-white/10">
                 <div className="cyber-subtitle">
                   <span>{subtitle}</span>
                   <span className="cyber-highlight">{highlight}</span>
@@ -88,7 +88,7 @@ export default function CyberCard({
                       href={githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white transition-colors"
+                      className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-white/5 dark:hover:bg-white/15 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
                       title="View GitHub Source"
                     >
                       <GithubIcon className="w-4 h-4" />
@@ -99,7 +99,7 @@ export default function CyberCard({
                       href={liveUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="p-1.5 rounded-lg bg-[#00ffaa]/20 hover:bg-[#00ffaa]/30 text-[#00ffaa] transition-colors"
+                      className="p-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-600 dark:bg-[#00ffaa]/20 dark:hover:bg-[#00ffaa]/30 dark:text-[#00ffaa] transition-colors"
                       title="Launch Live Demo"
                     >
                       <ExternalLink className="w-4 h-4" />

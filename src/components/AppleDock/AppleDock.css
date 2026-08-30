@@ -1,9 +1,9 @@
-/* Apple Dock Styles based on user code */
+/* Apple Dock Styles */
 .apple-dock-nav {
   position: fixed;
   left: 50%;
-  bottom: 20px;
-  bottom: calc(20px + env(safe-area-inset-bottom));
+  bottom: 24px;
+  bottom: calc(24px + env(safe-area-inset-bottom));
   transform: translateX(-50%);
   z-index: 50;
   display: flex;
@@ -15,23 +15,25 @@
 .apple-dock-menu {
   width: 100%;
   max-width: 540px;
-  backdrop-filter: blur(16px) saturate(180%) contrast(150%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(150%);
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 1px 1px rgba(255, 255, 255, 0.1);
-  padding: 8px 12px;
+  backdrop-filter: blur(20px) saturate(190%) contrast(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(190%) contrast(120%);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.03);
+  padding: 8px 14px;
   border-radius: 99rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   position: relative;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.light .apple-dock-menu {
-  background: rgba(255, 255, 255, 0.75);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 0 1px 1px rgba(0, 0, 0, 0.05);
+.dark .apple-dock-menu {
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.08);
 }
 
 .apple-dock-menu::after {
@@ -40,11 +42,17 @@
   inset: 0;
   border-radius: inherit;
   box-shadow:
+    inset 1px 1px 2px rgba(255, 255, 255, 0.8),
+    inset -1px -1px 2px rgba(0, 0, 0, 0.05);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dark .apple-dock-menu::after {
+  box-shadow:
     inset 2px 2px 5px -2px rgba(255, 255, 255, 0.3),
     inset -2px -2px 5px 2px rgba(255, 255, 255, 0.1),
     inset 0 -2px 0 rgba(255, 255, 255, 0.2);
-  pointer-events: none;
-  z-index: 0;
 }
 
 .dock-item {
@@ -53,7 +61,7 @@
   align-items: center;
   justify-content: center;
   min-width: 58px;
-  color: rgba(255, 255, 255, 0.85);
+  color: #475569;
   text-decoration: none;
   padding: 8px 6px;
   border-radius: 999rem;
@@ -61,16 +69,17 @@
   cursor: pointer;
   position: relative;
   user-select: none;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 
-.light .dock-item {
-  color: rgba(30, 41, 59, 0.85);
+.dark .dock-item {
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .dock-item svg {
-  width: 1.4rem;
-  height: 1.4rem;
-  transition: transform 0.2s ease;
+  width: 1.35rem;
+  height: 1.35rem;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .dock-item span {
@@ -82,15 +91,14 @@
 }
 
 .dock-item.active {
+  background: rgba(2, 132, 199, 0.12);
+  color: #0284c7;
+}
+
+.dark .dock-item.active {
   background: rgba(255, 255, 255, 0.15);
   color: #00ffaa;
   box-shadow: inset 0 0 12px rgba(0, 255, 170, 0.2);
-}
-
-.light .dock-item.active {
-  background: rgba(0, 122, 255, 0.15);
-  color: #0284c7;
-  box-shadow: inset 0 0 12px rgba(2, 132, 199, 0.15);
 }
 
 /* Active indicator dot */
@@ -100,11 +108,11 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #00ffaa;
-  box-shadow: 0 0 8px #00ffaa;
-}
-
-.light .dock-active-dot {
   background: #0284c7;
   box-shadow: 0 0 8px #0284c7;
+}
+
+.dark .dock-active-dot {
+  background: #00ffaa;
+  box-shadow: 0 0 8px #00ffaa;
 }

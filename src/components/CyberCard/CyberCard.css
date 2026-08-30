@@ -30,11 +30,12 @@
 }
 
 .light .cyber-card {
-  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-  border: 2px solid rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1.5px solid rgba(203, 213, 225, 0.8);
   box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.08),
-    inset 0 0 15px rgba(255, 255, 255, 0.8);
+    0 12px 28px -4px rgba(0, 0, 0, 0.08),
+    0 4px 6px -2px rgba(0, 0, 0, 0.03),
+    inset 0 0 15px rgba(255, 255, 255, 0.9);
 }
 
 .cyber-card-content {
@@ -66,12 +67,12 @@
 }
 
 .light .cyber-prompt {
-  color: #334155;
-  text-shadow: 0 0 10px rgba(92, 103, 255, 0.3);
+  color: #1e293b;
+  text-shadow: 0 0 10px rgba(2, 132, 199, 0.3);
 }
 
 .cyber-title {
-  opacity: 0.9;
+  opacity: 0.95;
   transition: 300ms ease-in-out;
   font-size: 22px;
   font-weight: 800;
@@ -85,9 +86,10 @@
 }
 
 .light .cyber-title {
-  background: linear-gradient(45deg, #0284c7, #6366f1);
+  background: linear-gradient(45deg, #0284c7, #4f46e5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 8px rgba(2, 132, 199, 0.2));
 }
 
 .cyber-subtitle {
@@ -100,7 +102,7 @@
 }
 
 .light .cyber-subtitle {
-  color: #475569;
+  color: #334155;
 }
 
 .cyber-highlight {
@@ -110,6 +112,12 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: bold;
+}
+
+.light .cyber-highlight {
+  background: linear-gradient(90deg, #0284c7, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .cyber-glowing-elements {
@@ -135,6 +143,10 @@
   transition: opacity 0.3s ease;
 }
 
+.light .cyber-glow-1 {
+  background: radial-gradient(circle at center, rgba(2, 132, 199, 0.15) 0%, transparent 70%);
+}
+
 .cyber-glow-1 {
   top: -20px;
   left: -20px;
@@ -144,6 +156,9 @@
   right: -30px;
   transform: translateY(-50%);
   background: radial-gradient(circle at center, rgba(92, 103, 255, 0.3) 0%, transparent 70%);
+}
+.light .cyber-glow-2 {
+  background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
 }
 .cyber-glow-3 {
   bottom: -20px;
@@ -158,6 +173,10 @@
   border-radius: 50%;
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+.light .cyber-card-particles span {
+  background: #0284c7;
 }
 
 /* Hover effects */
@@ -216,6 +235,15 @@
   pointer-events: none;
 }
 
+.light .cyber-card::before {
+  background: radial-gradient(
+    circle at center,
+    rgba(2, 132, 199, 0.08) 0%,
+    rgba(99, 102, 241, 0.05) 50%,
+    transparent 100%
+  );
+}
+
 .cyber-tracker:hover ~ .cyber-card::before {
   opacity: 1;
 }
@@ -237,7 +265,7 @@
 
 .cyber-tracker:hover ~ .cyber-card {
   transition: 250ms ease-out;
-  filter: brightness(1.1);
+  filter: brightness(1.05);
 }
 
 .cyber-canvas {
@@ -295,6 +323,15 @@
   pointer-events: none;
 }
 
+.light .cyber-card-glare {
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
 .cyber-tracker:hover ~ .cyber-card .cyber-card-glare {
   opacity: 1;
 }
@@ -308,6 +345,15 @@
     transparent
   );
   pointer-events: none;
+}
+
+.light .cyber-lines span {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(2, 132, 199, 0.2),
+    transparent
+  );
 }
 
 .cyber-lines span:nth-child(1) { top: 20%; left: 0; width: 100%; height: 1px; animation: cyberLineGrow 3s linear infinite; }
@@ -330,6 +376,10 @@
   transition: all 0.3s ease;
 }
 
+.light .cyber-corner-elements span {
+  border: 2px solid rgba(2, 132, 199, 0.3);
+}
+
 .cyber-corner-elements span:nth-child(1) { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
 .cyber-corner-elements span:nth-child(2) { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
 .cyber-corner-elements span:nth-child(3) { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
@@ -338,6 +388,11 @@
 .cyber-tracker:hover ~ .cyber-card .cyber-corner-elements span {
   border-color: rgba(0, 255, 170, 0.8);
   box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+.light .cyber-tracker:hover ~ .cyber-card .cyber-corner-elements span {
+  border-color: rgba(2, 132, 199, 0.8);
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.3);
 }
 
 .cyber-scan-line {
@@ -352,6 +407,15 @@
   transform: translateY(-100%);
   animation: cyberScanMove 2.5s linear infinite;
   pointer-events: none;
+}
+
+.light .cyber-scan-line {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(2, 132, 199, 0.08),
+    transparent
+  );
 }
 
 @keyframes cyberScanMove {
