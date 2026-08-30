@@ -4,19 +4,20 @@ import { portfolioData } from '../data/portfolioData';
 import DiscordPresence from '../components/DiscordPresence/DiscordPresence';
 import FloatingFolder from '../components/FloatingFolder/FloatingFolder';
 import { 
-  Briefcase, 
-  GraduationCap, 
+  Shield, 
   Terminal, 
   Sparkles, 
   Laptop, 
-  Heart, 
-  Award,
-  Layers,
-  ArrowRight
+  Code2, 
+  GraduationCap, 
+  Lock,
+  Network,
+  Cpu,
+  Bot
 } from 'lucide-react';
 
 export default function AboutPage() {
-  const { profile, experience, skills } = portfolioData;
+  const { profile, skillDomains, techStack } = portfolioData;
 
   return (
     <div className="space-y-16 pb-24 pt-4">
@@ -27,17 +28,17 @@ export default function AboutPage() {
         className="text-left max-w-3xl space-y-4"
       >
         <span className="text-xs font-mono font-bold tracking-widest text-[#00ffaa] uppercase px-3 py-1 rounded-full bg-[#00ffaa]/10 border border-[#00ffaa]/30">
-          ABOUT & ROOTS
+          01 / BACKGROUND & FOCUS
         </span>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
-          The Story Behind the Code
+          About {profile.name}
         </h1>
         <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
-          I'm a full-stack engineer and design technologist obsessively focused on building responsive, tactile web applications with zero lag and exceptional craftsmanship.
+          {profile.education} with a strong foundation in Python, Discord bot architectures, security fundamentals, and modern web interfaces.
         </p>
       </motion.div>
 
-      {/* Grid: Story & Live Discord Presence */}
+      {/* Grid: Narrative / Domains & Live Discord Presence */}
       <motion.div 
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -45,56 +46,59 @@ export default function AboutPage() {
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="grid grid-cols-1 lg:grid-cols-12 gap-8"
       >
-        {/* Left Column: Narrative Story & Skills (7 cols) */}
+        {/* Left Column: Bio Details & Domain Trees (7 cols) */}
         <div className="lg:col-span-7 space-y-8">
+          {/* Bio Overview */}
           <div className="glass-panel p-8 rounded-3xl space-y-4">
             <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#00ffaa]" />
-              Philosophy & Craft
+              <Shield className="w-5 h-5 text-[#00ffaa]" />
+              Focus & Core Philosophy
             </h3>
             <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               <p>
-                My journey started with a curiosity for how micro-interactions, spring physics, and WebGL could transform ordinary web software into immersive playgrounds.
+                I'm a first-year Computer Science Engineering student specializing in <strong>Cyber Security</strong>. My technical journey is driven by building real-world software, starting with <strong>Discord bot systems</strong> in Python and expanding into application security, systems/networks, and interactive frontends.
               </p>
               <p>
-                Today, I build complete end-to-end architectures: from scalable backends, real-time WebSocket pipelines, and automated CI/CD workflows, all the way to pixel-perfect, accessible UI components.
+                I actively practice <strong>AI-Assisted Development</strong> — utilizing modern AI to accelerate research, prototyping, and debugging while strictly understanding, optimizing, and maintaining the underlying architecture.
               </p>
             </div>
           </div>
 
-          {/* Skills Breakdown */}
+          {/* Cybersecurity & Development Domain Trees */}
           <div className="glass-panel p-8 rounded-3xl space-y-6">
             <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Terminal className="w-5 h-5 text-cyan-500" />
-              Technical Stack & Arsenal
+              <Terminal className="w-5 h-5 text-cyan-400" />
+              Domains & Technical Focus
             </h3>
 
-            <div className="space-y-4">
-              {skills.map((grp) => (
-                <div key={grp.category} className="space-y-2">
-                  <div className="flex items-center gap-2 text-xs font-mono text-slate-500 dark:text-slate-400 font-semibold">
-                    <grp.icon className="w-4 h-4 text-[#5c67ff]" />
-                    <span>{grp.category}</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {skillDomains.map((dom) => {
+                const Icon = dom.icon;
+                return (
+                  <div key={dom.domain} className="space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-[#00ffaa] tracking-wider">
+                      <Icon className="w-4 h-4 text-[#5c67ff]" />
+                      <span>{dom.domain}</span>
+                    </div>
+
+                    <div className="space-y-2 pl-2 border-l-2 border-slate-200 dark:border-white/10">
+                      {dom.items.map((item) => (
+                        <div key={item} className="text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                          <span className="text-slate-400">├──</span>
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {grp.skills.map((s) => (
-                      <span
-                        key={s}
-                        className="text-xs font-mono px-3 py-1.5 rounded-xl bg-slate-200/80 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-800 dark:text-slate-200"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
 
         {/* Right Column: Live Discord Widget & 3D Resume Folder (5 cols) */}
         <div className="lg:col-span-5 space-y-8">
-          {/* Live Discord Presence */}
+          {/* Live Discord Presence Widget */}
           <DiscordPresence defaultDiscordId={profile.discordId} />
 
           {/* 3D Floating Folder Resume Box */}
@@ -112,51 +116,12 @@ export default function AboutPage() {
               label="Download Resume.pdf"
               isDownload={true}
               downloadUrl="#"
-              downloadFilename="Haruki_FullStack_Resume.pdf"
+              downloadFilename="Ashish_Sunil_Resume.pdf"
             />
             <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-2">
-              Interactive 3D folder dropzone — click to download full verified CV.
+              Interactive 3D folder dropzone — click to download full CV.
             </p>
           </div>
-        </div>
-      </motion.div>
-
-      {/* Experience & Milestones Timeline */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="space-y-8"
-      >
-        <div className="space-y-2">
-          <span className="text-xs font-mono font-bold tracking-widest text-[#00ffaa] uppercase">
-            CAREER TRAJECTORY
-          </span>
-          <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white">
-            Experience & Journey
-          </h2>
-        </div>
-
-        <div className="space-y-4">
-          {experience.map((item, idx) => (
-            <div
-              key={idx}
-              className="glass-panel p-6 sm:p-8 rounded-3xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-l-4 border-l-[#00ffaa]"
-            >
-              <div className="space-y-1">
-                <span className="text-xs font-mono text-[#00ffaa] font-bold">
-                  {item.period}
-                </span>
-                <h4 className="text-lg font-bold text-slate-900 dark:text-white">
-                  {item.role} <span className="text-slate-400 font-normal">@ {item.company}</span>
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
-                  {item.description}
-                </p>
-              </div>
-            </div>
-          ))}
         </div>
       </motion.div>
     </div>

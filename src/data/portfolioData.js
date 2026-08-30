@@ -1,76 +1,161 @@
 import { 
-  Code, 
-  Cpu, 
-  Globe, 
-  Layout, 
-  Sparkles, 
+  Shield, 
   Terminal, 
-  Zap, 
+  Bot, 
+  Globe, 
+  Cpu, 
+  Code2, 
+  Layers, 
+  Sparkles, 
   Database,
-  Smartphone,
-  Shield,
-  Layers,
-  Palette
+  Lock,
+  Network,
+  Binary
 } from 'lucide-react';
 
 export const portfolioData = {
   profile: {
-    name: "Haruki",
-    title: "Full-Stack Engineer & Creative Technologist",
-    tagline: "Bridging tactile aesthetics with high-performance web systems.",
-    location: "Tokyo / Remote",
-    status: "Available for ambitious freelance & full-time roles",
-    email: "haruki.engineer@gmail.com",
+    name: "Ashish Sunil",
+    alias: "Haruki",
+    title: "Cybersecurity Specialist & Discord Systems Developer",
+    tagline: "First-year B.Tech CSE (Cyber Security) building secure backend systems, Discord infrastructure, and tactile web interfaces.",
+    education: "B.Tech CSE — Cyber Security (First Year)",
+    location: "India / Remote",
+    status: "Exploring Cybersecurity & Systems Engineering",
+    email: "ashissunil77@gmail.com",
     discordId: "1098483466926030869",
     github: "https://github.com/haruki-4160",
     linkedin: "https://linkedin.com",
     twitter: "https://x.com",
+    specialty: "Discord Bot Development & System Automation",
+    primaryLanguage: "Python",
+    interests: ["Cybersecurity", "Discord Systems", "Frontend UI", "AI-Assisted Dev", "Software Architecture"],
     stats: [
-      { label: "Years Exp.", value: "4+" },
-      { label: "Shipped Projects", value: "30+" },
-      { label: "Git Commits", value: "2.4k+" },
-      { label: "Client Satisfaction", value: "100%" },
+      { label: "Degree Focus", value: "CyberSec" },
+      { label: "Core Lang", value: "Python" },
+      { label: "Discord Bots", value: "3+ Systems" },
+      { label: "Year of Study", value: "1st Year" },
     ]
   },
 
-  skills: [
+  whatIBuild: [
     {
-      category: "Frontend & Creative UI",
-      icon: Layout,
-      skills: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js / WebGL", "Framer Motion", "Vite", "Vue.js"]
+      id: "discord-systems",
+      title: "Discord Systems",
+      subtitle: "MODERATION & UTILITIES",
+      icon: Bot,
+      description: "Moderation bots, music engines, AI chat systems, community utilities, and custom Discord API integrations."
     },
     {
-      category: "Backend & Systems",
-      icon: Database,
-      skills: ["Node.js", "Express", "Python / FastAPI", "PostgreSQL", "Prisma", "Redis", "GraphQL", "Supabase"]
+      id: "web-experiences",
+      title: "Web Experiences",
+      subtitle: "FRONTEND & UI",
+      icon: Globe,
+      description: "Modern tactile frontend interfaces, responsive event websites, and interactive experimental UI designs."
     },
     {
-      category: "AI, ML & Tools",
+      id: "software-tools",
+      title: "Software Projects",
+      subtitle: "SYSTEMS & APPS",
+      icon: Terminal,
+      description: "Custom developer tools, lightweight scripts, and applications built to solve problems and automate workflows."
+    },
+    {
+      id: "ai-dev",
+      title: "AI-Assisted Dev",
+      subtitle: "RESEARCH & PROTOTYPING",
       icon: Cpu,
-      skills: ["OpenAI API", "LangChain", "Vector DBs", "Docker", "AWS", "Git / GitHub Actions", "Figma", "Linux"]
+      description: "Leveraging modern AI to research, prototype, debug, and accelerate production while mastering core architectures."
     }
   ],
 
-  projects: [],
+  skillDomains: [
+    {
+      domain: "CYBERSECURITY",
+      icon: Shield,
+      items: [
+        "Security Fundamentals",
+        "Application Security",
+        "Systems & Networks",
+        "Exploring Different Domains"
+      ]
+    },
+    {
+      domain: "DEVELOPMENT",
+      icon: Code2,
+      items: [
+        "Python (Primary)",
+        "JavaScript",
+        "APIs / REST Architecture",
+        "Linux CLI & Systems",
+        "Software Architecture"
+      ]
+    }
+  ],
 
-  experience: [
+  techStack: [
+    { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+    { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+    { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+    { name: "MongoDB", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" },
+    { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+    { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+    { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+    { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+    { name: "GitHub", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" },
+    { name: "VS Code", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" },
+  ],
+
+  selectedWorks: [
     {
-      period: "2024 — Present",
-      role: "Senior Creative Developer",
-      company: "Aether Dynamics",
-      description: "Leading frontend architecture and high-fidelity interaction design for enterprise AI platforms."
+      id: "celeste",
+      title: "CELESTE",
+      type: "Discord Moderation",
+      stack: ["Python", "Discord.py"],
+      description: "Robust Discord moderation bot built with custom permission checks, automated filtering, and server safety utilities.",
+      highlight: "MODERATION",
+      badge: "DISCORD BOT",
+      githubUrl: "https://github.com/haruki-4160"
     },
     {
-      period: "2022 — 2024",
-      role: "Full-Stack Engineer",
-      company: "Kuro Web Labs",
-      description: "Shipped scalable microservices, WebGL 3D product visualizers, and robust backend APIs."
+      id: "celune",
+      title: "CELUNE",
+      type: "Discord Music",
+      stack: ["Python", "Discord"],
+      description: "High-performance Discord music streaming bot with queue management, voice client optimization, and playback controls.",
+      highlight: "MUSIC ENGINE",
+      badge: "DISCORD BOT",
+      githubUrl: "https://github.com/haruki-4160"
     },
     {
-      period: "2020 — 2022",
-      role: "Frontend Engineer & UI Designer",
-      company: "Studio Nexus",
-      description: "Crafted accessible component libraries, design systems, and responsive modern web apps."
+      id: "sryaa",
+      title: "SRYAA",
+      type: "Discord Chat",
+      stack: ["Python", "Discord"],
+      description: "Interactive conversational Discord bot with context-aware chat utilities and community engagement features.",
+      highlight: "CHAT UTILITY",
+      badge: "DISCORD BOT",
+      githubUrl: "https://github.com/haruki-4160"
+    },
+    {
+      id: "portfolio",
+      title: "PORTFOLIO",
+      type: "Web Experience",
+      stack: ["React", "Tailwind", "Framer Motion"],
+      description: "Tactile personal portfolio featuring 3D tilt cards, skeuomorphic theme switcher, spring physics Apple dock, and live Discord API integration.",
+      highlight: "FRONTEND",
+      badge: "WEB APP",
+      githubUrl: "https://github.com/haruki-4160/Portfolio"
+    },
+    {
+      id: "squid-game-website",
+      title: "SQUID GAME WEBSITE",
+      type: "Event Website",
+      stack: ["Frontend", "UI/UX", "JavaScript"],
+      description: "Immersive event landing page designed with themed animations, sound effects, and interactive registration stages.",
+      highlight: "EVENT UI",
+      badge: "EVENT WEB",
+      githubUrl: "https://github.com/haruki-4160"
     }
   ]
 };
