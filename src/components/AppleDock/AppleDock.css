@@ -1,0 +1,110 @@
+/* Apple Dock Styles based on user code */
+.apple-dock-nav {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  width: auto;
+  max-width: 95vw;
+}
+
+.apple-dock-menu {
+  width: 100%;
+  max-width: 540px;
+  backdrop-filter: blur(16px) saturate(180%) contrast(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%) contrast(150%);
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 1px 1px rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 99rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+
+.light .apple-dock-menu {
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.apple-dock-menu::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow:
+    inset 2px 2px 5px -2px rgba(255, 255, 255, 0.3),
+    inset -2px -2px 5px 2px rgba(255, 255, 255, 0.1),
+    inset 0 -2px 0 rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.dock-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  padding: 8px 6px;
+  border-radius: 999rem;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.light .dock-item {
+  color: rgba(30, 41, 59, 0.85);
+}
+
+.dock-item svg {
+  width: 1.4rem;
+  height: 1.4rem;
+  transition: transform 0.2s ease;
+}
+
+.dock-item span {
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: 4px;
+  letter-spacing: 0.5px;
+}
+
+.dock-item.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #00ffaa;
+  box-shadow: inset 0 0 12px rgba(0, 255, 170, 0.2);
+}
+
+.light .dock-item.active {
+  background: rgba(0, 122, 255, 0.15);
+  color: #0284c7;
+  box-shadow: inset 0 0 12px rgba(2, 132, 199, 0.15);
+}
+
+/* Active indicator dot */
+.dock-active-dot {
+  position: absolute;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #00ffaa;
+  box-shadow: 0 0 8px #00ffaa;
+}
+
+.light .dock-active-dot {
+  background: #0284c7;
+  box-shadow: 0 0 8px #0284c7;
+}

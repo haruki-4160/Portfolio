@@ -1,0 +1,313 @@
+/* Retro Search Bar CSS derived from user code */
+.retro-search-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.retro-white,
+.retro-border,
+.retro-darkBorderBg,
+.retro-glow {
+  max-height: 70px;
+  max-width: 324px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+  z-index: 0;
+  border-radius: 14px;
+  filter: blur(3px);
+  pointer-events: none;
+}
+
+.retro-input {
+  background-color: #f2e2c4;
+  color: #3a2e20;
+  border: none;
+  width: 310px;
+  height: 56px;
+  border-radius: 12px;
+  padding-left: 54px;
+  padding-right: 50px;
+  font-size: 16px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dark .retro-input {
+  background-color: #1e1914;
+  color: #f2e2c4;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+#poda {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.retro-input::placeholder {
+  color: #857754;
+}
+
+.retro-input:focus {
+  outline: none;
+}
+
+#retro-main:focus-within > #input-mask {
+  display: none;
+}
+
+#input-mask {
+  pointer-events: none;
+  width: 90px;
+  height: 20px;
+  position: absolute;
+  background: linear-gradient(90deg, transparent, #3a2e20);
+  top: 18px;
+  left: 60px;
+  opacity: 0.3;
+}
+
+#pink-mask {
+  pointer-events: none;
+  width: 30px;
+  height: 20px;
+  position: absolute;
+  background: #f28e8e;
+  top: 10px;
+  left: 5px;
+  filter: blur(20px);
+  opacity: 0.8;
+  transition: all 1.5s ease;
+}
+
+#retro-main:hover > #pink-mask {
+  opacity: 0;
+}
+
+.retro-white {
+  max-height: 63px;
+  max-width: 316px;
+  border-radius: 12px;
+  filter: blur(2px);
+}
+
+.retro-white::before {
+  content: "";
+  z-index: -2;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(83deg);
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  filter: brightness(1.4);
+  background-image: conic-gradient(
+    rgba(0, 0, 0, 0) 0%,
+    #dcb483,
+    rgba(0, 0, 0, 0) 8%,
+    rgba(0, 0, 0, 0) 50%,
+    #d16e5a,
+    rgba(0, 0, 0, 0) 58%
+  );
+  transition: all 2s;
+}
+
+.retro-border {
+  max-height: 59px;
+  max-width: 312px;
+  border-radius: 11px;
+  filter: blur(0.5px);
+}
+
+.retro-border::before {
+  content: "";
+  z-index: -2;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(70deg);
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  filter: brightness(1.3);
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-image: conic-gradient(
+    #3a2e20,
+    #c98f65 5%,
+    #3a2e20 14%,
+    #3a2e20 50%,
+    #f28e8e 60%,
+    #3a2e20 64%
+  );
+  transition: all 2s;
+}
+
+.retro-darkBorderBg {
+  max-height: 65px;
+  max-width: 320px;
+}
+
+.retro-darkBorderBg::before {
+  content: "";
+  z-index: -2;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(82deg);
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-image: conic-gradient(
+    rgba(0, 0, 0, 0),
+    #725d4a,
+    rgba(0, 0, 0, 0) 10%,
+    rgba(0, 0, 0, 0) 50%,
+    #d16e5a,
+    rgba(0, 0, 0, 0) 60%
+  );
+  transition: all 2s;
+}
+
+#poda:hover > .retro-darkBorderBg::before,
+#poda:focus-within > .retro-darkBorderBg::before {
+  transform: translate(-50%, -50%) rotate(262deg);
+  transition: all 3s;
+}
+
+#poda:hover > .retro-glow::before,
+#poda:focus-within > .retro-glow::before {
+  transform: translate(-50%, -50%) rotate(240deg);
+  transition: all 3s;
+}
+
+#poda:hover > .retro-white::before,
+#poda:focus-within > .retro-white::before {
+  transform: translate(-50%, -50%) rotate(263deg);
+  transition: all 3s;
+}
+
+#poda:hover > .retro-border::before,
+#poda:focus-within > .retro-border::before {
+  transform: translate(-50%, -50%) rotate(250deg);
+  transition: all 3s;
+}
+
+.retro-glow {
+  overflow: hidden;
+  filter: blur(25px);
+  opacity: 0.5;
+  max-height: 120px;
+  max-width: 360px;
+}
+
+.retro-glow::before {
+  content: "";
+  z-index: -2;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(60deg);
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-image: conic-gradient(
+    #000,
+    #c98f65 5%,
+    #000 38%,
+    #000 50%,
+    #f28e8e 60%,
+    #000 87%
+  );
+  transition: all 2s;
+}
+
+#filter-icon-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+  height: 40px;
+  width: 38px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #a57d52, #846846, #6b5342);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+#filter-icon-btn:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+.filter-border-anim {
+  height: 42px;
+  width: 40px;
+  position: absolute;
+  overflow: hidden;
+  top: 7px;
+  right: 7px;
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.filter-border-anim::before {
+  content: "";
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  filter: brightness(1.35);
+  background-image: conic-gradient(
+    rgba(0, 0, 0, 0),
+    #a57d52,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0) 50%,
+    #a57d52,
+    rgba(0, 0, 0, 0) 100%
+  );
+  animation: retroRotate 4s linear infinite;
+}
+
+#retro-main {
+  position: relative;
+  z-index: 10;
+}
+
+#retro-search-icon {
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  color: #c98f65;
+  pointer-events: none;
+}
+
+@keyframes retroRotate {
+  100% {
+    transform: translate(-50%, -50%) rotate(450deg);
+  }
+}

@@ -1,0 +1,360 @@
+/* CyberCard Styles derived from user raw code */
+.cyber-container {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: 390px;
+  transition: 200ms;
+}
+
+.cyber-container:active {
+  transform: scale(0.98);
+}
+
+.cyber-card {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+  transition: 700ms;
+  background: linear-gradient(135deg, #121218 0%, #1e1e28 100%);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.light .cyber-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.08),
+    inset 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.cyber-card-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 20px;
+  box-sizing: border-box;
+}
+
+.cyber-prompt {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  transition: 300ms ease-in-out;
+  position: absolute;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  text-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+  font-family: 'JetBrains Mono', monospace;
+  pointer-events: none;
+}
+
+.light .cyber-prompt {
+  color: #334155;
+  text-shadow: 0 0 10px rgba(92, 103, 255, 0.3);
+}
+
+.cyber-title {
+  opacity: 0.9;
+  transition: 300ms ease-in-out;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-align: left;
+  width: 100%;
+  background: linear-gradient(45deg, #00ffaa, #00a2ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 170, 0.3));
+}
+
+.light .cyber-title {
+  background: linear-gradient(45deg, #0284c7, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cyber-subtitle {
+  width: 100%;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'JetBrains Mono', monospace;
+  z-index: 10;
+}
+
+.light .cyber-subtitle {
+  color: #475569;
+}
+
+.cyber-highlight {
+  color: #00ffaa;
+  margin-left: 5px;
+  background: linear-gradient(90deg, #5c67ff, #ad51ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.cyber-glowing-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cyber-glow-1,
+.cyber-glow-2,
+.cyber-glow-3 {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 170, 0.25) 0%,
+    rgba(0, 255, 170, 0) 70%
+  );
+  filter: blur(18px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-glow-1 {
+  top: -20px;
+  left: -20px;
+}
+.cyber-glow-2 {
+  top: 50%;
+  right: -30px;
+  transform: translateY(-50%);
+  background: radial-gradient(circle at center, rgba(92, 103, 255, 0.3) 0%, transparent 70%);
+}
+.cyber-glow-3 {
+  bottom: -20px;
+  left: 30%;
+}
+
+.cyber-card-particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #00ffaa;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Hover effects */
+.cyber-tracker:hover ~ .cyber-card .cyber-title {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.cyber-tracker:hover ~ .cyber-card .cyber-glowing-elements div {
+  opacity: 1;
+}
+
+.cyber-tracker:hover ~ .cyber-card .cyber-card-particles span {
+  animation: cyberParticleFloat 2.5s infinite;
+}
+
+@keyframes cyberParticleFloat {
+  0% {
+    transform: translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--x, 0) * 35px), calc(var(--y, 0) * 35px));
+    opacity: 0;
+  }
+}
+
+/* Particle positions */
+.cyber-card-particles span:nth-child(1) { --x: 1; --y: -1; top: 40%; left: 20%; }
+.cyber-card-particles span:nth-child(2) { --x: -1; --y: -1; top: 60%; right: 20%; }
+.cyber-card-particles span:nth-child(3) { --x: 0.5; --y: 1; top: 20%; left: 40%; }
+.cyber-card-particles span:nth-child(4) { --x: -0.5; --y: 1; top: 80%; right: 40%; }
+.cyber-card-particles span:nth-child(5) { --x: 1; --y: 0.5; top: 30%; left: 60%; }
+.cyber-card-particles span:nth-child(6) { --x: -1; --y: 0.5; top: 70%; right: 60%; }
+
+.cyber-card::before {
+  content: "";
+  background: radial-gradient(
+    circle at center,
+    rgba(0, 255, 170, 0.12) 0%,
+    rgba(0, 162, 255, 0.08) 50%,
+    transparent 100%
+  );
+  filter: blur(25px);
+  opacity: 0;
+  width: 150%;
+  height: 150%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.cyber-tracker:hover ~ .cyber-card::before {
+  opacity: 1;
+}
+
+.cyber-tracker {
+  position: absolute;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+}
+
+.cyber-tracker:hover {
+  cursor: pointer;
+}
+
+.cyber-tracker:hover ~ .cyber-card .cyber-prompt {
+  opacity: 0;
+}
+
+.cyber-tracker:hover ~ .cyber-card {
+  transition: 250ms ease-out;
+  filter: brightness(1.1);
+}
+
+.cyber-canvas {
+  perspective: 900px;
+  inset: 0;
+  z-index: 20;
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+}
+
+/* 25 Zones */
+.ctr-1:hover ~ .cyber-card { transform: rotateX(15deg) rotateY(-8deg); }
+.ctr-2:hover ~ .cyber-card { transform: rotateX(15deg) rotateY(-4deg); }
+.ctr-3:hover ~ .cyber-card { transform: rotateX(15deg) rotateY(0deg); }
+.ctr-4:hover ~ .cyber-card { transform: rotateX(15deg) rotateY(4deg); }
+.ctr-5:hover ~ .cyber-card { transform: rotateX(15deg) rotateY(8deg); }
+
+.ctr-6:hover ~ .cyber-card { transform: rotateX(8deg) rotateY(-8deg); }
+.ctr-7:hover ~ .cyber-card { transform: rotateX(8deg) rotateY(-4deg); }
+.ctr-8:hover ~ .cyber-card { transform: rotateX(8deg) rotateY(0deg); }
+.ctr-9:hover ~ .cyber-card { transform: rotateX(8deg) rotateY(4deg); }
+.ctr-10:hover ~ .cyber-card { transform: rotateX(8deg) rotateY(8deg); }
+
+.ctr-11:hover ~ .cyber-card { transform: rotateX(0deg) rotateY(-8deg); }
+.ctr-12:hover ~ .cyber-card { transform: rotateX(0deg) rotateY(-4deg); }
+.ctr-13:hover ~ .cyber-card { transform: rotateX(0deg) rotateY(0deg); }
+.ctr-14:hover ~ .cyber-card { transform: rotateX(0deg) rotateY(4deg); }
+.ctr-15:hover ~ .cyber-card { transform: rotateX(0deg) rotateY(8deg); }
+
+.ctr-16:hover ~ .cyber-card { transform: rotateX(-8deg) rotateY(-8deg); }
+.ctr-17:hover ~ .cyber-card { transform: rotateX(-8deg) rotateY(-4deg); }
+.ctr-18:hover ~ .cyber-card { transform: rotateX(-8deg) rotateY(0deg); }
+.ctr-19:hover ~ .cyber-card { transform: rotateX(-8deg) rotateY(4deg); }
+.ctr-20:hover ~ .cyber-card { transform: rotateX(-8deg) rotateY(8deg); }
+
+.ctr-21:hover ~ .cyber-card { transform: rotateX(-15deg) rotateY(-8deg); }
+.ctr-22:hover ~ .cyber-card { transform: rotateX(-15deg) rotateY(-4deg); }
+.ctr-23:hover ~ .cyber-card { transform: rotateX(-15deg) rotateY(0deg); }
+.ctr-24:hover ~ .cyber-card { transform: rotateX(-15deg) rotateY(4deg); }
+.ctr-25:hover ~ .cyber-card { transform: rotateX(-15deg) rotateY(8deg); }
+
+.cyber-card-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0;
+  transition: opacity 300ms;
+  pointer-events: none;
+}
+
+.cyber-tracker:hover ~ .cyber-card .cyber-card-glare {
+  opacity: 1;
+}
+
+.cyber-lines span {
+  position: absolute;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(92, 103, 255, 0.3),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.cyber-lines span:nth-child(1) { top: 20%; left: 0; width: 100%; height: 1px; animation: cyberLineGrow 3s linear infinite; }
+.cyber-lines span:nth-child(2) { top: 40%; right: 0; width: 100%; height: 1px; animation: cyberLineGrow 3s linear infinite 1s; }
+.cyber-lines span:nth-child(3) { top: 60%; left: 0; width: 100%; height: 1px; animation: cyberLineGrow 3s linear infinite 2s; }
+.cyber-lines span:nth-child(4) { top: 80%; right: 0; width: 100%; height: 1px; animation: cyberLineGrow 3s linear infinite 1.5s; }
+
+@keyframes cyberLineGrow {
+  0% { transform: scaleX(0); opacity: 0; }
+  50% { transform: scaleX(1); opacity: 1; }
+  100% { transform: scaleX(0); opacity: 0; }
+}
+
+.cyber-corner-elements span {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(92, 103, 255, 0.4);
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.cyber-corner-elements span:nth-child(1) { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+.cyber-corner-elements span:nth-child(2) { top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
+.cyber-corner-elements span:nth-child(3) { bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
+.cyber-corner-elements span:nth-child(4) { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+
+.cyber-tracker:hover ~ .cyber-card .cyber-corner-elements span {
+  border-color: rgba(0, 255, 170, 0.8);
+  box-shadow: 0 0 10px rgba(0, 255, 170, 0.5);
+}
+
+.cyber-scan-line {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 170, 0.12),
+    transparent
+  );
+  transform: translateY(-100%);
+  animation: cyberScanMove 2.5s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes cyberScanMove {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
