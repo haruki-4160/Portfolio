@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import CyberCard from '../components/CyberCard/CyberCard';
+import DiscordPresence from '../components/DiscordPresence/DiscordPresence';
 import VinylMusicPlayer from '../components/VinylMusicPlayer/VinylMusicPlayer';
 import { 
   ArrowRight, 
@@ -35,17 +36,19 @@ export default function Home({ onNavigate, onSelectProject }) {
     <div className="space-y-24 pb-20">
       {/* 🌟 HERO SECTION */}
       <section className="min-h-[85vh] flex flex-col lg:flex-row items-center justify-between gap-12 pt-8 sm:pt-16">
-        {/* Left Hero Text */}
+        {/* Left Hero Text & Quick Action Badges */}
         <motion.div 
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="flex-1 space-y-6 max-w-2xl text-left"
         >
-          {/* Sapphire Status Badge */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono shadow-sm">
-            <Shield className="w-3.5 h-3.5 text-blue-400" />
-            <span>{profile.education}</span>
+          {/* Sapphire Status & Education Badge */}
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-mono shadow-sm">
+              <Shield className="w-3.5 h-3.5 text-blue-400" />
+              <span>{profile.education}</span>
+            </div>
           </div>
 
           {/* Headline with Liquid Ice & Deep Sapphire Gradient */}
@@ -101,31 +104,21 @@ export default function Home({ onNavigate, onSelectProject }) {
           </div>
         </motion.div>
 
-        {/* Right 3D Cyber Tilt Hero Card (Clean & Standalone) */}
+        {/* Right Hero Column: Live Profile Bubble & 3D Tilt Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="shrink-0 relative flex flex-col items-center justify-center py-6"
+          className="shrink-0 w-full lg:w-[420px] space-y-6"
         >
-          {/* Ambient sapphire back glow */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-sky-400/20 rounded-3xl blur-2xl -z-10" />
-          
-          <CyberCard
-            title="ASHISH.DEV"
-            subtitle="CYBERSEC"
-            highlight="PYTHON"
-            prompt="HOVER ME"
-            description="B.Tech Cyber Security student building Discord automation systems, security tools, and responsive web apps."
-            tags={["Python", "Discord.py", "CyberSec", "React"]}
-            badge="HARUKI CORE"
-            icon={Shield}
-            onClick={() => onNavigate('about')}
-          />
+          {/* 🟢 Live Discord Profile Bubble (Real Avatar, Live Status & Direct Chat) */}
+          <div className="relative">
+            <DiscordPresence defaultDiscordId={profile.discordId} />
+          </div>
         </motion.div>
       </section>
 
-      {/* 🎧 Dedicated Ambient Vinyl Music Lounge (Separate & Clean) */}
+      {/* 🎧 Dedicated Ambient Vinyl Music Lounge */}
       <motion.section
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
