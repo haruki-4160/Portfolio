@@ -1,0 +1,342 @@
+.plane-send-btn {
+  --primary: #38bdf8;
+  --neutral-1: #ffffff;
+  --neutral-2: #e2e8f0;
+  --radius: 16px;
+
+  cursor: pointer;
+  border-radius: var(--radius);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  border: none;
+  box-shadow: 0 0.5px 0.5px 1px rgba(255, 255, 255, 0.4),
+    0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 5px 0px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  width: 100%;
+  padding: 20px;
+  height: 64px;
+  font-family: 'JetBrains Mono', "Plus Jakarta Sans", sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  user-select: none;
+}
+
+.dark .plane-send-btn {
+  --neutral-1: #1a1d2d;
+  --neutral-2: #0f111a;
+  --primary: #60a5fa;
+  color: #ffffff;
+  box-shadow: 0 0.5px 0.5px 1px rgba(255, 255, 255, 0.1),
+    0 10px 30px rgba(0, 0, 0, 0.6), 0 4px 5px 0px rgba(0, 0, 0, 0.3);
+}
+
+.plane-send-btn:hover {
+  transform: scale(1.015);
+  box-shadow: 0 0 1px 2px rgba(56, 189, 248, 0.4),
+    0 15px 30px rgba(37, 99, 235, 0.25), 0 10px 3px -3px rgba(0, 0, 0, 0.1);
+}
+
+.plane-send-btn:active {
+  transform: scale(0.99);
+}
+
+.plane-send-btn:after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  border: 2px solid transparent;
+  background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
+    linear-gradient(to bottom, rgba(56, 189, 248, 0.5), rgba(37, 99, 235, 0.8)) border-box;
+  z-index: 0;
+  transition: all 0.4s ease;
+}
+
+.plane-send-btn:hover::after {
+  transform: scale(1.02, 1.05);
+  box-shadow: inset 0 -1px 3px 0 rgba(255, 255, 255, 0.8);
+}
+
+.plane-send-btn::before {
+  content: "";
+  inset: 5px;
+  position: absolute;
+  background: linear-gradient(to top, var(--neutral-1), var(--neutral-2));
+  border-radius: 12px;
+  filter: blur(0.5px);
+  z-index: 2;
+}
+
+.plane-send-state p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.plane-send-state .icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  transform: scale(1.25);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plane-send-state .icon svg {
+  overflow: visible;
+}
+
+/* Outline with Spinning Conic Glow */
+.plane-send-outline {
+  position: absolute;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  inset: -2px -3.5px;
+}
+
+.plane-send-outline::before {
+  content: "";
+  position: absolute;
+  inset: -100%;
+  background: conic-gradient(
+    from 180deg,
+    transparent 60%,
+    #38bdf8 80%,
+    transparent 100%
+  );
+  animation: planeSpin 2s linear infinite;
+  animation-play-state: paused;
+}
+
+@keyframes planeSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.plane-send-btn:hover .plane-send-outline {
+  opacity: 1;
+}
+
+.plane-send-btn:hover .plane-send-outline::before {
+  animation-play-state: running;
+}
+
+/* Letters */
+.plane-send-state p span {
+  display: block;
+  opacity: 1;
+  animation: planeSlideDown 0.8s ease forwards calc(var(--i) * 0.03s);
+}
+
+.plane-send-btn:hover p span {
+  opacity: 1;
+  animation: planeWave 0.5s ease forwards calc(var(--i) * 0.02s);
+}
+
+.plane-send-btn.is-sent p span {
+  opacity: 1;
+  animation: planeDisappear 0.6s ease forwards calc(var(--i) * 0.03s);
+}
+
+@keyframes planeWave {
+  30% {
+    opacity: 1;
+    transform: translateY(4px) translateX(0) rotate(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px) translateX(0) rotate(0);
+    color: var(--primary);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+}
+
+@keyframes planeSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) translateX(5px) rotate(-90deg);
+    color: var(--primary);
+    filter: blur(5px);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(4px) translateX(0) rotate(0);
+    filter: blur(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px) translateX(0) rotate(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0) rotate(0);
+  }
+}
+
+@keyframes planeDisappear {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(5px) translateY(20px);
+    color: var(--primary);
+    filter: blur(5px);
+  }
+}
+
+/* Plane */
+.plane-send-state--default .icon svg {
+  animation: planeLand 0.6s ease forwards;
+}
+
+.plane-send-btn:hover .plane-send-state--default .icon {
+  transform: rotate(45deg) scale(1.25);
+}
+
+.plane-send-btn.is-sent .plane-send-state--default svg {
+  animation: planeTakeOff 0.8s linear forwards;
+}
+
+.plane-send-btn.is-sent .plane-send-state--default .icon {
+  transform: rotate(0) scale(1.25);
+}
+
+@keyframes planeTakeOff {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(70px) rotate(45deg) scale(2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(160px) rotate(45deg) scale(0);
+  }
+}
+
+@keyframes planeLand {
+  0% {
+    transform: translateX(-60px) translateY(30px) rotate(-50deg) scale(2);
+    opacity: 0;
+    filter: blur(3px);
+  }
+  100% {
+    transform: translateX(0) translateY(0) rotate(0);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* Contrail */
+.plane-send-state--default .icon:before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  width: 0;
+  left: -5px;
+  background: linear-gradient(to right, transparent, rgba(56, 189, 248, 0.8));
+}
+
+.plane-send-btn.is-sent .plane-send-state--default .icon:before {
+  animation: planeContrail 0.8s linear forwards;
+}
+
+@keyframes planeContrail {
+  0% {
+    width: 0;
+    opacity: 1;
+  }
+  8% {
+    width: 15px;
+  }
+  60% {
+    opacity: 0.7;
+    width: 80px;
+  }
+  100% {
+    opacity: 0;
+    width: 160px;
+  }
+}
+
+/* States */
+.plane-send-state {
+  padding-left: 29px;
+  z-index: 2;
+  display: flex;
+  position: relative;
+}
+
+.plane-send-state--default span:nth-child(4) {
+  margin-right: 6px;
+}
+
+.plane-send-state--sent {
+  display: none;
+}
+
+.plane-send-state--sent svg {
+  transform: scale(1.25);
+  margin-right: 8px;
+}
+
+.plane-send-btn.is-sent .plane-send-state--default {
+  position: absolute;
+}
+
+.plane-send-btn.is-sent .plane-send-state--sent {
+  display: flex;
+}
+
+.plane-send-btn.is-sent .plane-send-state--sent span {
+  opacity: 0;
+  animation: planeSlideDown 0.8s ease forwards calc(var(--i) * 0.2s);
+}
+
+.plane-send-btn.is-sent .plane-send-state--sent .icon svg {
+  opacity: 0;
+  animation: planeAppear 1.2s ease forwards 0.8s;
+}
+
+@keyframes planeAppear {
+  0% {
+    opacity: 0;
+    transform: scale(4) rotate(-40deg);
+    color: var(--primary);
+    filter: blur(4px);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(0.6);
+    filter: blur(1px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import FloatingFolder from '../components/FloatingFolder/FloatingFolder';
+import SendMessageButton from '../components/SendMessageButton/SendMessageButton';
 import { 
   Send, 
   Copy, 
@@ -12,9 +13,12 @@ import {
   ArrowUpRight,
   QrCode,
   ExternalLink,
-  ScanLine
+  ScanLine,
+  AlertCircle,
+  PhoneCall,
+  MessageCircle
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, InstagramIcon } from '../components/Icons/SocialIcons';
+import { GithubIcon, LinkedinIcon, InstagramIcon, DiscordIcon } from '../components/Icons/SocialIcons';
 import confetti from 'canvas-confetti';
 
 export default function ContactPage() {
@@ -23,9 +27,33 @@ export default function ContactPage() {
   const [attachedFile, setAttachedFile] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setErrorMessage('');
+
+    if (!formData.name.trim()) {
+      setErrorMessage('Please provide your name.');
+      return;
+    }
+
+    if (!validateEmail(formData.email)) {
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (!formData.message.trim() || formData.message.length < 5) {
+      setErrorMessage('Please write a brief message or project description (minimum 5 characters).');
+      return;
+    }
+
     setSubmitted(true);
     confetti({
       particleCount: 100,
@@ -64,24 +92,46 @@ export default function ContactPage() {
         {/* Left Column: Form & 3D Folder Upload (7 cols) */}
         <div className="lg:col-span-7">
           <div className="glass-panel p-8 sm:p-10 rounded-3xl space-y-6">
+            {/* Success State */}
             {submitted ? (
-              <div className="text-center py-12 space-y-4">
-                <div className="w-16 h-16 rounded-full bg-blue-500/20 border border-blue-500/40 text-blue-400 flex items-center justify-center mx-auto text-2xl font-bold">
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-12 space-y-4"
+              >
+                <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-500 flex items-center justify-center mx-auto text-2xl font-bold shadow-lg shadow-emerald-500/20">
                   ✓
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Message Transmitted!</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 max-w-sm mx-auto">
-                  Thank you for reaching out. I'll review your project details and get back to you within 24 hours.
+                <p className="text-sm text-slate-600 dark:text-slate-300 max-w-sm mx-auto leading-relaxed">
+                  Thank you for reaching out, <strong>{formData.name}</strong>. I'll review your project details and get back to you within 24 hours.
                 </p>
-                <button
-                  onClick={() => setSubmitted(false)}
-                  className="text-xs font-mono text-blue-500 dark:text-blue-400 underline pt-4 cursor-pointer"
-                >
-                  Send another message
-                </button>
-              </div>
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      setSubmitted(false);
+                      setFormData({ name: '', email: '', message: '', projectType: 'Discord Bot & Automation' });
+                    }}
+                    className="text-xs font-mono text-blue-500 dark:text-blue-400 underline cursor-pointer"
+                  >
+                    Send another message
+                  </button>
+                </div>
+              </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Error Message Banner */}
+                {errorMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-mono flex items-center gap-2"
+                  >
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </motion.div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label className="text-xs font-mono text-slate-600 dark:text-slate-300 font-semibold">
@@ -153,13 +203,10 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full py-4 rounded-xl bg-gradient-to-r from-[#38bdf8] via-[#2563eb] to-[#1d4ed8] text-white font-bold text-sm flex items-center justify-center gap-2 hover:opacity-95 shadow-lg shadow-blue-500/25 transition-all hover:scale-[1.01] cursor-pointer"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>Transmit Message</span>
-                </button>
+                {/* Interactive Plane Take-Off Send Message Button */}
+                <div className="pt-2">
+                  <SendMessageButton isSubmitted={submitted} type="submit" />
+                </div>
               </form>
             )}
           </div>
@@ -198,6 +245,7 @@ export default function ContactPage() {
                 src="/instagram-qr.png"
                 alt="Hues of Haruki Instagram QR Code"
                 className="w-48 h-48 sm:w-52 sm:h-52 object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
+                loading="lazy"
               />
               <span className="text-[10px] font-mono text-slate-600 font-semibold mt-1">
                 Scan with phone camera or Instagram
@@ -216,7 +264,7 @@ export default function ContactPage() {
             </a>
           </div>
 
-          {/* Direct Email Card */}
+          {/* Clickable Direct Email Card */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
             <span className="p-2.5 rounded-xl bg-blue-500/10 text-blue-500 inline-block">
               <Mail className="w-5 h-5" />
@@ -226,23 +274,56 @@ export default function ContactPage() {
                 Direct Email
               </h4>
               <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                Click below to copy address:
+                Click below to copy or launch mail client:
               </p>
             </div>
 
-            <button
-              onClick={handleCopyEmail}
-              className="w-full py-3 px-4 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 flex items-center justify-between text-xs font-mono text-slate-800 dark:text-slate-200 transition-all cursor-pointer shadow-sm"
-            >
-              <span className="truncate">{profile.email}</span>
-              <span className="flex items-center gap-1 text-blue-500 dark:text-sky-400 font-semibold">
-                {copiedEmail ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5 text-slate-400" />}
-                {copiedEmail ? 'Copied!' : 'Copy'}
-              </span>
-            </button>
+            <div className="flex flex-col sm:flex-row items-center gap-2">
+              <a
+                href={`mailto:${profile.email}`}
+                className="w-full sm:flex-1 py-3 px-4 rounded-xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 flex items-center justify-between text-xs font-mono text-slate-800 dark:text-slate-200 transition-all shadow-sm"
+              >
+                <span className="truncate">{profile.email}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-blue-500" />
+              </a>
+
+              <button
+                onClick={handleCopyEmail}
+                className="w-full sm:w-auto py-3 px-4 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-sky-400 text-xs font-mono font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                title="Copy to clipboard"
+              >
+                {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
+              </button>
+            </div>
           </div>
 
-          {/* Elsewhere on the Web (GitHub, LinkedIn, Email - Twitter Replaced!) */}
+          {/* Discord Direct Connect Card */}
+          <div className="glass-panel p-6 rounded-3xl space-y-4">
+            <span className="p-2.5 rounded-xl bg-[#5865F2]/10 text-[#5865F2] inline-block">
+              <MessageSquare className="w-5 h-5" />
+            </span>
+            <div>
+              <h4 className="text-base font-bold text-slate-900 dark:text-white">
+                Discord Direct
+              </h4>
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                Chat or hop on a call via Discord:
+              </p>
+            </div>
+
+            <a
+              href={`https://discord.com/users/${profile.discordId}`}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full py-3 px-4 rounded-xl bg-[#5865F2] hover:bg-[#4752C4] text-white flex items-center justify-between text-xs font-mono font-semibold transition-all shadow-md shadow-[#5865F2]/25 hover:scale-[1.01]"
+            >
+              <span>Connect on Discord</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Elsewhere on the Web (GitHub, LinkedIn, Email) */}
           <div className="glass-panel p-6 rounded-3xl space-y-4">
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">
               Elsewhere on the Web
@@ -272,7 +353,7 @@ export default function ContactPage() {
 
               <a
                 href={`mailto:${profile.email}`}
-                className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/15 border border-slate-300 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-sky-400 transition-all hover:-translate-y-1 shadow-sm"
+                className="flex flex-col items-center justify-center p-3 rounded-2xl bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 text-slate-700 dark:text-slate-300 hover:text-blue-500 dark:hover:text-sky-400 transition-all hover:-translate-y-1 shadow-sm"
                 title="Direct Email"
               >
                 <Mail className="w-5 h-5 mb-1 text-slate-800 dark:text-slate-200" />
