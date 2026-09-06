@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { portfolioData } from '../data/portfolioData';
 import RetroSearchBar from '../components/RetroSearchBar/RetroSearchBar';
 import CyberCard from '../components/CyberCard/CyberCard';
 import { ScrollRevealContainer, ScrollRevealItem } from '../components/ScrollReveal/ScrollReveal';
@@ -9,8 +10,16 @@ import confetti from 'canvas-confetti';
 export default function ProjectsPage({ onSelectProject }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
-  const [githubRepos, setGithubRepos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [githubRepos, setGithubRepos] = useState(() => {
+    // Initial fallback from portfolioData.selectedWorks so cards are ALWAYS visible immediately
+    return portfolioData.selectedWorks.map(w => ({
+      ...w,
+      category: w.type === 'bot' ? 'AI/ML' : w.type === 'frontend' ? 'Web Apps' : 'Tools',
+      stars: w.highlight?.includes('★') ? parseInt(w.highlight.replace(/\D/g, '')) || 0 : 0,
+      tags: w.stack || []
+    }));
+  });
+  const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
   const username = "haruki-4160";
@@ -22,28 +31,30 @@ export default function ProjectsPage({ onSelectProject }) {
       const res = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=50`);
       if (res.ok) {
         const data = await res.json();
-        const formatted = data.map(repo => {
-          const lang = repo.language || (repo.topics && repo.topics[0]) || "Code";
-          return {
-            id: `gh-${repo.id}`,
-            name: repo.name,
-            title: repo.name.toUpperCase().replace(/[-_]/g, ' '),
-            subtitle: lang.toUpperCase(),
-            highlight: repo.stargazers_count > 0 ? `★ ${repo.stargazers_count} STARS` : "ACTIVE REPO",
-            category: mapRepoCategory(repo.language, repo.topics),
-            badge: repo.stargazers_count > 0 ? "POPULAR" : "GITHUB",
-            description: repo.description || "GitHub repository actively maintained by Haruki.",
-            fullDescription: repo.description ? `${repo.description}\n\nRepository: ${repo.full_name}\nStars: ${repo.stargazers_count} | Forks: ${repo.forks_count}\nLast updated: ${new Date(repo.updated_at).toLocaleDateString()}` : `Public GitHub repository maintained by ${username}.`,
-            tags: [repo.language, ...(repo.topics || [])].filter(Boolean),
-            liveUrl: repo.homepage || null,
-            githubUrl: repo.html_url,
-            stars: repo.stargazers_count,
-            forks: repo.forks_count,
-            updatedAt: new Date(repo.updated_at).toLocaleDateString(),
-            image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"
-          };
-        });
-        setGithubRepos(formatted);
+        if (Array.isArray(data) && data.length > 0) {
+          const formatted = data.map(repo => {
+            const lang = repo.language || (repo.topics && repo.topics[0]) || "Code";
+            return {
+              id: `gh-${repo.id}`,
+              name: repo.name,
+              title: repo.name.toUpperCase().replace(/[-_]/g, ' '),
+              subtitle: lang.toUpperCase(),
+              highlight: repo.stargazers_count > 0 ? `★ ${repo.stargazers_count} STARS` : "ACTIVE REPO",
+              category: mapRepoCategory(repo.language, repo.topics),
+              badge: repo.stargazers_count > 0 ? "POPULAR" : "GITHUB",
+              description: repo.description || "GitHub repository actively maintained by Haruki.",
+              fullDescription: repo.description ? `${repo.description}\n\nRepository: ${repo.full_name}\nStars: ${repo.stargazers_count} | Forks: ${repo.forks_count}\nLast updated: ${new Date(repo.updated_at).toLocaleDateString()}` : `Public GitHub repository maintained by ${username}.`,
+              tags: [repo.language, ...(repo.topics || [])].filter(Boolean),
+              liveUrl: repo.homepage || null,
+              githubUrl: repo.html_url,
+              stars: repo.stargazers_count,
+              forks: repo.forks_count,
+              updatedAt: new Date(repo.updated_at).toLocaleDateString(),
+              image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80"
+            };
+          });
+          setGithubRepos(formatted);
+        }
       }
     } catch (err) {
       console.error('Failed to fetch GitHub repos', err);
@@ -73,8 +84,8 @@ export default function ProjectsPage({ onSelectProject }) {
       const query = searchQuery.toLowerCase();
       const matchesSearch = 
         p.title.toLowerCase().includes(query) ||
-        p.description.toLowerCase().includes(query) ||
-        p.tags.some(t => t.toLowerCase().includes(query));
+        p.description?.toLowerCase().includes(query) ||
+        (p.tags && p.tags.some(t => t.toLowerCase().includes(query)));
       return matchesCat && matchesSearch;
     });
   }, [githubRepos, selectedCategory, searchQuery]);
@@ -147,15 +158,11 @@ export default function ProjectsPage({ onSelectProject }) {
       </div>
 
       {/* Repositories Grid with Staggered Scroll Pop-Up */}
-      {loading ? (
-        <div className="text-center py-16 space-y-3">
-          <RefreshCw className="w-8 h-8 text-blue-500 animate-spin mx-auto" />
-          <p className="text-xs font-mono text-slate-400">Loading GitHub repositories...</p>
-        </div>
-      ) : filteredProjects.length > 0 ? (
+      {filteredProjects.length > 0 ? (
         <ScrollRevealContainer 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pt-6"
-          amount={0.1}
+          amount={0}
+          once={true}
         >
           {filteredProjects.map((proj) => (
             <ScrollRevealItem key={proj.id}>
