@@ -77,7 +77,7 @@ function PortfolioApp() {
         className="flex flex-col min-h-screen justify-between"
       >
         {/* Top Header Bar */}
-        <header className="sticky top-0 z-40 w-full backdrop-blur-md bg-white/75 dark:bg-[#0a0a0f]/80 border-b border-slate-200/60 dark:border-white/10 transition-colors duration-300">
+        <header className="sticky top-0 z-40 w-full backdrop-blur-xl bg-white/80 dark:bg-[#070b14]/85 border-b border-blue-500/20 dark:border-blue-500/20 shadow-sm transition-colors duration-300">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
             {/* Logo / Crest with Favicon */}
             <button
