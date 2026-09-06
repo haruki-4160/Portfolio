@@ -63,17 +63,15 @@ function PortfolioApp() {
   // Triggered when Hero CTA TakeOff button is clicked
   const handleLaunchFlight = ({ startX, startY, targetTab }) => {
     setFlightState({ active: true, startX, startY, targetTab });
-    setPageShift(true);
 
-    // Synchronize camera glide mid-flight with slow, smooth flight path
+    // Smoothly synchronize vertical camera scroll with the diving paper plane
     setTimeout(() => {
-      handleNavigate(targetTab, 1.8);
-    }, 700);
+      handleNavigate(targetTab, 1.6);
+    }, 280);
   };
 
   const handleFlightComplete = (targetTab) => {
     setFlightState(null);
-    setPageShift(false);
   };
 
   return (
@@ -133,24 +131,8 @@ function PortfolioApp() {
           </div>
         </header>
 
-        {/* Main Content Feed with Horizontal Camera Glide when Flight is Active */}
-        <motion.main
-          animate={
-            pageShift
-              ? {
-                  x: [0, -140, 0],
-                  opacity: [1, 0.88, 1],
-                  filter: ['blur(0px)', 'blur(3px)', 'blur(0px)'],
-                  scale: [1, 0.985, 1],
-                }
-              : { x: 0, opacity: 1, filter: 'blur(0px)', scale: 1 }
-          }
-          transition={{
-            duration: 2.4,
-            ease: [0.25, 0.1, 0.25, 1],
-          }}
-          className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1 pt-6 sm:pt-10 z-10 space-y-24 sm:space-y-36"
-        >
+        {/* Main Content Feed */}
+        <main className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1 pt-6 sm:pt-10 z-10 space-y-24 sm:space-y-36">
           {/* Section 1: Home / Hero */}
           <section id="home" className="scroll-mt-24">
             <Home 
@@ -174,7 +156,7 @@ function PortfolioApp() {
           <section id="contact" className="scroll-mt-24">
             <ContactPage />
           </section>
-        </motion.main>
+        </main>
 
         {/* Footer with Real Verified Social Links */}
         <footer className="w-full text-center py-10 pb-32 text-xs font-mono text-slate-500 dark:text-slate-500 border-t border-slate-200/50 dark:border-white/5 z-10">
