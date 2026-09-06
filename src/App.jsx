@@ -12,8 +12,7 @@ import FlightNavigator from './components/FlightNavigator/FlightNavigator';
 import { GithubIcon, DiscordIcon, LinkedinIcon, InstagramIcon } from './components/Icons/SocialIcons';
 import { Mail } from 'lucide-react';
 import HeroPage from './pages/HeroPage';
-import DomainsPage from './pages/DomainsPage';
-import FeaturedPage from './pages/FeaturedPage';
+import DomainsStackPage from './pages/DomainsStackPage';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -27,7 +26,7 @@ function PortfolioApp() {
 
   // Scroll spy with active section detector for horizontal / vertical
   useEffect(() => {
-    const sections = ['home', 'domains', 'featured', 'projects', 'about', 'contact'];
+    const sections = ['home', 'domains', 'projects', 'about', 'contact'];
     
     const handleScroll = (scrollLeftVal) => {
       const isMobile = window.innerWidth <= 1024;
@@ -165,30 +164,22 @@ function PortfolioApp() {
           />
         </section>
 
-        {/* Page 2: Audio Lounge & Domains */}
+        {/* Page 2: Domains & Stack */}
         <section id="domains" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
-          <DomainsPage />
+          <DomainsStackPage />
         </section>
 
-        {/* Page 3: Featured Projects & Stack */}
-        <section id="featured" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
-          <FeaturedPage 
-            onNavigate={handleNavigate}
-            onSelectProject={setSelectedProject} 
-          />
-        </section>
-
-        {/* Page 4: All Repositories */}
+        {/* Page 3: Featured Work & Live GitHub Repositories */}
         <section id="projects" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
           <ProjectsPage onSelectProject={setSelectedProject} />
         </section>
 
-        {/* Page 5: About & Journey */}
+        {/* Page 4: About & Journey */}
         <section id="about" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
           <AboutPage />
         </section>
 
-        {/* Page 6: Contact & Transmission */}
+        {/* Page 5: Contact & Transmission */}
         <section id="contact" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
           <ContactPage />
         </section>

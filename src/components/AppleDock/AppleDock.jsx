@@ -54,8 +54,7 @@ export default function AppleDock({ activeTab, onNavigate, onTabChange }) {
   const navItems = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'domains', label: 'Domains', icon: Bot },
-    { id: 'featured', label: 'Featured', icon: Sparkles },
-    { id: 'projects', label: 'Repos', icon: FolderGit2 },
+    { id: 'projects', label: 'Projects', icon: FolderGit2 },
     { id: 'about', label: 'About', icon: User },
     { id: 'contact', label: 'Contact', icon: Mail },
   ];
