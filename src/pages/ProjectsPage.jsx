@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import RetroSearchBar from '../components/RetroSearchBar/RetroSearchBar';
 import CyberCard from '../components/CyberCard/CyberCard';
+import { ScrollRevealContainer, ScrollRevealItem } from '../components/ScrollReveal/ScrollReveal';
 import { RefreshCw, Star, GitFork, ExternalLink, Code2, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -78,35 +79,36 @@ export default function ProjectsPage({ onSelectProject }) {
     });
   }, [githubRepos, selectedCategory, searchQuery]);
 
-  const handleRefreshClick = () => {
-    fetchGitHubRepos();
-    confetti({ particleCount: 35, spread: 50 });
-  };
-
   return (
     <div className="space-y-12 pb-24 pt-4">
       {/* Header */}
-      <motion.div
+      <motion.div 
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center max-w-2xl mx-auto space-y-4"
+        className="space-y-4 text-left max-w-2xl"
       >
-        <span className="text-xs font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 uppercase px-3.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/30">
-          GITHUB REPOSITORIES
+        <span className="text-xs font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 uppercase px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30">
+          ALL REPOSITORIES
         </span>
         <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">
-          Live Repositories & Work
+          Code Arsenal & Open Source
         </h1>
-        <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300">
-          Directly synced from <a href={`https://github.com/${username}`} target="_blank" rel="noreferrer" className="text-sky-500 dark:text-sky-400 underline font-mono">github.com/{username}</a>
+        <p className="text-base text-slate-600 dark:text-slate-300">
+          Explore all public repositories directly synchronized from GitHub with live commit metadata, stars, and language breakdowns.
         </p>
 
-        {/* Live Sync Trigger */}
-        <div className="pt-2">
+        {/* Live GitHub Sync Indicator & Refresh Trigger */}
+        <div className="flex items-center gap-3 pt-2">
+          <div className="inline-flex items-center gap-2 text-xs font-mono text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Live Sync: @{username}</span>
+          </div>
+
           <button
-            onClick={handleRefreshClick}
+            onClick={fetchGitHubRepos}
             disabled={refreshing}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 border border-slate-300 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 transition-all cursor-pointer shadow-sm hover:scale-[1.02]"
+            className="text-xs font-mono text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+            title="Refresh GitHub Repositories"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-blue-500' : 'text-slate-400'}`} />
             <span>{refreshing ? 'Fetching Live Repos...' : 'Sync Latest GitHub Commits'}</span>
@@ -144,39 +146,46 @@ export default function ProjectsPage({ onSelectProject }) {
         </div>
       </div>
 
-      {/* Repositories Grid */}
+      {/* Repositories Grid with Staggered Scroll Pop-Up */}
       {loading ? (
         <div className="text-center py-16 space-y-3">
           <RefreshCw className="w-8 h-8 text-blue-500 animate-spin mx-auto" />
           <p className="text-xs font-mono text-slate-400">Loading GitHub repositories...</p>
         </div>
       ) : filteredProjects.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pt-6">
+        <ScrollRevealContainer 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pt-6"
+          amount={0.1}
+        >
           {filteredProjects.map((proj) => (
-            <CyberCard
-              key={proj.id}
-              title={proj.title}
-              subtitle={proj.subtitle}
-              highlight={proj.highlight}
-              prompt="VIEW REPO"
-              description={proj.description}
-              tags={proj.tags.length > 0 ? proj.tags : ["GitHub", "Source"]}
-              badge={proj.badge}
-              liveUrl={proj.liveUrl}
-              githubUrl={proj.githubUrl}
-              onClick={() => onSelectProject(proj)}
-            />
+            <ScrollRevealItem key={proj.id}>
+              <CyberCard
+                title={proj.title}
+                subtitle={proj.subtitle}
+                highlight={proj.highlight}
+                prompt="VIEW DETAILS"
+                description={proj.description}
+                tags={proj.tags}
+                badge={proj.badge}
+                githubUrl={proj.githubUrl}
+                liveUrl={proj.liveUrl}
+                onClick={() => onSelectProject(proj)}
+              />
+            </ScrollRevealItem>
           ))}
-        </div>
+        </ScrollRevealContainer>
       ) : (
-        <div className="glass-panel text-center py-16 px-6 rounded-3xl max-w-md mx-auto space-y-3">
-          <p className="text-base font-bold text-slate-900 dark:text-white">No repositories found</p>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            No repositories matched "{searchQuery}".
+        <div className="glass-panel text-center py-16 rounded-3xl space-y-3 max-w-lg mx-auto">
+          <p className="text-base font-bold text-slate-900 dark:text-white">No repositories match your filter</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+            Try adjusting your search query or selecting a different category pill.
           </p>
           <button
-            onClick={() => { setSearchQuery(''); setSelectedCategory('All'); }}
-            className="text-xs font-mono text-blue-500 dark:text-blue-400 underline pt-2 cursor-pointer"
+            onClick={() => {
+              setSearchQuery('');
+              setSelectedCategory('All');
+            }}
+            className="text-xs font-mono text-blue-500 dark:text-blue-400 hover:underline pt-2 cursor-pointer"
           >
             Reset Filters
           </button>

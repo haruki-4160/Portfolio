@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import DiscordPresence from '../components/DiscordPresence/DiscordPresence';
 import FloatingFolder from '../components/FloatingFolder/FloatingFolder';
+import { ScrollRevealContainer, ScrollRevealItem } from '../components/ScrollReveal/ScrollReveal';
 import { 
   Shield, 
   Terminal, 
@@ -38,92 +39,87 @@ export default function AboutPage() {
         </p>
       </motion.div>
 
-      {/* Grid: Narrative / Domains & Live Discord Presence */}
-      <motion.div 
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.15 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="grid grid-cols-1 lg:grid-cols-12 gap-8"
-      >
+      {/* Grid: Narrative / Domains & Live Discord Presence with Staggered Scroll Pop-Up */}
+      <ScrollRevealContainer className="grid grid-cols-1 lg:grid-cols-12 gap-8" amount={0.1}>
         {/* Left Column: Bio Details & Domain Trees (7 cols) */}
         <div className="lg:col-span-7 space-y-8">
           {/* Bio Overview */}
-          <div className="glass-panel p-8 rounded-3xl space-y-4">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Shield className="w-5 h-5 text-blue-500 dark:text-blue-400" />
-              Focus & Core Philosophy
-            </h3>
-            <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              <p>
-                I'm a first-year Computer Science Engineering student specializing in <strong>Cyber Security</strong>. My technical journey is driven by building real-world software, starting with <strong>Discord bot systems</strong> in Python and expanding into application security, systems/networks, and interactive frontends.
-              </p>
-              <p>
-                I actively practice <strong>AI-Assisted Development</strong> — utilizing modern AI to accelerate research, prototyping, and debugging while strictly understanding, optimizing, and maintaining the underlying architecture.
-              </p>
+          <ScrollRevealItem>
+            <div className="glass-panel p-8 rounded-3xl space-y-4">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Shield className="w-5 h-5 text-blue-500 dark:text-blue-400" />
+                Focus & Core Philosophy
+              </h3>
+              <div className="space-y-3 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                <p>
+                  I'm a first-year Computer Science Engineering student specializing in <strong>Cyber Security</strong>. My technical journey is driven by building real-world software, starting with <strong>Discord bot systems</strong> in Python and expanding into application security, systems/networks, and interactive frontends.
+                </p>
+                <p>
+                  I actively practice <strong>AI-Assisted Development</strong> — utilizing modern AI to accelerate research, prototyping, and debugging while strictly understanding, optimizing, and maintaining the underlying architecture.
+                </p>
+              </div>
             </div>
-          </div>
+          </ScrollRevealItem>
 
           {/* Cybersecurity & Development Domain Trees */}
-          <div className="glass-panel p-8 rounded-3xl space-y-6">
-            <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              <Terminal className="w-5 h-5 text-sky-500 dark:text-sky-400" />
-              Domains & Technical Focus
-            </h3>
+          <ScrollRevealItem>
+            <div className="glass-panel p-8 rounded-3xl space-y-6">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                <Terminal className="w-5 h-5 text-sky-500 dark:text-sky-400" />
+                Domains & Technical Focus
+              </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {skillDomains.map((dom) => {
-                const Icon = dom.icon;
-                return (
-                  <div key={dom.domain} className="space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-mono font-bold text-blue-600 dark:text-blue-400 tracking-wider">
-                      <Icon className="w-4 h-4 text-sky-500" />
-                      <span>{dom.domain}</span>
-                    </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {skillDomains.map((dom) => {
+                  const Icon = dom.icon;
+                  return (
+                    <div key={dom.domain} className="space-y-3">
+                      <div className="flex items-center gap-2 text-xs font-mono font-bold text-blue-600 dark:text-blue-400 tracking-wider">
+                        <Icon className="w-4 h-4 text-sky-500" />
+                        <span>{dom.domain}</span>
+                      </div>
 
-                    <div className="space-y-2 pl-2 border-l-2 border-slate-300 dark:border-white/10">
-                      {dom.items.map((item) => (
-                        <div key={item} className="text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center gap-2">
-                          <span className="text-slate-400">├──</span>
-                          <span>{item}</span>
-                        </div>
-                      ))}
+                      <div className="space-y-2 pl-2 border-l-2 border-slate-300 dark:border-white/10">
+                        {dom.items.map((item) => (
+                          <div key={item} className="text-xs font-mono text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                            <span className="text-slate-400">├──</span>
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </div>
+          </ScrollRevealItem>
         </div>
 
-        {/* Right Column: Live Discord Widget & 3D Resume Folder (5 cols) */}
+        {/* Right Column: Live Discord Presence & 3D Resume Folder (5 cols) */}
         <div className="lg:col-span-5 space-y-8">
-          {/* Live Discord Presence Widget */}
-          <DiscordPresence defaultDiscordId={profile.discordId} />
+          {/* Live Discord Presence Hub */}
+          <ScrollRevealItem>
+            <DiscordPresence defaultDiscordId={profile.discordId} />
+          </ScrollRevealItem>
 
-          {/* 3D Floating Folder Resume Box */}
-          <div className="glass-panel p-6 rounded-3xl flex flex-col items-center text-center space-y-3">
-            <div className="text-left w-full">
-              <span className="text-[10px] font-mono text-sky-500 dark:text-sky-400 font-bold uppercase tracking-wider">
-                DOCUMENTATION
-              </span>
+          {/* 3D Interactive Resume Folder Component */}
+          <ScrollRevealItem>
+            <div className="glass-panel p-8 rounded-3xl flex flex-col items-center justify-center text-center space-y-4">
               <h4 className="text-base font-bold text-slate-900 dark:text-white">
-                Download Curriculum Vitae
+                Interactive Resume Dossier
               </h4>
-            </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs font-mono">
+                Inspect and download Ashish Sunil's verified credentials and academic coursework.
+              </p>
 
-            <FloatingFolder
-              label="Download Resume.pdf"
-              isDownload={true}
-              downloadUrl="#"
-              downloadFilename="Ashish_Sunil_Resume.pdf"
-            />
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 pt-2">
-              Interactive 3D folder dropzone — click to download full CV.
-            </p>
-          </div>
+              <FloatingFolder
+                label="Ashish_Sunil_Resume.pdf"
+                downloadUrl="/Ashish_Sunil_Resume.pdf"
+              />
+            </div>
+          </ScrollRevealItem>
         </div>
-      </motion.div>
+      </ScrollRevealContainer>
     </div>
   );
 }
