@@ -2,9 +2,15 @@ import React from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import './ThemeSwitch.css';
 import { Sun, Moon } from 'lucide-react';
+import { soundFx } from '../../utils/soundEffects';
 
 export default function ThemeSwitch({ showLabels = false }) {
   const { isDark, toggleTheme } = useTheme();
+
+  const handleToggle = () => {
+    soundFx.playSwitch(!isDark);
+    toggleTheme();
+  };
 
   return (
     <div className="flex items-center gap-3">
@@ -21,7 +27,7 @@ export default function ThemeSwitch({ showLabels = false }) {
           id="theme-checkbox"
           className="theme-switch-checkbox"
           checked={isDark}
-          onChange={toggleTheme}
+          onChange={handleToggle}
         />
         <label htmlFor="theme-checkbox" className="theme-switch-label" title={`Switch to ${isDark ? 'Light' : 'Dark'} Mode`}>
         </label>

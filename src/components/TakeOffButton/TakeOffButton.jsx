@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './TakeOffButton.css';
+import { soundFx } from '../../utils/soundEffects';
 
 export default function TakeOffButton({
   text = "View Selected Work",
@@ -12,6 +13,7 @@ export default function TakeOffButton({
 
   const handleClick = (e) => {
     e.preventDefault();
+    soundFx.playPop(variant === 'primary' ? 680 : 540);
     setIsLaunching(true);
 
     // Call navigation handler
@@ -27,6 +29,10 @@ export default function TakeOffButton({
     }, 1600);
   };
 
+  const handleMouseEnter = () => {
+    soundFx.playHover();
+  };
+
   const letters = text.split("");
   const sentLetters = sentText.split("");
 
@@ -34,6 +40,7 @@ export default function TakeOffButton({
     <button
       type="button"
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
       className={`hero-takeoff-btn ${variant} ${isLaunching ? 'is-launching' : ''} ${className}`}
     >
       <div className="hero-takeoff-outline"></div>

@@ -18,6 +18,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, InstagramIcon } from '../components/Icons/SocialIcons';
+import { soundFx } from '../utils/soundEffects';
 
 export default function ContactPage() {
   const { profile } = portfolioData;
@@ -54,6 +55,7 @@ export default function ContactPage() {
 
     // Mark as submitted to trigger the plane takeOff animation on the button
     setSubmitted(true);
+    soundFx.playSuccess();
 
     // Auto-reset state and clear fields after 4 seconds
     setTimeout(() => {
@@ -64,6 +66,7 @@ export default function ContactPage() {
   };
 
   const handleCopyEmail = () => {
+    soundFx.playPop();
     navigator.clipboard.writeText(profile.email);
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2500);

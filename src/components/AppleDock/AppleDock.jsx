@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import './AppleDock.css';
 import { Home, FolderGit2, User, Mail } from 'lucide-react';
+import { soundFx } from '../../utils/soundEffects';
 
 function DockIcon({ mouseX, item, activeTab, onSelect }) {
   const ref = useRef(null);
@@ -23,9 +24,14 @@ function DockIcon({ mouseX, item, activeTab, onSelect }) {
   const handleClick = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    soundFx.playTap();
     if (onSelect) {
       onSelect(item.id);
     }
+  };
+
+  const handleMouseEnter = () => {
+    soundFx.playHover();
   };
 
   return (
@@ -34,6 +40,7 @@ function DockIcon({ mouseX, item, activeTab, onSelect }) {
       style={{ width }}
       whileTap={{ scale: 0.9 }}
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
       className={`dock-item group ${isActive ? 'active' : ''}`}
       title={item.label}
       type="button"

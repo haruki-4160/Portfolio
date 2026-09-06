@@ -7,6 +7,7 @@ import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import BackgroundGrid from './components/Background/BackgroundGrid';
 import AppleDock from './components/AppleDock/AppleDock';
 import ThemeSwitch from './components/ThemeSwitch/ThemeSwitch';
+import SoundToggle from './components/SoundToggle/SoundToggle';
 import ProjectModal from './components/ProjectModal/ProjectModal';
 import { GithubIcon, DiscordIcon, LinkedinIcon, InstagramIcon } from './components/Icons/SocialIcons';
 import { Mail } from 'lucide-react';
@@ -101,8 +102,9 @@ function PortfolioApp() {
               </div>
             </button>
 
-            {/* Right Header: 3D Skeuomorphic Theme Switch */}
-            <div className="flex items-center gap-4">
+            {/* Right Header: Sound Toggle + 3D Skeuomorphic Theme Switch */}
+            <div className="flex items-center gap-3">
+              <SoundToggle />
               <ThemeSwitch showLabels={false} />
             </div>
           </div>
