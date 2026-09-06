@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import './AppleDock.css';
-import { Home, FolderGit2, User, Mail, Sparkles } from 'lucide-react';
+import { Home, FolderGit2, User, Mail } from 'lucide-react';
 
 function DockIcon({ mouseX, item, activeTab, onSelect }) {
   const ref = useRef(null);
@@ -20,26 +20,36 @@ function DockIcon({ mouseX, item, activeTab, onSelect }) {
 
   const isActive = activeTab === item.id;
 
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onSelect) {
+      onSelect(item.id);
+    }
+  };
+
   return (
     <motion.button
       ref={ref}
       style={{ width }}
       whileTap={{ scale: 0.9 }}
-      onClick={() => onSelect(item.id)}
+      onClick={handleClick}
       className={`dock-item group ${isActive ? 'active' : ''}`}
       title={item.label}
+      type="button"
     >
-      <motion.div style={{ scale }} className="flex flex-col items-center justify-center">
+      <motion.div style={{ scale }} className="flex flex-col items-center justify-center pointer-events-none">
         <item.icon className="w-5 h-5 transition-transform duration-200 group-hover:-translate-y-0.5" />
-        <span className="hidden sm:block text-[10px] tracking-wide">{item.label}</span>
+        <span className="hidden sm:block text-[10px] tracking-wide font-mono">{item.label}</span>
       </motion.div>
       {isActive && <div className="dock-active-dot" />}
     </motion.button>
   );
 }
 
-export default function AppleDock({ activeTab, onTabChange }) {
+export default function AppleDock({ activeTab, onNavigate, onTabChange }) {
   const mouseX = useMotionValue(Infinity);
+  const handleSelect = onNavigate || onTabChange;
 
   const navItems = [
     { id: 'home', label: 'Home', icon: Home },
@@ -49,7 +59,7 @@ export default function AppleDock({ activeTab, onTabChange }) {
   ];
 
   return (
-    <nav className="apple-dock-nav">
+    <nav className="apple-dock-nav" aria-label="Main Navigation">
       <motion.div
         onMouseMove={(e) => mouseX.set(e.pageX)}
         onMouseLeave={() => mouseX.set(Infinity)}
@@ -64,7 +74,7 @@ export default function AppleDock({ activeTab, onTabChange }) {
             item={item}
             mouseX={mouseX}
             activeTab={activeTab}
-            onSelect={onTabChange}
+            onSelect={handleSelect}
           />
         ))}
       </motion.div>
