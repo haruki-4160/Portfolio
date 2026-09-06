@@ -7,22 +7,21 @@ export default function VinylMusicPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState("0:00");
-  const [duration, setDuration] = useState("2:48");
+  const [duration, setDuration] = useState("3:20");
   const [volume, setVolume] = useState(80);
   const [isMuted, setIsMuted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   
+  const videoId = "wlEIQVYyn3o"; // User's requested new YouTube track
+  const [trackTitle, setTrackTitle] = useState("Curated Aesthetic Beat");
+  const [artistName, setArtistName] = useState("Haruki Soundscapes");
+
   const playerRef = useRef(null);
   const intervalRef = useRef(null);
 
-  const videoId = "eR-u3XauxDU"; // DOCE BRISA - QMIIR (Slowed) x Cipher
-  const trackInfo = {
-    title: "DOCE BRISA (Slowed)",
-    artist: "QMIIR x Cipher",
-    youtubeUrl: `https://youtu.be/${videoId}`
-  };
+  const youtubeUrl = `https://youtu.be/${videoId}`;
 
-  // Initialize YouTube IFrame Player API
+  // Initialize YouTube IFrame Player API for Real Audio Playback
   useEffect(() => {
     if (!window.YT) {
       const tag = document.createElement('script');
@@ -47,6 +46,16 @@ export default function VinylMusicPlayer() {
           events: {
             onReady: (event) => {
               event.target.setVolume(volume);
+
+              // Dynamically get track title and artist from YouTube video data
+              try {
+                const data = event.target.getVideoData();
+                if (data && data.title) {
+                  setTrackTitle(data.title.replace(/\s*\([^)]*\)/g, '').replace(/\s*\[[^\]]*\]/g, ''));
+                  if (data.author) setArtistName(data.author);
+                }
+              } catch (e) {}
+
               const totalSec = event.target.getDuration();
               if (totalSec) {
                 const mins = Math.floor(totalSec / 60);
@@ -214,15 +223,15 @@ export default function VinylMusicPlayer() {
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
               <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white truncate block">
-                {trackInfo.title}
+                {trackTitle}
               </span>
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">
-              {trackInfo.artist}
+              {artistName}
             </p>
           </div>
 
-          {/* Animated Equalizer Soundwaves (Dance on playing) */}
+          {/* Animated Equalizer Soundwaves */}
           <div className="flex items-center gap-0.5 h-6 px-1 shrink-0">
             {[1, 2, 3, 4].map((bar) => (
               <span
@@ -319,7 +328,7 @@ export default function VinylMusicPlayer() {
 
                 {/* YouTube Link */}
                 <a
-                  href={trackInfo.youtubeUrl}
+                  href={youtubeUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="p-1.5 rounded-xl text-slate-400 hover:text-blue-500 hover:bg-slate-100 dark:hover:bg-white/5 transition-colors"
