@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './SendMessageButton.css';
 
 export default function SendMessageButton({ isSubmitted, onClick, type = "submit" }) {
-  const [isSent, setIsSent] = useState(false);
-
-  const handleClick = (e) => {
-    setIsSent(true);
-    if (onClick) onClick(e);
-  };
-
   return (
     <button
       type={type}
-      onClick={handleClick}
-      className={`plane-send-btn ${isSent || isSubmitted ? 'is-sent' : ''}`}
+      onClick={onClick}
+      className={`plane-send-btn ${isSubmitted ? 'is-sent' : ''}`}
     >
       <div className="plane-send-outline"></div>
 

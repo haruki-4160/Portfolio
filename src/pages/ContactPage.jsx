@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import FloatingFolder from '../components/FloatingFolder/FloatingFolder';
 import SendMessageButton from '../components/SendMessageButton/SendMessageButton';
@@ -15,11 +15,9 @@ import {
   ExternalLink,
   ScanLine,
   AlertCircle,
-  PhoneCall,
-  MessageCircle
+  CheckCircle2
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, InstagramIcon, DiscordIcon } from '../components/Icons/SocialIcons';
-import confetti from 'canvas-confetti';
+import { GithubIcon, LinkedinIcon, InstagramIcon } from '../components/Icons/SocialIcons';
 
 export default function ContactPage() {
   const { profile } = portfolioData;
@@ -54,18 +52,20 @@ export default function ContactPage() {
       return;
     }
 
+    // Mark as submitted to trigger the plane takeOff animation on the button
     setSubmitted(true);
-    confetti({
-      particleCount: 100,
-      spread: 80,
-      origin: { y: 0.6 }
-    });
+
+    // Auto-reset state and clear fields after 4 seconds
+    setTimeout(() => {
+      setFormData({ name: '', email: '', message: '', projectType: 'Discord Bot & Automation' });
+      setAttachedFile(null);
+      setSubmitted(false);
+    }, 4000);
   };
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(profile.email);
     setCopiedEmail(true);
-    confetti({ particleCount: 30, spread: 50 });
     setTimeout(() => setCopiedEmail(false), 2500);
   };
 
@@ -92,123 +92,119 @@ export default function ContactPage() {
         {/* Left Column: Form & 3D Folder Upload (7 cols) */}
         <div className="lg:col-span-7">
           <div className="glass-panel p-8 sm:p-10 rounded-3xl space-y-6">
-            {/* Success State */}
-            {submitted ? (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="text-center py-12 space-y-4"
-              >
-                <div className="w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-500 flex items-center justify-center mx-auto text-2xl font-bold shadow-lg shadow-emerald-500/20">
-                  ✓
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900 dark:text-white">Message Transmitted!</h3>
-                <p className="text-sm text-slate-600 dark:text-slate-300 max-w-sm mx-auto leading-relaxed">
-                  Thank you for reaching out, <strong>{formData.name}</strong>. I'll review your project details and get back to you within 24 hours.
-                </p>
-                <div className="pt-2">
-                  <button
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormData({ name: '', email: '', message: '', projectType: 'Discord Bot & Automation' });
-                    }}
-                    className="text-xs font-mono text-blue-500 dark:text-blue-400 underline cursor-pointer"
-                  >
-                    Send another message
-                  </button>
-                </div>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Error Message Banner */}
-                {errorMessage && (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Error Message Banner */}
+              {errorMessage && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-mono flex items-center gap-2"
+                >
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                  <span>{errorMessage}</span>
+                </motion.div>
+              )}
+
+              {/* Subdued Inline Confirmation Chip */}
+              <AnimatePresence>
+                {submitted && (
                   <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-600 dark:text-rose-400 text-xs font-mono flex items-center gap-2"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-mono flex items-center gap-2"
                   >
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    <span>{errorMessage}</span>
+                    <CheckCircle2 className="w-4 h-4 shrink-0" />
+                    <span>Message transmitted successfully! I'll get back to you within 24 hours.</span>
                   </motion.div>
                 )}
+              </AnimatePresence>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-mono text-slate-600 dark:text-slate-300 font-semibold">
-                      Your Name
-                    </label>
-                    <input
-                      required
-                      type="text"
-                      placeholder="e.g. Alex Morgan"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="text-xs font-mono text-slate-600 dark:text-slate-300 font-semibold">
-                      Email Address
-                    </label>
-                    <input
-                      required
-                      type="email"
-                      placeholder="alex@company.com"
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors"
-                    />
-                  </div>
-                </div>
-
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label className="text-xs font-mono text-slate-600 dark:text-slate-300 font-semibold">
-                    Project Focus
+                    Your Name
                   </label>
-                  <select
-                    value={formData.projectType}
-                    onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#121218] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500"
-                  >
-                    <option value="Discord Bot & Automation">Discord Bot & Automation</option>
-                    <option value="Cybersecurity Audit / Systems">Cybersecurity Audit / Systems</option>
-                    <option value="Web & Frontend Application">Web & Frontend Application</option>
-                    <option value="Consulting / Architecture">Consulting / Architecture</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-xs font-mono text-slate-600 dark:text-slate-300 font-semibold">
-                    Message / Requirements
-                  </label>
-                  <textarea
+                  <input
                     required
-                    rows={4}
-                    placeholder="Tell me about your project, timeline, and goals..."
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors resize-none"
+                    type="text"
+                    placeholder="e.g. Alex Morgan"
+                    value={formData.name}
+                    onChange={(e) => {
+                      setFormData({ ...formData, name: e.target.value });
+                      if (errorMessage) setErrorMessage('');
+                    }}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors"
                   />
                 </div>
 
-                {/* 3D Animated Floating Folder Upload */}
-                <div className="pt-2 flex flex-col items-center sm:items-start">
-                  <span className="text-xs font-mono text-slate-500 dark:text-slate-400 mb-2">
-                    Optional: Attach Specs / Wireframes
-                  </span>
-                  <FloatingFolder
-                    label="Attach Brief or Specs"
-                    onFileSelect={(file) => setAttachedFile(file)}
+                <div className="space-y-2">
+                  <label className="text-xs font-mono text-slate-600 dark:text-slate-300 font-semibold">
+                    Email Address
+                  </label>
+                  <input
+                    required
+                    type="email"
+                    placeholder="alex@company.com"
+                    value={formData.email}
+                    onChange={(e) => {
+                      setFormData({ ...formData, email: e.target.value });
+                      if (errorMessage) setErrorMessage('');
+                    }}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors"
                   />
                 </div>
+              </div>
 
-                {/* Interactive Plane Take-Off Send Message Button */}
-                <div className="pt-2">
-                  <SendMessageButton isSubmitted={submitted} type="submit" />
-                </div>
-              </form>
-            )}
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-slate-600 dark:text-slate-300 font-semibold">
+                  Project Focus
+                </label>
+                <select
+                  value={formData.projectType}
+                  onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                  className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-[#121218] border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500"
+                >
+                  <option value="Discord Bot & Automation">Discord Bot & Automation</option>
+                  <option value="Cybersecurity Audit / Systems">Cybersecurity Audit / Systems</option>
+                  <option value="Web & Frontend Application">Web & Frontend Application</option>
+                  <option value="Consulting / Architecture">Consulting / Architecture</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-xs font-mono text-slate-600 dark:text-slate-300 font-semibold">
+                  Message / Requirements
+                </label>
+                <textarea
+                  required
+                  rows={4}
+                  placeholder="Tell me about your project, timeline, and goals..."
+                  value={formData.message}
+                  onChange={(e) => {
+                    setFormData({ ...formData, message: e.target.value });
+                    if (errorMessage) setErrorMessage('');
+                  }}
+                  className="w-full px-4 py-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white text-sm outline-none focus:border-blue-500 transition-colors resize-none"
+                />
+              </div>
+
+              {/* 3D Animated Floating Folder Upload */}
+              <div className="pt-2 flex flex-col items-center sm:items-start">
+                <span className="text-xs font-mono text-slate-500 dark:text-slate-400 mb-2">
+                  Optional: Attach Specs / Wireframes
+                </span>
+                <FloatingFolder
+                  label="Attach Brief or Specs"
+                  onFileSelect={(file) => setAttachedFile(file)}
+                />
+              </div>
+
+              {/* Interactive Plane Take-Off Send Message Button */}
+              <div className="pt-2">
+                <SendMessageButton isSubmitted={submitted} type="submit" />
+              </div>
+            </form>
           </div>
         </div>
 
