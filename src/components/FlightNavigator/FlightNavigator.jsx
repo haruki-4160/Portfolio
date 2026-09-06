@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import './FlightNavigator.css';
 
-export default function FlightNavigator({ flightState, onFlightComplete }) {
+export default function FlightNavigator({ flightState, onFlightComplete, onCameraShift }) {
   // flightState: { active: boolean, startX: number, startY: number, targetTab: string } | null
   const [particles, setParticles] = useState([]);
   const [windLines, setWindLines] = useState([]);
@@ -15,28 +15,28 @@ export default function FlightNavigator({ flightState, onFlightComplete }) {
     }
 
     const { startX, startY } = flightState;
-    const screenHeight = window.innerHeight;
-    const distanceY = screenHeight - startY + 200;
+    const screenWidth = window.innerWidth;
+    const distance = screenWidth - startX + 200;
 
-    // Generate glowing contrail sparkle particles along the vertical downward flight path
-    const newParticles = Array.from({ length: 22 }, (_, i) => {
-      const progress = (i + 1) / 22;
+    // Generate glowing contrail sparkle particles along the flight corridor
+    const newParticles = Array.from({ length: 24 }, (_, i) => {
+      const progress = (i + 1) / 24;
       return {
-        id: `v-particle-${i}`,
-        x: startX + Math.sin(progress * Math.PI * 2) * 50 + (Math.random() * 20 - 10),
-        y: startY + distanceY * progress,
-        delay: 0.15 + progress * 1.2,
+        id: `particle-${i}`,
+        x: startX + distance * progress,
+        y: startY - Math.sin(progress * Math.PI) * 70 + (Math.random() * 30 - 15),
+        delay: 0.15 + progress * 1.8,
         size: Math.random() * 5 + 3,
-        duration: Math.random() * 0.7 + 0.5,
+        duration: Math.random() * 0.8 + 0.6,
       };
     });
 
-    // Generate vertical aerodynamic air stream lines
-    const newWindLines = Array.from({ length: 6 }, (_, i) => ({
-      id: `v-wind-${i}`,
-      x: startX - 30 + i * 15 + (Math.random() * 16 - 8),
-      delay: 0.2 + (i * 0.12),
-      height: Math.random() * 100 + 70,
+    // Generate high-speed horizontal aerodynamic wind streak lines
+    const newWindLines = Array.from({ length: 8 }, (_, i) => ({
+      id: `wind-${i}`,
+      y: startY - 40 + i * 18 + (Math.random() * 20 - 10),
+      delay: 0.3 + (i * 0.15),
+      width: Math.random() * 120 + 80,
     }));
 
     setParticles(newParticles);
@@ -45,39 +45,52 @@ export default function FlightNavigator({ flightState, onFlightComplete }) {
 
   if (!flightState?.active) return null;
 
-  const startX = flightState.startX || window.innerWidth * 0.5;
-  const startY = flightState.startY || window.innerHeight * 0.3;
+  const startX = flightState.startX || window.innerWidth * 0.2;
+  const startY = flightState.startY || window.innerHeight * 0.5;
+  const screenWidth = window.innerWidth;
   const screenHeight = window.innerHeight;
 
-  // Smooth downward dive coordinates
-  const midX = startX + 55;
-  const endX = startX + 20;
+  // Parabolic smooth curve across the screen from left to right
+  const midX = startX + (screenWidth - startX) * 0.45;
+  const endX = screenWidth + 180;
 
-  const midY = startY + (screenHeight - startY) * 0.45;
-  const endY = screenHeight + 140;
+  const midY = Math.max(60, startY - 90);
+  const endY = Math.min(screenHeight - 100, startY + 50);
 
   return (
     <div className="flight-overlay-container" aria-hidden="true">
-      {/* Vertical Aerodynamic Streamlines */}
+      {/* Horizontal Camera Guide Glow Tunnel */}
+      <motion.div
+        initial={{ opacity: 0, scaleX: 0 }}
+        animate={{
+          opacity: [0, 0.4, 0.6, 0.2, 0],
+          scaleX: [0, 0.6, 1, 1],
+        }}
+        transition={{ duration: 2.3, ease: "easeInOut" }}
+        className="flight-camera-tunnel"
+        style={{ top: `${Math.min(startY, midY) - 30}px` }}
+      />
+
+      {/* Aerodynamic Wind Streaks */}
       {windLines.map((w) => (
         <motion.div
           key={w.id}
-          initial={{ y: -100, opacity: 0, scaleY: 0.2 }}
+          initial={{ x: -200, opacity: 0, scaleX: 0.2 }}
           animate={{
-            y: [0, screenHeight + 200],
+            x: [0, screenWidth + 300],
             opacity: [0, 0.8, 0.4, 0],
-            scaleY: [0.4, 1.6, 0.2],
+            scaleX: [0.5, 1.8, 0.2],
           }}
           transition={{
-            duration: 1.1,
+            duration: 1.2,
             delay: w.delay,
             ease: [0.25, 0.1, 0.25, 1],
           }}
           style={{
-            left: `${w.x}px`,
-            height: `${w.height}px`,
+            top: `${w.y}px`,
+            width: `${w.width}px`,
           }}
-          className="flight-vertical-wind-line"
+          className="flight-wind-line"
         />
       ))}
 
@@ -88,7 +101,7 @@ export default function FlightNavigator({ flightState, onFlightComplete }) {
           initial={{ opacity: 0, scale: 0, x: startX, y: startY }}
           animate={{
             opacity: [0, 1, 0.8, 0],
-            scale: [0.2, 1.5, 1, 0],
+            scale: [0.2, 1.6, 1, 0],
             x: p.x,
             y: p.y,
           }}
@@ -102,26 +115,26 @@ export default function FlightNavigator({ flightState, onFlightComplete }) {
         />
       ))}
 
-      {/* Smooth Downward Gliding Paper Plane */}
+      {/* Smooth Gliding Paper Plane */}
       <motion.div
         initial={{
           x: startX,
           y: startY,
           scale: 0.85,
-          rotate: -15,
+          rotate: 0,
           opacity: 1,
         }}
         animate={{
-          x: [startX, startX + 40, midX, endX],
-          y: [startY, startY - 45, midY, endY],
-          scale: [0.85, 1.3, 1.35, 1.1],
-          rotate: [-15, 25, 75, 85], // Smooth bank into downward vertical glide
+          x: [startX, startX + 60, midX, endX],
+          y: [startY, startY - 30, midY, endY],
+          scale: [0.85, 1.35, 1.45, 1.15],
+          rotate: [0, -12, 14, 26],
           opacity: [1, 1, 1, 0.85],
         }}
         transition={{
-          duration: 1.7, // Smooth, natural vertical pace
-          ease: [0.25, 0.1, 0.25, 1],
-          times: [0, 0.18, 0.58, 1],
+          duration: 2.4, // Smooth, slow, majestic pace
+          ease: [0.25, 0.1, 0.25, 1], // Smooth aerodynamic bezier
+          times: [0, 0.15, 0.55, 1],
         }}
         onAnimationComplete={() => {
           if (onFlightComplete) {

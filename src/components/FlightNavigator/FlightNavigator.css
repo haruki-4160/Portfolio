@@ -43,11 +43,23 @@
   color: #60a5fa;
 }
 
-/* Vertical Aerodynamic Streamlines */
-.flight-vertical-wind-line {
+/* Horizontal Camera Guide Glow Tunnel */
+.flight-camera-tunnel {
   position: absolute;
-  width: 2px;
-  background: linear-gradient(180deg, transparent, rgba(56, 189, 248, 0.85), transparent);
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.08) 30%, rgba(59, 130, 246, 0.12) 70%, transparent 100%);
+  transform-origin: left center;
+  pointer-events: none;
+  filter: blur(12px);
+}
+
+/* Aerodynamic Horizontal Wind Lines */
+.flight-wind-line {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.85), transparent);
   border-radius: 9999px;
   filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.9));
   pointer-events: none;
