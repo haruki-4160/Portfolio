@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Volume2, VolumeX, Volume1, Play, Pause, RotateCcw, Sparkles, ExternalLink, Music } from 'lucide-react';
+import { Volume2, VolumeX, Volume1, Play, Pause, RotateCcw, Sparkles, ExternalLink, Music, Image as ImageIcon } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
-export default function VinylMusicPlayer() {
+export default function VinylMusicPlayer({ 
+  customDiskImage = "/haruki-logo.png",
+  customTitle = "HARUKI",
+  customArtist = "Ashish Sunil · Soundscapes",
+  customVideoId = "wlEIQVYyn3o"
+}) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState("0:00");
@@ -11,10 +16,11 @@ export default function VinylMusicPlayer() {
   const [volume, setVolume] = useState(80);
   const [isMuted, setIsMuted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [diskImage, setDiskImage] = useState(customDiskImage);
   
-  const videoId = "wlEIQVYyn3o"; // User's requested YouTube track
-  const trackTitle = "HARUKI";
-  const artistName = "Ashish Sunil · Soundscapes";
+  const videoId = customVideoId;
+  const trackTitle = customTitle;
+  const artistName = customArtist;
 
   const playerRef = useRef(null);
   const intervalRef = useRef(null);
@@ -191,22 +197,29 @@ export default function VinylMusicPlayer() {
 
         {/* Top Core Row: Spinning Vinyl Badge + Title + Soundwave + Main Play Button */}
         <div className="flex items-center justify-between gap-3 relative z-10">
-          {/* Mini Cosmic Vinyl Artwork with Real Spin */}
+          {/* Custom Image Spinning Vinyl Disc */}
           <div className="relative shrink-0">
-            <div className={`w-12 h-12 rounded-full shadow-lg border-2 border-slate-700 dark:border-zinc-500 overflow-hidden bg-[#090a10] flex items-center justify-center ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
-              <svg width="48" height="48" viewBox="0 0 128 128">
-                <rect width="128" height="128" fill="#090a10"></rect>
-                <circle cx="64" cy="64" r="54" fill="none" stroke="#1e2235" strokeWidth="2" opacity="0.6" />
-                <circle cx="64" cy="64" r="42" fill="none" stroke="#1e2235" strokeWidth="2" opacity="0.6" />
-                <circle cx="64" cy="64" r="30" fill="none" stroke="#1e2235" strokeWidth="2" opacity="0.6" />
-                <circle cx="90" cy="30" r="10" fill="#38bdf8" fillOpacity="0.5"></circle>
-                <circle cx="90" cy="30" r="8" fill="#60a5fa"></circle>
-                <path d="M0 128 Q32 64 64 128 T128 128" fill="#2563eb" stroke="black" strokeWidth="1" opacity="0.85"></path>
-                <path d="M0 128 Q32 32 64 128 T128 128" fill="#6366f1" stroke="black" strokeWidth="1" opacity="0.85"></path>
-              </svg>
+            <div className={`w-12 h-12 rounded-full shadow-lg border-2 border-slate-700 dark:border-zinc-500 overflow-hidden bg-[#090a10] relative flex items-center justify-center ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
+              {/* Vinyl Grooves Background */}
+              <div className="absolute inset-0 rounded-full border border-white/10" />
+              <div className="absolute inset-1 rounded-full border border-white/5" />
+              <div className="absolute inset-2 rounded-full border border-white/10" />
+
+              {/* Custom Disk Center Artwork */}
+              <div className="w-6 h-6 rounded-full overflow-hidden shadow-inner ring-1 ring-white/30 z-10">
+                <img
+                  src={diskImage}
+                  alt="Custom Disk Cover"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Specular Vinyl Reflection Sheen */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none rounded-full" />
             </div>
-            {/* Spindle hole */}
-            <div className="absolute inset-0 m-auto w-3.5 h-3.5 rounded-full bg-white dark:bg-slate-900 border border-slate-400" />
+
+            {/* Center Spindle Hole */}
+            <div className="absolute inset-0 m-auto w-2 h-2 rounded-full bg-white dark:bg-slate-900 border border-slate-400 z-20 pointer-events-none" />
           </div>
 
           {/* Custom Track Details */}
