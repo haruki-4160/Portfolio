@@ -155,9 +155,9 @@ export default function ProjectsPage({ onSelectProject }) {
         </div>
       </div>
 
-      {/* Repositories Grid */}
+      {/* Repositories Grid with Smooth Internal Scroll */}
       {filteredProjects.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center pt-4 max-h-[50vh] overflow-y-auto custom-scroll pr-2 w-full">
           {filteredProjects.map((proj, idx) => (
             <motion.div
               key={proj.id}

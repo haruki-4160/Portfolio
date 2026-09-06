@@ -70,7 +70,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="space-y-16 pb-24 pt-4">
+    <div className="w-full max-w-6xl mx-auto flex flex-col justify-center space-y-8 py-6 max-h-[calc(100vh-6rem)] overflow-y-auto custom-scroll pr-1">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}

@@ -11,7 +11,6 @@ html, body {
   min-height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

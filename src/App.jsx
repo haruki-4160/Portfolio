@@ -102,50 +102,46 @@ function PortfolioApp() {
       {/* Dynamic Parallax Background */}
       <BackgroundGrid />
 
-      {/* Main App Container with Cinematic Reveal Transition */}
-      <motion.div
-        initial={{ opacity: 0, y: 15, filter: 'blur(10px)' }}
-        animate={!loading ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 15, filter: 'blur(10px)' }}
-        transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-        className="flex flex-col min-h-screen"
-      >
-        {/* Top Header Bar - Fixed to Viewport */}
-        <header className="fixed top-0 left-0 right-0 z-40 w-full backdrop-blur-md bg-white/75 dark:bg-[#0a0a0f]/80 border-b border-slate-200/60 dark:border-white/10 transition-colors duration-300">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
-            {/* Logo / Crest with Favicon */}
-            <button
-              onClick={() => handleNavigate('home')}
-              className="flex items-center gap-3 group text-left cursor-pointer"
-            >
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/20 dark:ring-white/10 group-hover:scale-105 transition-transform bg-black/40 shadow-md">
-                <img
-                  src="/haruki-logo.png"
-                  alt="Haruki Crest"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div>
-                <div className="font-extrabold text-sm sm:text-base tracking-widest text-slate-900 dark:text-white flex items-center gap-1.5 font-mono">
-                  HARUKI
-                  <span className="text-sky-500 text-xs">✦</span>
-                </div>
-                <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 hidden sm:block">
-                  ASHISH SUNIL // CYBERSECURITY
-                </div>
-              </div>
-            </button>
-
-            {/* Right Header: 3D Skeuomorphic Theme Switch */}
-            <div className="flex items-center gap-4">
-              <ThemeSwitch showLabels={false} />
+      {/* Top Header Bar - Fixed to Viewport at Root Level */}
+      <header className="fixed top-0 left-0 right-0 z-40 w-full backdrop-blur-md bg-white/75 dark:bg-[#0a0a0f]/80 border-b border-slate-200/60 dark:border-white/10 transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+          {/* Logo / Crest with Favicon */}
+          <button
+            onClick={() => handleNavigate('home')}
+            className="flex items-center gap-3 group text-left cursor-pointer"
+          >
+            <div className="relative w-10 h-10 rounded-xl overflow-hidden ring-1 ring-white/20 dark:ring-white/10 group-hover:scale-105 transition-transform bg-black/40 shadow-md">
+              <img
+                src="/haruki-logo.png"
+                alt="Haruki Crest"
+                className="w-full h-full object-cover"
+              />
             </div>
-          </div>
-        </header>
+            <div>
+              <div className="font-extrabold text-sm sm:text-base tracking-widest text-slate-900 dark:text-white flex items-center gap-1.5 font-mono">
+                HARUKI
+                <span className="text-sky-500 text-xs">✦</span>
+              </div>
+              <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400 hidden sm:block">
+                ASHISH SUNIL // CYBERSECURITY
+              </div>
+            </div>
+          </button>
 
-        {/* Main Content Feed - Horizontal Multi-Page Layout */}
-        <main
-          className="flex flex-col lg:flex-row items-stretch w-full lg:w-max min-h-[calc(100vh-5rem)] pt-20 sm:pt-24 pb-32 z-10"
-        >
+          {/* Right Header: 3D Skeuomorphic Theme Switch */}
+          <div className="flex items-center gap-4">
+            <ThemeSwitch showLabels={false} />
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content Feed with Cinematic Reveal Transition */}
+      <motion.main
+        initial={{ opacity: 0, y: 15 }}
+        animate={!loading ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+        className="flex flex-col lg:flex-row items-stretch w-full lg:w-max min-h-[calc(100vh-5rem)] pt-20 sm:pt-24 pb-32 z-10"
+      >
           {/* Page 1: Home / Hero */}
           <section id="home" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
             <HeroPage 
@@ -240,8 +236,7 @@ function PortfolioApp() {
 
             <p className="mt-4 text-[10px]">© {new Date().getFullYear()} Ashish Sunil.</p>
           </footer>
-        </main>
-      </motion.div>
+        </motion.main>
 
       {/* Floating Apple Dock Navbar */}
       <AppleDock activeTab={activeTab} onNavigate={handleNavigate} />
