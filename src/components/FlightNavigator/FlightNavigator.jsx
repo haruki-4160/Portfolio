@@ -2,69 +2,139 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './FlightNavigator.css';
 
-export default function FlightNavigator({ flightState, onFlightComplete }) {
+export default function FlightNavigator({ flightState, onFlightComplete, onCameraShift }) {
   // flightState: { active: boolean, startX: number, startY: number, targetTab: string } | null
   const [particles, setParticles] = useState([]);
+  const [windLines, setWindLines] = useState([]);
 
   useEffect(() => {
-    if (!flightState?.active) return;
+    if (!flightState?.active) {
+      setParticles([]);
+      setWindLines([]);
+      return;
+    }
 
-    // Generate dynamic trail particles
-    const newParticles = Array.from({ length: 12 }, (_, i) => ({
-      id: i,
-      x: flightState.startX + (window.innerWidth - flightState.startX) * (i / 12),
-      y: flightState.startY + (Math.sin(i * 0.5) * 40),
-      delay: i * 0.05,
-      size: Math.random() * 4 + 2,
+    const { startX, startY } = flightState;
+    const screenWidth = window.innerWidth;
+    const distance = screenWidth - startX + 200;
+
+    // Generate glowing contrail sparkle particles along the flight corridor
+    const newParticles = Array.from({ length: 24 }, (_, i) => {
+      const progress = (i + 1) / 24;
+      return {
+        id: `particle-${i}`,
+        x: startX + distance * progress,
+        y: startY - Math.sin(progress * Math.PI) * 70 + (Math.random() * 30 - 15),
+        delay: 0.15 + progress * 1.8,
+        size: Math.random() * 5 + 3,
+        duration: Math.random() * 0.8 + 0.6,
+      };
+    });
+
+    // Generate high-speed horizontal aerodynamic wind streak lines
+    const newWindLines = Array.from({ length: 8 }, (_, i) => ({
+      id: `wind-${i}`,
+      y: startY - 40 + i * 18 + (Math.random() * 20 - 10),
+      delay: 0.3 + (i * 0.15),
+      width: Math.random() * 120 + 80,
     }));
+
     setParticles(newParticles);
+    setWindLines(newWindLines);
   }, [flightState]);
 
   if (!flightState?.active) return null;
 
-  const endX = window.innerWidth + 120;
-  const controlY = flightState.startY - 80;
-  const endY = flightState.startY + 40;
+  const startX = flightState.startX || window.innerWidth * 0.2;
+  const startY = flightState.startY || window.innerHeight * 0.5;
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  // Parabolic smooth curve across the screen from left to right
+  const midX = startX + (screenWidth - startX) * 0.45;
+  const endX = screenWidth + 180;
+
+  const midY = Math.max(60, startY - 90);
+  const endY = Math.min(screenHeight - 100, startY + 50);
 
   return (
-    <div className="flight-overlay-container">
-      {/* Contrail Sparkle Particles */}
+    <div className="flight-overlay-container" aria-hidden="true">
+      {/* Horizontal Camera Guide Glow Tunnel */}
+      <motion.div
+        initial={{ opacity: 0, scaleX: 0 }}
+        animate={{
+          opacity: [0, 0.4, 0.6, 0.2, 0],
+          scaleX: [0, 0.6, 1, 1],
+        }}
+        transition={{ duration: 2.3, ease: "easeInOut" }}
+        className="flight-camera-tunnel"
+        style={{ top: `${Math.min(startY, midY) - 30}px` }}
+      />
+
+      {/* Aerodynamic Wind Streaks */}
+      {windLines.map((w) => (
+        <motion.div
+          key={w.id}
+          initial={{ x: -200, opacity: 0, scaleX: 0.2 }}
+          animate={{
+            x: [0, screenWidth + 300],
+            opacity: [0, 0.8, 0.4, 0],
+            scaleX: [0.5, 1.8, 0.2],
+          }}
+          transition={{
+            duration: 1.2,
+            delay: w.delay,
+            ease: [0.25, 0.1, 0.25, 1],
+          }}
+          style={{
+            top: `${w.y}px`,
+            width: `${w.width}px`,
+          }}
+          className="flight-wind-line"
+        />
+      ))}
+
+      {/* Trailing Stardust Sparkles */}
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          initial={{ opacity: 0, scale: 0, x: flightState.startX, y: flightState.startY }}
+          initial={{ opacity: 0, scale: 0, x: startX, y: startY }}
           animate={{
-            opacity: [0, 0.9, 0],
-            scale: [0.5, 1.5, 0],
+            opacity: [0, 1, 0.8, 0],
+            scale: [0.2, 1.6, 1, 0],
             x: p.x,
             y: p.y,
           }}
-          transition={{ duration: 0.9, delay: p.delay, ease: "easeOut" }}
+          transition={{
+            duration: p.duration,
+            delay: p.delay,
+            ease: "easeOut",
+          }}
           style={{ width: p.size, height: p.size }}
           className="flight-light-particle"
         />
       ))}
 
-      {/* Main Flying Paper Plane with Parabolic Flight to the Right */}
+      {/* Smooth Gliding Paper Plane */}
       <motion.div
         initial={{
-          x: flightState.startX,
-          y: flightState.startY,
-          scale: 0.8,
+          x: startX,
+          y: startY,
+          scale: 0.85,
           rotate: 0,
           opacity: 1,
         }}
         animate={{
-          x: [flightState.startX, flightState.startX + 200, endX],
-          y: [flightState.startY, controlY, endY],
-          scale: [0.8, 1.4, 1.1],
-          rotate: [0, 15, 30],
-          opacity: [1, 1, 0.9],
+          x: [startX, startX + 60, midX, endX],
+          y: [startY, startY - 30, midY, endY],
+          scale: [0.85, 1.35, 1.45, 1.15],
+          rotate: [0, -12, 14, 26],
+          opacity: [1, 1, 1, 0.85],
         }}
         transition={{
-          duration: 0.95,
-          ease: [0.22, 1, 0.36, 1],
-          times: [0, 0.4, 1],
+          duration: 2.4, // Smooth, slow, majestic pace
+          ease: [0.25, 0.1, 0.25, 1], // Smooth aerodynamic bezier
+          times: [0, 0.15, 0.55, 1],
         }}
         onAnimationComplete={() => {
           if (onFlightComplete) {
@@ -73,6 +143,10 @@ export default function FlightNavigator({ flightState, onFlightComplete }) {
         }}
         className="flight-plane-wrapper"
       >
+        {/* Glowing engine pulse aura */}
+        <div className="flight-engine-glow" />
+
+        {/* Paper Plane SVG Vector */}
         <svg
           viewBox="0 0 24 24"
           fill="none"

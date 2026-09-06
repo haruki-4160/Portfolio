@@ -21,6 +21,7 @@ function PortfolioApp() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [flightState, setFlightState] = useState(null);
+  const [pageShift, setPageShift] = useState(false);
 
   // Scroll spy with active section detector
   useEffect(() => {
@@ -45,12 +46,12 @@ function PortfolioApp() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleNavigate = (sectionId) => {
+  const handleNavigate = (sectionId, customDuration = 1.4) => {
     setActiveTab(sectionId);
     const el = document.getElementById(sectionId);
     if (el) {
       if (window.lenis) {
-        window.lenis.scrollTo(el, { offset: -70, duration: 1.4 });
+        window.lenis.scrollTo(el, { offset: -70, duration: customDuration });
       } else {
         const yOffset = -70;
         const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
@@ -62,15 +63,17 @@ function PortfolioApp() {
   // Triggered when Hero CTA TakeOff button is clicked
   const handleLaunchFlight = ({ startX, startY, targetTab }) => {
     setFlightState({ active: true, startX, startY, targetTab });
+    setPageShift(true);
 
-    // Smoothly lead camera navigation mid-flight
+    // Synchronize camera glide mid-flight with slow, smooth flight path
     setTimeout(() => {
-      handleNavigate(targetTab);
-    }, 350);
+      handleNavigate(targetTab, 1.8);
+    }, 700);
   };
 
   const handleFlightComplete = (targetTab) => {
     setFlightState(null);
+    setPageShift(false);
   };
 
   return (
@@ -130,8 +133,24 @@ function PortfolioApp() {
           </div>
         </header>
 
-        {/* Main Content Feed */}
-        <main className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1 pt-6 sm:pt-10 z-10 space-y-24 sm:space-y-36">
+        {/* Main Content Feed with Horizontal Camera Glide when Flight is Active */}
+        <motion.main
+          animate={
+            pageShift
+              ? {
+                  x: [0, -140, 0],
+                  opacity: [1, 0.88, 1],
+                  filter: ['blur(0px)', 'blur(3px)', 'blur(0px)'],
+                  scale: [1, 0.985, 1],
+                }
+              : { x: 0, opacity: 1, filter: 'blur(0px)', scale: 1 }
+          }
+          transition={{
+            duration: 2.4,
+            ease: [0.25, 0.1, 0.25, 1],
+          }}
+          className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1 pt-6 sm:pt-10 z-10 space-y-24 sm:space-y-36"
+        >
           {/* Section 1: Home / Hero */}
           <section id="home" className="scroll-mt-24">
             <Home 
@@ -155,7 +174,7 @@ function PortfolioApp() {
           <section id="contact" className="scroll-mt-24">
             <ContactPage />
           </section>
-        </main>
+        </motion.main>
 
         {/* Footer with Real Verified Social Links */}
         <footer className="w-full text-center py-10 pb-32 text-xs font-mono text-slate-500 dark:text-slate-500 border-t border-slate-200/50 dark:border-white/5 z-10">
