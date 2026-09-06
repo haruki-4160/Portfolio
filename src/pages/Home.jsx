@@ -20,7 +20,7 @@ import {
   Headphones 
 } from 'lucide-react';
 
-export default function Home({ onNavigate, onSelectProject }) {
+export default function Home({ onNavigate, onSelectProject, onLaunchFlight }) {
   const { profile, whatIBuild, selectedWorks, techStack } = portfolioData;
 
   return (
@@ -61,20 +61,22 @@ export default function Home({ onNavigate, onSelectProject }) {
             {profile.tagline}
           </p>
 
-          {/* Action CTAs with Paper Plane Take-Off Animation */}
+          {/* Action CTAs with Full-Screen Paper Plane Take-Off Animation */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <TakeOffButton
               text="View Selected Work"
               sentText="Navigating..."
               variant="primary"
-              onClick={() => onNavigate('projects')}
+              targetTab="projects"
+              onLaunch={onLaunchFlight}
             />
 
             <TakeOffButton
               text="Get In Touch"
               sentText="Opening..."
               variant="secondary"
-              onClick={() => onNavigate('contact')}
+              targetTab="contact"
+              onLaunch={onLaunchFlight}
             />
           </div>
 

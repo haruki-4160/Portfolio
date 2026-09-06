@@ -8,6 +8,7 @@ import BackgroundGrid from './components/Background/BackgroundGrid';
 import AppleDock from './components/AppleDock/AppleDock';
 import ThemeSwitch from './components/ThemeSwitch/ThemeSwitch';
 import ProjectModal from './components/ProjectModal/ProjectModal';
+import FlightNavigator from './components/FlightNavigator/FlightNavigator';
 import { GithubIcon, DiscordIcon, LinkedinIcon, InstagramIcon } from './components/Icons/SocialIcons';
 import { Mail } from 'lucide-react';
 import Home from './pages/Home';
@@ -19,6 +20,7 @@ function PortfolioApp() {
   const [activeTab, setActiveTab] = useState('home');
   const [selectedProject, setSelectedProject] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [flightState, setFlightState] = useState(null);
 
   // Scroll spy with active section detector
   useEffect(() => {
@@ -57,10 +59,30 @@ function PortfolioApp() {
     }
   };
 
+  // Triggered when Hero CTA TakeOff button is clicked
+  const handleLaunchFlight = ({ startX, startY, targetTab }) => {
+    setFlightState({ active: true, startX, startY, targetTab });
+
+    // Smoothly lead camera navigation mid-flight
+    setTimeout(() => {
+      handleNavigate(targetTab);
+    }, 350);
+  };
+
+  const handleFlightComplete = (targetTab) => {
+    setFlightState(null);
+  };
+
   return (
     <div className="min-h-screen relative flex flex-col justify-between text-slate-900 dark:text-slate-100 selection:bg-[#3b82f6]/30 selection:text-[#93c5fd]">
       {/* Custom 3-Second Loading Screen with Smooth Fade/Blur Exit */}
       <LoadingScreen onComplete={() => setLoading(false)} />
+
+      {/* Full-Screen Global Paper Plane Flight Overlay */}
+      <FlightNavigator 
+        flightState={flightState} 
+        onFlightComplete={handleFlightComplete} 
+      />
 
       {/* Top Scroll Progress Indicator */}
       <ScrollProgress />
@@ -108,11 +130,15 @@ function PortfolioApp() {
           </div>
         </header>
 
-        {/* Main Continuous Scroll Feed */}
+        {/* Main Content Feed */}
         <main className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1 pt-6 sm:pt-10 z-10 space-y-24 sm:space-y-36">
           {/* Section 1: Home / Hero */}
           <section id="home" className="scroll-mt-24">
-            <Home onNavigate={handleNavigate} onSelectProject={setSelectedProject} />
+            <Home 
+              onNavigate={handleNavigate} 
+              onSelectProject={setSelectedProject}
+              onLaunchFlight={handleLaunchFlight}
+            />
           </section>
 
           {/* Section 2: Projects */}
