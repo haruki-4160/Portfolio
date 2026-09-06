@@ -12,9 +12,9 @@ export default function VinylMusicPlayer() {
   const [isMuted, setIsMuted] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   
-  const videoId = "wlEIQVYyn3o"; // User's requested new YouTube track
-  const [trackTitle, setTrackTitle] = useState("Curated Aesthetic Beat");
-  const [artistName, setArtistName] = useState("Haruki Soundscapes");
+  const videoId = "wlEIQVYyn3o"; // User's requested YouTube track
+  const trackTitle = "HARUKI";
+  const artistName = "Ashish Sunil · Soundscapes";
 
   const playerRef = useRef(null);
   const intervalRef = useRef(null);
@@ -46,16 +46,6 @@ export default function VinylMusicPlayer() {
           events: {
             onReady: (event) => {
               event.target.setVolume(volume);
-
-              // Dynamically get track title and artist from YouTube video data
-              try {
-                const data = event.target.getVideoData();
-                if (data && data.title) {
-                  setTrackTitle(data.title.replace(/\s*\([^)]*\)/g, '').replace(/\s*\[[^\]]*\]/g, ''));
-                  if (data.author) setArtistName(data.author);
-                }
-              } catch (e) {}
-
               const totalSec = event.target.getDuration();
               if (totalSec) {
                 const mins = Math.floor(totalSec / 60);
@@ -219,12 +209,13 @@ export default function VinylMusicPlayer() {
             <div className="absolute inset-0 m-auto w-3.5 h-3.5 rounded-full bg-white dark:bg-slate-900 border border-slate-400" />
           </div>
 
-          {/* Track Details */}
+          {/* Custom Track Details */}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
-              <span className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white truncate block">
+              <span className="text-sm font-extrabold tracking-wider bg-gradient-to-r from-slate-900 via-blue-600 to-sky-500 dark:from-white dark:via-blue-400 dark:to-sky-300 bg-clip-text text-transparent truncate block font-mono">
                 {trackTitle}
               </span>
+              <Sparkles className="w-3.5 h-3.5 text-sky-400 shrink-0" />
             </div>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 font-mono truncate">
               {artistName}
