@@ -11,7 +11,9 @@ import ProjectModal from './components/ProjectModal/ProjectModal';
 import FlightNavigator from './components/FlightNavigator/FlightNavigator';
 import { GithubIcon, DiscordIcon, LinkedinIcon, InstagramIcon } from './components/Icons/SocialIcons';
 import { Mail } from 'lucide-react';
-import Home from './pages/Home';
+import HeroPage from './pages/HeroPage';
+import DomainsPage from './pages/DomainsPage';
+import FeaturedPage from './pages/FeaturedPage';
 import ProjectsPage from './pages/ProjectsPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
@@ -25,7 +27,7 @@ function PortfolioApp() {
 
   // Scroll spy with active section detector for horizontal / vertical
   useEffect(() => {
-    const sections = ['home', 'projects', 'about', 'contact'];
+    const sections = ['home', 'domains', 'featured', 'projects', 'about', 'contact'];
     const handleScroll = () => {
       const isMobile = window.innerWidth <= 1024;
       const scrollPos = isMobile
@@ -55,14 +57,14 @@ function PortfolioApp() {
     const el = document.getElementById(sectionId);
     if (el) {
       if (window.lenis) {
-        window.lenis.scrollTo(el, { offset: -30, duration: customDuration });
+        window.lenis.scrollTo(el, { offset: 0, duration: customDuration });
       } else {
         const isMobile = window.innerWidth <= 1024;
         if (isMobile) {
           const y = el.getBoundingClientRect().top + window.pageYOffset - 70;
           window.scrollTo({ top: y, behavior: 'smooth' });
         } else {
-          const x = el.getBoundingClientRect().left + window.pageXOffset - 30;
+          const x = el.getBoundingClientRect().left + window.pageXOffset;
           window.scrollTo({ left: x, behavior: 'smooth' });
         }
       }
@@ -73,7 +75,7 @@ function PortfolioApp() {
   const handleLaunchFlight = ({ startX, startY, targetTab }) => {
     setFlightState({ active: true, startX, startY, targetTab });
 
-    // Smoothly scroll horizontally mid-flight
+    // Smoothly scroll horizontally mid-flight to destination page
     setTimeout(() => {
       handleNavigate(targetTab, 1.8);
     }, 500);
@@ -140,36 +142,48 @@ function PortfolioApp() {
           </div>
         </header>
 
-        {/* Main Content Feed - Horizontal Multi-Panel Layout */}
+        {/* Main Content Feed - Horizontal Multi-Page Layout */}
         <main
-          className="flex flex-col lg:flex-row items-stretch w-full lg:w-max min-h-[calc(100vh-5rem)] pt-20 sm:pt-24 pb-32 px-4 sm:px-8 gap-8 sm:gap-14 z-10"
+          className="flex flex-col lg:flex-row items-stretch w-full lg:w-max min-h-[calc(100vh-5rem)] pt-20 sm:pt-24 pb-32 z-10"
         >
-          {/* Section 1: Home / Hero */}
-          <section id="home" className="w-full lg:w-[86vw] lg:max-w-[1300px] flex-shrink-0">
-            <Home 
+          {/* Page 1: Home / Hero */}
+          <section id="home" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+            <HeroPage 
               onNavigate={handleNavigate} 
-              onSelectProject={setSelectedProject}
               onLaunchFlight={handleLaunchFlight}
             />
           </section>
 
-          {/* Section 2: Projects */}
-          <section id="projects" className="w-full lg:w-[86vw] lg:max-w-[1300px] flex-shrink-0">
+          {/* Page 2: Audio Lounge & Domains */}
+          <section id="domains" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+            <DomainsPage />
+          </section>
+
+          {/* Page 3: Featured Projects & Stack */}
+          <section id="featured" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+            <FeaturedPage 
+              onNavigate={handleNavigate}
+              onSelectProject={setSelectedProject} 
+            />
+          </section>
+
+          {/* Page 4: All Repositories */}
+          <section id="projects" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
             <ProjectsPage onSelectProject={setSelectedProject} />
           </section>
 
-          {/* Section 3: About & Journey */}
-          <section id="about" className="w-full lg:w-[86vw] lg:max-w-[1300px] flex-shrink-0">
+          {/* Page 5: About & Journey */}
+          <section id="about" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
             <AboutPage />
           </section>
 
-          {/* Section 4: Contact */}
-          <section id="contact" className="w-full lg:w-[86vw] lg:max-w-[1300px] flex-shrink-0">
+          {/* Page 6: Contact & Transmission */}
+          <section id="contact" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
             <ContactPage />
           </section>
 
-          {/* End Section / Horizontal Footer Panel */}
-          <footer className="w-full lg:w-[32vw] lg:max-w-[420px] flex-shrink-0 flex flex-col justify-center items-center py-12 px-6 text-xs font-mono text-slate-500 dark:text-slate-500 rounded-3xl glass-panel border border-slate-200/60 dark:border-white/10 my-auto shadow-xl">
+          {/* End Section / Horizontal Footer Dossier Panel */}
+          <footer className="w-full lg:w-[40vw] lg:max-w-[460px] flex-shrink-0 flex flex-col justify-center items-center py-12 px-6 text-xs font-mono text-slate-500 dark:text-slate-500 rounded-3xl glass-panel border border-slate-200/60 dark:border-white/10 my-auto mx-8 shadow-xl">
             <div className="flex items-center justify-center gap-2 mb-3">
               <img src="/haruki-logo.png" alt="Logo" className="w-8 h-8 opacity-90 rounded-lg" />
               <span className="font-bold text-slate-800 dark:text-slate-200 tracking-wider text-sm">ASHISH SUNIL · HARUKI</span>
