@@ -21,15 +21,20 @@ export default function LoadingScreen({ onComplete }) {
         <motion.div
           key="loader"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          exit={{ 
+            opacity: 0, 
+            scale: 1.08,
+            filter: "blur(24px)",
+            pointerEvents: "none"
+          }}
+          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="loading-screen-overlay"
         >
           {/* Logo Crest Floating Above */}
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: -20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
             className="mb-8 flex flex-col items-center gap-3"
           >
             <div className="w-14 h-14 rounded-2xl overflow-hidden ring-2 ring-white/20 shadow-2xl bg-black/50">
@@ -65,12 +70,12 @@ export default function LoadingScreen({ onComplete }) {
           {/* Subtitle Progress Status */}
           <motion.div
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.8 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
+            animate={{ opacity: 0.85 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
             className="mt-8 text-xs font-mono text-sky-400 tracking-widest uppercase flex items-center gap-2"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-ping" />
-            <span>Initializing System & Presences...</span>
+            <span>Initializing Core & Systems...</span>
           </motion.div>
         </motion.div>
       )}
