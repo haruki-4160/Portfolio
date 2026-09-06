@@ -6,6 +6,13 @@ class SoundEngine {
     this.ctx = null;
     this.enabled = typeof window !== 'undefined' ? localStorage.getItem('haruki_sound_enabled') !== 'false' : true;
     this.masterGain = null;
+    this.lastHoverTime = 0;
+    this.lastHoverTarget = null;
+    this.initializedListeners = false;
+
+    if (typeof window !== 'undefined') {
+      this.initGlobalListeners();
+    }
   }
 
   init() {
@@ -14,13 +21,52 @@ class SoundEngine {
       if (AudioContext) {
         this.ctx = new AudioContext();
         this.masterGain = this.ctx.createGain();
-        this.masterGain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+        this.masterGain.gain.setValueAtTime(0.28, this.ctx.currentTime);
         this.masterGain.connect(this.ctx.destination);
       }
     }
     if (this.ctx && this.ctx.state === 'suspended') {
       this.ctx.resume();
     }
+  }
+
+  initGlobalListeners() {
+    if (this.initializedListeners || typeof window === 'undefined') return;
+    this.initializedListeners = true;
+
+    // Unlock Web Audio Context on first user touch/click/key
+    const unlockAudio = () => {
+      this.init();
+      window.removeEventListener('pointerdown', unlockAudio);
+      window.removeEventListener('keydown', unlockAudio);
+    };
+    window.addEventListener('pointerdown', unlockAudio, { passive: true });
+    window.addEventListener('keydown', unlockAudio, { passive: true });
+
+    // Intelligent Global Hover Sound Delegation
+    document.addEventListener('mouseover', (e) => {
+      if (!this.enabled) return;
+
+      const target = e.target;
+      if (!target || typeof target.closest !== 'function') return;
+
+      // Select interactive elements
+      const interactiveEl = target.closest(
+        'button, a, [role="button"], input[type="range"], input[type="checkbox"], input[type="radio"], select, .cursor-pointer, [data-sound="hover"], .cyber-card'
+      );
+
+      if (interactiveEl && interactiveEl !== this.lastHoverTarget) {
+        this.lastHoverTarget = interactiveEl;
+        this.playHover();
+      }
+    }, { passive: true });
+
+    // Reset target on mouseout
+    document.addEventListener('mouseout', (e) => {
+      if (this.lastHoverTarget && e.target && (e.target === this.lastHoverTarget || !this.lastHoverTarget.contains(e.target))) {
+        this.lastHoverTarget = null;
+      }
+    }, { passive: true });
   }
 
   toggleSound() {
@@ -91,9 +137,15 @@ class SoundEngine {
     } catch (e) {}
   }
 
-  // 3. Subtle Acoustic Hover Tick (for card hovers)
-  playHover() {
+  // 3. Subtle Acoustic Bubble Hover Tick (for card & item hovers)
+  playHover(freq = 920) {
     if (!this.enabled) return;
+    
+    // Throttle hover sounds so rapid mouse movement stays crisp without audio lag
+    const nowMs = Date.now();
+    if (nowMs - this.lastHoverTime < 45) return;
+    this.lastHoverTime = nowMs;
+
     this.init();
     if (!this.ctx) return;
 
@@ -103,17 +155,17 @@ class SoundEngine {
       const gain = this.ctx.createGain();
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(850, now);
-      osc.frequency.exponentialRampToValueAtTime(1200, now + 0.02);
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 1.35, now + 0.02);
 
-      gain.gain.setValueAtTime(0.06, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.028);
 
       osc.connect(gain);
       gain.connect(this.masterGain);
 
       osc.start(now);
-      osc.stop(now + 0.03);
+      osc.stop(now + 0.035);
     } catch (e) {}
   }
 
