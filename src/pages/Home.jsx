@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import CyberCard from '../components/CyberCard/CyberCard';
 import CyberProfileCard from '../components/CyberProfileCard/CyberProfileCard';
 import VinylMusicPlayer from '../components/VinylMusicPlayer/VinylMusicPlayer';
-import { ScrollRevealContainer, ScrollRevealItem } from '../components/ScrollReveal/ScrollReveal';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -105,7 +104,7 @@ export default function Home({ onNavigate, onSelectProject }) {
           </div>
         </motion.div>
 
-        {/* Right Hero Column: 3D Cyber Profile Card with 25-Zone Perspective Mouse Hover Tracking */}
+        {/* Right Hero Column: 3D Cyber Profile Card */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -124,8 +123,8 @@ export default function Home({ onNavigate, onSelectProject }) {
       <motion.section
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
-        transition={{ type: "spring", stiffness: 260, damping: 22 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
         className="glass-panel p-6 sm:p-8 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6 border border-slate-200/80 dark:border-white/10 shadow-lg"
       >
         <div className="space-y-1 text-center md:text-left">
@@ -151,15 +150,9 @@ export default function Home({ onNavigate, onSelectProject }) {
         </div>
       </motion.section>
 
-      {/* 02 / WHAT I BUILD (Staggered Spring Pop-Up) */}
+      {/* 02 / WHAT I BUILD */}
       <section className="space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="flex flex-col sm:flex-row sm:items-end justify-between gap-2"
-        >
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2">
           <div>
             <span className="text-xs font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 uppercase">
               02 / DOMAINS
@@ -168,46 +161,46 @@ export default function Home({ onNavigate, onSelectProject }) {
               What I Build
             </h2>
           </div>
-        </motion.div>
+        </div>
 
-        <ScrollRevealContainer className="grid grid-cols-1 md:grid-cols-2 gap-6" amount={0.15}>
-          {whatIBuild.map((item) => {
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {whatIBuild.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <ScrollRevealItem key={item.id}>
-                <div className="glass-panel p-6 sm:p-7 rounded-3xl space-y-4 border border-slate-200/80 dark:border-white/10 transition-shadow hover:shadow-xl group">
-                  <div className="flex items-center justify-between">
-                    <span className="p-3 rounded-2xl bg-blue-500/10 text-blue-500 dark:text-blue-400 group-hover:bg-blue-500/20 transition-colors">
-                      <Icon className="w-5 h-5" />
-                    </span>
-                    <span className="text-[10px] font-mono tracking-widest text-slate-400 dark:text-slate-500 uppercase">
-                      {item.subtitle}
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
+              <motion.div 
+                key={item.id}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                whileHover={{ y: -4 }}
+                className="glass-panel p-6 sm:p-7 rounded-3xl space-y-4 border border-slate-200/80 dark:border-white/10 transition-shadow hover:shadow-xl group"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="p-3 rounded-2xl bg-blue-500/10 text-blue-500 dark:text-blue-400 group-hover:bg-blue-500/20 transition-colors">
+                    <Icon className="w-5 h-5" />
+                  </span>
+                  <span className="text-[10px] font-mono tracking-widest text-slate-400 dark:text-slate-500 uppercase">
+                    {item.subtitle}
+                  </span>
                 </div>
-              </ScrollRevealItem>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 mt-2 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </motion.div>
             );
           })}
-        </ScrollRevealContainer>
+        </div>
       </section>
 
-      {/* 03 / SELECTED WORK (Staggered 3D Card Pop-Up) */}
+      {/* 03 / SELECTED WORK */}
       <section className="space-y-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="flex items-center justify-between"
-        >
+        <div className="flex items-center justify-between">
           <div>
             <span className="text-xs font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 uppercase">
               03 / SELECTED WORK
@@ -223,12 +216,19 @@ export default function Home({ onNavigate, onSelectProject }) {
             <span>View all repositories</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
-        </motion.div>
+        </div>
 
-        {/* Selected Work Cards Grid with Staggered Pop-Up */}
-        <ScrollRevealContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center" amount={0.15}>
-          {selectedWorks.map((work) => (
-            <ScrollRevealItem key={work.id}>
+        {/* Selected Work Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
+          {selectedWorks.map((work, idx) => (
+            <motion.div
+              key={work.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="w-full flex justify-center"
+            >
               <CyberCard
                 title={work.title}
                 subtitle={work.type.toUpperCase()}
@@ -240,52 +240,51 @@ export default function Home({ onNavigate, onSelectProject }) {
                 githubUrl={work.githubUrl}
                 onClick={() => onSelectProject(work)}
               />
-            </ScrollRevealItem>
+            </motion.div>
           ))}
-        </ScrollRevealContainer>
+        </div>
       </section>
 
-      {/* 04 / STACK & ARSENAL (Staggered Pop-Up) */}
+      {/* 04 / STACK & ARSENAL */}
       <section className="space-y-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 0.5 }}
-          className="space-y-1 text-center sm:text-left"
-        >
+        <div className="space-y-1 text-center sm:text-left">
           <span className="text-xs font-mono font-bold tracking-widest text-blue-500 dark:text-blue-400 uppercase">
             04 / STACK
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
             Technologies & Tools
           </h2>
-        </motion.div>
+        </div>
 
-        {/* Devicon Icons Floating Strip with Staggered Entrance */}
-        <ScrollRevealContainer className="glass-panel p-6 sm:p-8 rounded-3xl" amount={0.15}>
+        {/* Devicon Icons Floating Strip */}
+        <motion.div 
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="glass-panel p-6 sm:p-8 rounded-3xl"
+        >
           <div className="flex flex-wrap items-center justify-center sm:justify-between gap-6">
             {techStack.map((tech) => (
-              <ScrollRevealItem key={tech.name}>
-                <div 
-                  className="flex flex-col items-center gap-2 group cursor-pointer"
-                  title={tech.name}
-                >
-                  <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 flex items-center justify-center p-2.5 group-hover:scale-110 group-hover:border-blue-500/50 transition-all shadow-sm">
-                    <img
-                      src={tech.icon}
-                      alt={tech.name}
-                      className="w-full h-full object-contain filter group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"
-                    />
-                  </div>
-                  <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
-                    {tech.name}
-                  </span>
+              <div 
+                key={tech.name} 
+                className="flex flex-col items-center gap-2 group cursor-pointer"
+                title={tech.name}
+              >
+                <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-300 dark:border-white/10 flex items-center justify-center p-2.5 group-hover:scale-110 group-hover:border-blue-500/50 transition-all shadow-sm">
+                  <img
+                    src={tech.icon}
+                    alt={tech.name}
+                    className="w-full h-full object-contain filter group-hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"
+                  />
                 </div>
-              </ScrollRevealItem>
+                <span className="text-[10px] font-mono text-slate-500 dark:text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
+                  {tech.name}
+                </span>
+              </div>
             ))}
           </div>
-        </ScrollRevealContainer>
+        </motion.div>
       </section>
     </div>
   );

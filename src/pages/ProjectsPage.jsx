@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
 import RetroSearchBar from '../components/RetroSearchBar/RetroSearchBar';
 import CyberCard from '../components/CyberCard/CyberCard';
-import { ScrollRevealContainer, ScrollRevealItem } from '../components/ScrollReveal/ScrollReveal';
 import { RefreshCw, Star, GitFork, ExternalLink, Code2, Sparkles } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -11,7 +10,6 @@ export default function ProjectsPage({ onSelectProject }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [githubRepos, setGithubRepos] = useState(() => {
-    // Initial fallback from portfolioData.selectedWorks so cards are ALWAYS visible immediately
     return portfolioData.selectedWorks.map(w => ({
       ...w,
       category: w.type === 'bot' ? 'AI/ML' : w.type === 'frontend' ? 'Web Apps' : 'Tools',
@@ -157,15 +155,18 @@ export default function ProjectsPage({ onSelectProject }) {
         </div>
       </div>
 
-      {/* Repositories Grid with Staggered Scroll Pop-Up */}
+      {/* Repositories Grid */}
       {filteredProjects.length > 0 ? (
-        <ScrollRevealContainer 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pt-6"
-          amount={0}
-          once={true}
-        >
-          {filteredProjects.map((proj) => (
-            <ScrollRevealItem key={proj.id}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center pt-6">
+          {filteredProjects.map((proj, idx) => (
+            <motion.div
+              key={proj.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: (idx % 6) * 0.08 }}
+              className="w-full flex justify-center"
+            >
               <CyberCard
                 title={proj.title}
                 subtitle={proj.subtitle}
@@ -178,9 +179,9 @@ export default function ProjectsPage({ onSelectProject }) {
                 liveUrl={proj.liveUrl}
                 onClick={() => onSelectProject(proj)}
               />
-            </ScrollRevealItem>
+            </motion.div>
           ))}
-        </ScrollRevealContainer>
+        </div>
       ) : (
         <div className="glass-panel text-center py-16 rounded-3xl space-y-3 max-w-lg mx-auto">
           <p className="text-base font-bold text-slate-900 dark:text-white">No repositories match your filter</p>
