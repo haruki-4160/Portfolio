@@ -115,6 +115,8 @@ export default function AboutPage() {
               <FloatingFolder
                 label="Ashish_Sunil_Resume.pdf"
                 downloadUrl="/Ashish_Sunil_Resume.pdf"
+                downloadFilename="Ashish_Sunil_Resume.pdf"
+                isDownload={true}
               />
             </div>
           </ScrollRevealItem>

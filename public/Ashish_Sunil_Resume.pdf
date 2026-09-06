@@ -1,0 +1,65 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 720 >>
+stream
+BT
+/F1 22 Tf
+50 720 Td
+(ASHISH SUNIL [HARUKI]) Tj
+/F1 12 Tf
+0 -24 Td
+(B.Tech CSE - Cyber Security | First Year) Tj
+0 -18 Td
+(Email: ashishsunil4160@gmail.com | GitHub: github.com/haruki-4160) Tj
+0 -18 Td
+(LinkedIn: linkedin.com/in/ashish-sunil-159503364) Tj
+/F1 14 Tf
+0 -32 Td
+(CORE SKILLS & DOMAINS) Tj
+/F1 11 Tf
+0 -18 Td
+(- Primary Languages: Python, JavaScript, HTML5, CSS3) Tj
+0 -16 Td
+(- Focus Areas: Cybersecurity Fundamentals, Discord Bot Infrastructure, REST APIs, Linux CLI) Tj
+0 -16 Td
+(- Frameworks & Tools: React 18, Tailwind CSS, AsyncIO, FFmpeg, SQLite, Git/GitHub) Tj
+/F1 14 Tf
+0 -30 Td
+(FEATURED PROJECTS) Tj
+/F1 11 Tf
+0 -18 Td
+(1. CELESTE - Discord Moderation Engine in Python [AsyncIO, custom permission hierarchy]) Tj
+0 -16 Td
+(2. CELUNE - Discord High-Fidelity Audio Streaming Engine [FFmpeg voice buffer optimization]) Tj
+0 -16 Td
+(3. SRYAA - Interactive Discord Conversational Utility & REST API Integrations) Tj
+0 -16 Td
+(4. TACTILE PORTFOLIO - React 18 & Tailwind CSS Interactive 3D Portfolio) Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000234 00000 n 
+0000001007 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1076
+%%EOF
