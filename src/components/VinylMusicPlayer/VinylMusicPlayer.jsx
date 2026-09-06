@@ -4,7 +4,7 @@ import { Volume2, VolumeX, Volume1, Play, Pause, RotateCcw, Sparkles, ExternalLi
 import confetti from 'canvas-confetti';
 
 export default function VinylMusicPlayer({ 
-  customDiskImage = "/haruki-logo.png",
+  customDiskImage = "/vinyl-disk.png",
   customTitle = "HARUKI",
   customArtist = "Ashish Sunil · Soundscapes",
   customVideoId = "wlEIQVYyn3o"
@@ -197,29 +197,22 @@ export default function VinylMusicPlayer({
 
         {/* Top Core Row: Spinning Vinyl Badge + Title + Soundwave + Main Play Button */}
         <div className="flex items-center justify-between gap-3 relative z-10">
-          {/* Custom Image Spinning Vinyl Disc */}
+          {/* Custom Full-Art Spinning Vinyl Disc */}
           <div className="relative shrink-0">
-            <div className={`w-12 h-12 rounded-full shadow-lg border-2 border-slate-700 dark:border-zinc-500 overflow-hidden bg-[#090a10] relative flex items-center justify-center ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
-              {/* Vinyl Grooves Background */}
-              <div className="absolute inset-0 rounded-full border border-white/10" />
-              <div className="absolute inset-1 rounded-full border border-white/5" />
-              <div className="absolute inset-2 rounded-full border border-white/10" />
-
-              {/* Custom Disk Center Artwork */}
-              <div className="w-6 h-6 rounded-full overflow-hidden shadow-inner ring-1 ring-white/30 z-10">
-                <img
-                  src={diskImage}
-                  alt="Custom Disk Cover"
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <div className={`w-12 h-12 rounded-full shadow-md ring-1 ring-black/40 dark:ring-white/20 overflow-hidden relative flex items-center justify-center ${isPlaying ? 'animate-[spin_4s_linear_infinite]' : ''}`}>
+              {/* Full Vinyl Disc Image */}
+              <img
+                src={diskImage}
+                alt="Custom Vinyl Record"
+                className="w-full h-full object-cover scale-[1.05] rounded-full select-none pointer-events-none"
+              />
 
               {/* Specular Vinyl Reflection Sheen */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/15 to-transparent pointer-events-none rounded-full" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/25 to-transparent pointer-events-none rounded-full" />
             </div>
 
             {/* Center Spindle Hole */}
-            <div className="absolute inset-0 m-auto w-2 h-2 rounded-full bg-white dark:bg-slate-900 border border-slate-400 z-20 pointer-events-none" />
+            <div className="absolute inset-0 m-auto w-2 h-2 rounded-full bg-slate-900 border border-slate-400/80 z-20 pointer-events-none shadow-sm" />
           </div>
 
           {/* Custom Track Details */}
