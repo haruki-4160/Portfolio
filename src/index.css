@@ -7,9 +7,18 @@
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-html, body {
+html {
   min-height: 100vh;
+  width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
+}
+
+body {
+  min-height: 100vh;
+  width: max-content;
+  min-width: 100%;
+  overflow-x: visible;
   overflow-y: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -18,6 +27,8 @@ html, body {
 /* On mobile/tablets allow natural vertical overflow inside panels */
 @media (max-width: 1024px) {
   html, body {
+    width: 100%;
+    overflow-x: hidden;
     overflow-y: auto;
   }
 }

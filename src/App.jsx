@@ -28,11 +28,13 @@ function PortfolioApp() {
   // Scroll spy with active section detector for horizontal / vertical
   useEffect(() => {
     const sections = ['home', 'domains', 'featured', 'projects', 'about', 'contact'];
-    const handleScroll = () => {
+    
+    const handleScroll = (scrollLeftVal) => {
       const isMobile = window.innerWidth <= 1024;
-      const scrollPos = isMobile
-        ? window.scrollY + window.innerHeight * 0.35
-        : window.scrollX + window.innerWidth * 0.35;
+      const currentScroll = typeof scrollLeftVal === 'number'
+        ? scrollLeftVal
+        : (isMobile ? window.scrollY : window.scrollX);
+      const scrollPos = currentScroll + (isMobile ? window.innerHeight : window.innerWidth) * 0.35;
 
       for (const sectionId of sections) {
         const el = document.getElementById(sectionId);
@@ -47,25 +49,38 @@ function PortfolioApp() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', () => handleScroll(), { passive: true });
+    
+    // Also bind to lenis if available
+    let unbindLenis = null;
+    const checkLenis = setInterval(() => {
+      if (window.lenis) {
+        unbindLenis = window.lenis.on('scroll', (e) => handleScroll(e.scroll));
+        clearInterval(checkLenis);
+      }
+    }, 100);
+
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(checkLenis);
+      if (typeof unbindLenis === 'function') unbindLenis();
+    };
   }, []);
 
   const handleNavigate = (sectionId, customDuration = 1.4) => {
     setActiveTab(sectionId);
     const el = document.getElementById(sectionId);
     if (el) {
+      const isMobile = window.innerWidth <= 1024;
       if (window.lenis) {
-        window.lenis.scrollTo(el, { offset: 0, duration: customDuration });
+        window.lenis.scrollTo(isMobile ? el.offsetTop - 70 : el.offsetLeft, { duration: customDuration });
       } else {
-        const isMobile = window.innerWidth <= 1024;
         if (isMobile) {
-          const y = el.getBoundingClientRect().top + window.pageYOffset - 70;
-          window.scrollTo({ top: y, behavior: 'smooth' });
+          window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
         } else {
-          const x = el.getBoundingClientRect().left + window.pageXOffset;
-          window.scrollTo({ left: x, behavior: 'smooth' });
+          window.scrollTo({ left: el.offsetLeft, behavior: 'smooth' });
         }
       }
     }
@@ -86,7 +101,7 @@ function PortfolioApp() {
   };
 
   return (
-    <div className="min-h-screen relative flex flex-col justify-between text-slate-900 dark:text-slate-100 selection:bg-[#3b82f6]/30 selection:text-[#93c5fd]">
+    <div className="min-h-screen w-full lg:w-max relative flex flex-col justify-between text-slate-900 dark:text-slate-100 selection:bg-[#3b82f6]/30 selection:text-[#93c5fd]">
       {/* Custom 3-Second Loading Screen with Smooth Fade/Blur Exit */}
       <LoadingScreen onComplete={() => setLoading(false)} />
 
@@ -142,41 +157,41 @@ function PortfolioApp() {
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
         className="flex flex-col lg:flex-row items-stretch w-full lg:w-max min-h-[calc(100vh-5rem)] pt-20 sm:pt-24 pb-32 z-10"
       >
-          {/* Page 1: Home / Hero */}
-          <section id="home" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
-            <HeroPage 
-              onNavigate={handleNavigate} 
-              onLaunchFlight={handleLaunchFlight}
-            />
-          </section>
+        {/* Page 1: Home / Hero */}
+        <section id="home" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+          <HeroPage 
+            onNavigate={handleNavigate} 
+            onLaunchFlight={handleLaunchFlight}
+          />
+        </section>
 
-          {/* Page 2: Audio Lounge & Domains */}
-          <section id="domains" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
-            <DomainsPage />
-          </section>
+        {/* Page 2: Audio Lounge & Domains */}
+        <section id="domains" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+          <DomainsPage />
+        </section>
 
-          {/* Page 3: Featured Projects & Stack */}
-          <section id="featured" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
-            <FeaturedPage 
-              onNavigate={handleNavigate}
-              onSelectProject={setSelectedProject} 
-            />
-          </section>
+        {/* Page 3: Featured Projects & Stack */}
+        <section id="featured" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+          <FeaturedPage 
+            onNavigate={handleNavigate}
+            onSelectProject={setSelectedProject} 
+          />
+        </section>
 
-          {/* Page 4: All Repositories */}
-          <section id="projects" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
-            <ProjectsPage onSelectProject={setSelectedProject} />
-          </section>
+        {/* Page 4: All Repositories */}
+        <section id="projects" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+          <ProjectsPage onSelectProject={setSelectedProject} />
+        </section>
 
-          {/* Page 5: About & Journey */}
-          <section id="about" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
-            <AboutPage />
-          </section>
+        {/* Page 5: About & Journey */}
+        <section id="about" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+          <AboutPage />
+        </section>
 
-          {/* Page 6: Contact & Transmission */}
-          <section id="contact" className="w-full lg:w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
-            <ContactPage />
-          </section>
+        {/* Page 6: Contact & Transmission */}
+        <section id="contact" className="w-full lg:w-[100vw] lg:min-w-[100vw] min-h-[calc(100vh-6rem)] flex-shrink-0 flex items-center justify-center px-4 sm:px-8 lg:px-16">
+          <ContactPage />
+        </section>
 
           {/* End Section / Horizontal Footer Dossier Panel */}
           <footer className="w-full lg:w-[40vw] lg:max-w-[460px] flex-shrink-0 flex flex-col justify-center items-center py-12 px-6 text-xs font-mono text-slate-500 dark:text-slate-500 rounded-3xl glass-panel border border-slate-200/60 dark:border-white/10 my-auto mx-8 shadow-xl">
