@@ -2,9 +2,9 @@ import React from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 export default function ScrollProgress() {
-  const { scrollXProgress } = useScroll();
-  const scaleX = useSpring(scrollXProgress, {
-    stiffness: 220,
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 200,
     damping: 30,
     restDelta: 0.001
   });

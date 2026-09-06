@@ -171,12 +171,8 @@ export default function VinylMusicPlayer() {
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
     >
-      {/* Hidden YouTube IFrame Audio Target */}
-      <div 
-        id="yt-vinyl-audio-player" 
-        style={{ position: 'absolute', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }} 
-        aria-hidden="true" 
-      />
+      {/* Hidden YouTube IFrame */}
+      <div id="yt-vinyl-audio-player" className="hidden pointer-events-none" />
 
       {/* 🌟 Apple-Style Floating Glass Morphing Pill Chassis */}
       <motion.div

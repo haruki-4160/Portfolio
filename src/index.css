@@ -7,61 +7,42 @@
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-html {
-  min-height: 100vh;
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-}
-
-body {
-  min-height: 100vh;
-  width: max-content;
-  min-width: 100%;
-  overflow-x: visible;
-  overflow-y: hidden;
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden !important;
+  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-/* On mobile/tablets allow natural vertical overflow inside panels */
-@media (max-width: 1024px) {
-  html, body {
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
 }
 
 .light {
   --glass-border: rgba(255, 255, 255, 0.7);
 }
 
-/* Custom smooth horizontal & vertical scrollbar */
+/* Custom smooth scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(203, 213, 225, 0.4);
+  background: rgba(203, 213, 225, 0.6);
 }
 .dark ::-webkit-scrollbar-track {
-  background: rgba(8, 8, 14, 0.8);
+  background: rgba(8, 8, 14, 0.95);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.6);
-  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.7);
+  border-radius: 4px;
 }
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.45);
-  border-radius: 9999px;
+  background: rgba(59, 130, 246, 0.35);
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(100, 116, 139, 0.9);
 }
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(96, 165, 250, 0.8);
+  background: rgba(96, 165, 250, 0.6);
 }
 
 /* Brushed Silver (Light) & Rich Obsidian Glass (Dark) */

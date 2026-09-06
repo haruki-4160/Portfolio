@@ -1,32 +1,30 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './TakeOffButton.css';
 
 export default function TakeOffButton({
   text = "View Selected Work",
   sentText = "Launching...",
   variant = "primary", // "primary" | "secondary"
-  targetTab = "projects",
-  onLaunch,
+  onClick,
   className = ""
 }) {
   const [isLaunching, setIsLaunching] = useState(false);
-  const buttonRef = useRef(null);
 
   const handleClick = (e) => {
     e.preventDefault();
     setIsLaunching(true);
 
-    const rect = buttonRef.current?.getBoundingClientRect();
-    const startX = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
-    const startY = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
-
-    if (onLaunch) {
-      onLaunch({ startX, startY, targetTab });
+    // Call navigation handler
+    if (onClick) {
+      setTimeout(() => {
+        onClick(e);
+      }, 400); // Trigger smooth scroll mid-flight
     }
 
+    // Reset button state after launch
     setTimeout(() => {
       setIsLaunching(false);
-    }, 1200);
+    }, 1600);
   };
 
   const letters = text.split("");
@@ -34,7 +32,6 @@ export default function TakeOffButton({
 
   return (
     <button
-      ref={buttonRef}
       type="button"
       onClick={handleClick}
       className={`hero-takeoff-btn ${variant} ${isLaunching ? 'is-launching' : ''} ${className}`}

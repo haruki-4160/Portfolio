@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import './AppleDock.css';
-import { Home, Bot, Sparkles, FolderGit2, User, Mail } from 'lucide-react';
+import { Home, FolderGit2, User, Mail } from 'lucide-react';
 
 function DockIcon({ mouseX, item, activeTab, onSelect }) {
   const ref = useRef(null);
@@ -53,7 +53,6 @@ export default function AppleDock({ activeTab, onNavigate, onTabChange }) {
 
   const navItems = [
     { id: 'home', label: 'Home', icon: Home },
-    { id: 'domains', label: 'Domains', icon: Bot },
     { id: 'projects', label: 'Projects', icon: FolderGit2 },
     { id: 'about', label: 'About', icon: User },
     { id: 'contact', label: 'Contact', icon: Mail },

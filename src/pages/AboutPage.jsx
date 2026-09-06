@@ -21,7 +21,7 @@ export default function AboutPage() {
   const { profile, skillDomains, techStack } = portfolioData;
 
   return (
-    <div className="w-full max-w-6xl mx-auto flex flex-col justify-center space-y-8 py-6 max-h-[calc(100vh-6rem)] overflow-y-auto custom-scroll pr-1">
+    <div className="space-y-16 pb-24 pt-4">
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -115,8 +115,6 @@ export default function AboutPage() {
               <FloatingFolder
                 label="Ashish_Sunil_Resume.pdf"
                 downloadUrl="/Ashish_Sunil_Resume.pdf"
-                downloadFilename="Ashish_Sunil_Resume.pdf"
-                isDownload={true}
               />
             </div>
           </ScrollRevealItem>
