@@ -4,6 +4,7 @@ import { portfolioData } from '../data/portfolioData';
 import CyberCard from '../components/CyberCard/CyberCard';
 import CyberProfileCard from '../components/CyberProfileCard/CyberProfileCard';
 import VinylMusicPlayer from '../components/VinylMusicPlayer/VinylMusicPlayer';
+import TakeOffButton from '../components/TakeOffButton/TakeOffButton';
 import { 
   ArrowRight, 
   Sparkles, 
@@ -18,19 +19,9 @@ import {
   Code2, 
   Headphones 
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 export default function Home({ onNavigate, onSelectProject }) {
   const { profile, whatIBuild, selectedWorks, techStack } = portfolioData;
-
-  const handleHeroCta = () => {
-    confetti({
-      particleCount: 50,
-      spread: 60,
-      origin: { y: 0.6 }
-    });
-    onNavigate('projects');
-  };
 
   return (
     <div className="space-y-24 pb-20">
@@ -70,23 +61,21 @@ export default function Home({ onNavigate, onSelectProject }) {
             {profile.tagline}
           </p>
 
-          {/* Action CTAs with Sapphire Gradient */}
+          {/* Action CTAs with Paper Plane Take-Off Animation */}
           <div className="flex flex-wrap items-center gap-4 pt-2">
-            <button
-              onClick={handleHeroCta}
-              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#38bdf8] via-[#2563eb] to-[#1d4ed8] text-white font-bold text-sm flex items-center gap-2 hover:opacity-95 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5 transition-all cursor-pointer"
-            >
-              <span>View Selected Work</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            <TakeOffButton
+              text="View Selected Work"
+              sentText="Navigating..."
+              variant="primary"
+              onClick={() => onNavigate('projects')}
+            />
 
-            <button
+            <TakeOffButton
+              text="Get In Touch"
+              sentText="Opening..."
+              variant="secondary"
               onClick={() => onNavigate('contact')}
-              className="px-6 py-3.5 rounded-xl bg-slate-200 dark:bg-white/5 hover:bg-slate-300 dark:hover:bg-white/10 text-slate-800 dark:text-white border border-slate-300 dark:border-white/10 font-semibold text-sm flex items-center gap-2 transition-all cursor-pointer"
-            >
-              <span>Get In Touch</span>
-              <Send className="w-4 h-4 text-blue-500 dark:text-blue-400" />
-            </button>
+            />
           </div>
 
           {/* Quick Metrics */}
